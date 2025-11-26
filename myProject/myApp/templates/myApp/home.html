@@ -1,0 +1,1713 @@
+{% extends 'myApp/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #F5F5E8;
+    }
+    
+    .script-font {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    /* KRIYA Yoga Center Color Palette */
+    .bg-olive-green {
+        background-color: #6B7A5F;
+    }
+    
+    .bg-cream {
+        background-color: #F5F5E8;
+    }
+    
+    .text-olive {
+        color: #6B7A5F;
+    }
+    
+    .text-cream {
+        color: #F5F5E8;
+    }
+    
+    .bg-yoga-pink {
+        background-color: #E8B4B8;
+    }
+    
+    .bg-yoga-yellow {
+        background-color: #F4D03F;
+    }
+    
+    .bg-yoga-blue {
+        background-color: #AED6F1;
+    }
+    
+    .bg-yoga-orange {
+        background-color: #D4A574;
+    }
+    
+    /* Peaceful color palette for older viewers */
+    .text-peaceful-blue {
+        color: #2C5F7D;
+    }
+    
+    .bg-peaceful-cream {
+        background-color: #F9F7F4;
+    }
+    
+    .hero-section {
+        position: relative;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .lotus-icon {
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .quote-mark {
+        font-size: 8rem;
+        color: rgba(255, 255, 255, 0.3);
+        font-family: 'Playfair Display', serif;
+        line-height: 1;
+    }
+    
+    .yoga-style-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .yoga-style-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .bamboo-section {
+        background: linear-gradient(to right, #F5F5E8 0%, #E8F5E8 50%, #D4E8D4 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .bamboo-section::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.3;
+    }
+    
+    /* Peaceful Navigation & Footer Styles for Older Viewers */
+    .peaceful-nav {
+        background: rgba(249, 247, 244, 0.98);
+        backdrop-filter: blur(10px);
+        transition: all 0.8s ease;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .peaceful-nav-link {
+        font-size: 1.05rem;
+        padding: 0.875rem 1.5rem;
+        transition: all 0.6s ease;
+        color: #2C5F7D;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    
+    .peaceful-nav-link:hover {
+        color: #D4A574;
+        transform: translateY(-2px);
+        text-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+    }
+    
+    .peaceful-logo-icon {
+        animation: gentleFloat 5s ease-in-out infinite;
+    }
+    
+    @keyframes gentleFloat {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+    
+    .peaceful-footer {
+        background: linear-gradient(to bottom, #2C5F7D, #1A4A5F);
+        color: #F9F7F4;
+        transition: all 0.8s ease;
+    }
+    
+    .peaceful-footer a {
+        transition: all 0.5s ease;
+        color: #F9F7F4;
+        font-size: 1rem;
+    }
+    
+    .peaceful-footer a:hover {
+        color: #D4A574;
+        transform: translateX(5px);
+        text-shadow: 0 2px 8px rgba(212, 165, 116, 0.4);
+    }
+    
+    .peaceful-footer-link {
+        transition: all 0.5s ease;
+        color: #F9F7F4;
+        font-size: 1rem;
+    }
+    
+    .peaceful-footer-link:hover {
+        color: #D4A574;
+        transform: translateX(5px);
+        text-shadow: 0 2px 8px rgba(212, 165, 116, 0.4);
+    }
+    
+    .peaceful-footer-icon {
+        animation: gentleFloat 6s ease-in-out infinite;
+    }
+    
+    .peaceful-social-link {
+        transition: all 0.6s ease;
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .peaceful-social-link:hover {
+        transform: translateY(-3px) scale(1.1);
+        background-color: rgba(212, 165, 116, 0.3) !important;
+    }
+    
+    /* Glowing Animations */
+    .glow-section {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .glow-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(244, 208, 63, 0.2) 0%, transparent 70%);
+        animation: glowPulse 4s ease-in-out infinite;
+        pointer-events: none;
+    }
+    
+    .glow-section::after {
+        content: '';
+        position: absolute;
+        bottom: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(174, 214, 241, 0.2) 0%, transparent 70%);
+        animation: glowPulse 6s ease-in-out infinite reverse;
+        pointer-events: none;
+    }
+    
+    @keyframes glowPulse {
+        0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+        50% { transform: scale(1.2) rotate(180deg); opacity: 0.6; }
+    }
+    
+    .glow-text {
+        text-shadow: 0 0 20px rgba(244, 208, 63, 0.5), 0 0 40px rgba(244, 208, 63, 0.3);
+        animation: textGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes textGlow {
+        0%, 100% { text-shadow: 0 0 20px rgba(244, 208, 63, 0.5), 0 0 40px rgba(244, 208, 63, 0.3); }
+        50% { text-shadow: 0 0 30px rgba(244, 208, 63, 0.8), 0 0 60px rgba(244, 208, 63, 0.5); }
+    }
+    
+    .glow-card {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .glow-card::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        padding: 2px;
+        background: linear-gradient(45deg, rgba(244, 208, 63, 0.5), rgba(174, 214, 241, 0.5));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .glow-card:hover::before {
+        opacity: 1;
+        animation: borderGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes borderGlow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+    
+    .glow-button {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .glow-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    
+    .glow-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .floating {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    /* Gentle Sway Animation - Different from floating */
+    .gentle-sway {
+        animation: sway 8s ease-in-out infinite;
+    }
+    
+    @keyframes sway {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-15px) rotate(1deg); }
+        50% { transform: translateY(-10px) rotate(0deg); }
+        75% { transform: translateY(-15px) rotate(-1deg); }
+    }
+    
+    /* Fade In Up Animation */
+    .fade-in-up {
+        animation: fadeInUp 1.5s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Quote Mark Animation */
+    .quote-mark {
+        animation: quotePulse 4s ease-in-out infinite;
+    }
+    
+    @keyframes quotePulse {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(1.1); }
+    }
+    
+    .shimmer {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        background-size: 200% 100%;
+        animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    
+    /* Slide In Animation - Different from floating */
+    .slide-in-left {
+        animation: slideInLeft 1s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .slide-in-right {
+        animation: slideInRight 1s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Pulse Glow Animation */
+    .pulse-glow {
+        animation: pulseGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulseGlow {
+        0%, 100% { 
+            box-shadow: 0 0 20px rgba(244, 208, 63, 0.3), 0 0 40px rgba(174, 214, 241, 0.2);
+        }
+        50% { 
+            box-shadow: 0 0 30px rgba(244, 208, 63, 0.6), 0 0 60px rgba(174, 214, 241, 0.4);
+        }
+    }
+    
+    /* Wave Motion Animation */
+    .wave-motion {
+        animation: waveMotion 4s ease-in-out infinite;
+    }
+    
+    @keyframes waveMotion {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-10px) rotate(1deg); }
+        50% { transform: translateY(-5px) rotate(0deg); }
+        75% { transform: translateY(-10px) rotate(-1deg); }
+    }
+    
+    /* Scale In Animation - Different from others */
+    .scale-in {
+        animation: scaleIn 1.2s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    /* Rotate Glow Animation */
+    .rotate-glow {
+        animation: rotateGlow 5s ease-in-out infinite;
+    }
+    
+    @keyframes rotateGlow {
+        0%, 100% { 
+            transform: rotate(0deg);
+            filter: brightness(1);
+        }
+        25% { 
+            transform: rotate(2deg);
+            filter: brightness(1.1);
+        }
+        50% { 
+            transform: rotate(0deg);
+            filter: brightness(1.2);
+        }
+        75% { 
+            transform: rotate(-2deg);
+            filter: brightness(1.1);
+        }
+    }
+    
+    /* Text Reveal Animation */
+    .text-reveal {
+        animation: textReveal 1.5s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes textReveal {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+            clip-path: inset(0 0 100% 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            clip-path: inset(0 0 0 0);
+        }
+    }
+    
+    /* Glow Expand Animation */
+    .glow-expand {
+        animation: glowExpand 4s ease-in-out infinite;
+    }
+    
+    @keyframes glowExpand {
+        0%, 100% { 
+            box-shadow: 0 0 30px rgba(244, 208, 63, 0.4), 0 0 60px rgba(174, 214, 241, 0.3);
+        }
+        50% { 
+            box-shadow: 0 0 50px rgba(244, 208, 63, 0.7), 0 0 100px rgba(174, 214, 241, 0.5);
+        }
+    }
+    
+    /* Bounce In Animation - Different from others */
+    .bounce-in {
+        animation: bounceIn 1s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.3) translateY(-50px);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.05) translateY(0);
+        }
+        70% {
+            transform: scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    /* Fade In Right Animation */
+    .fade-in-right {
+        animation: fadeInRight 1.2s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Sparkle Animation */
+    .sparkle {
+        animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    @keyframes sparkle {
+        0%, 100% { 
+            opacity: 0.5;
+            transform: scale(1) rotate(0deg);
+        }
+        50% { 
+            opacity: 1;
+            transform: scale(1.2) rotate(180deg);
+        }
+    }
+    
+    /* Services Carousel Styles */
+    .services-carousel {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .services-carousel-container {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .service-card {
+        flex: 0 0 calc(100% - 2rem);
+        height: 600px;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        margin: 0 1rem;
+    }
+    
+    @media (min-width: 768px) {
+        .service-card {
+            flex: 0 0 calc(50% - 3rem);
+        }
+        .services-carousel-container {
+            padding: 0 2rem;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .service-card {
+            flex: 0 0 calc(33.333% - 3rem);
+        }
+    }
+    
+    .service-card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0;
+    }
+    
+    .service-card-content {
+        padding: 3rem 2.5rem 2.5rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.5), transparent);
+    }
+    
+    .service-card-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1rem;
+        font-family: 'Playfair Display', serif;
+        line-height: 1.3;
+    }
+    
+    .service-card-description {
+        color: rgba(255, 255, 255, 0.95);
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+    
+    .carousel-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 20;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-nav-btn:hover {
+        background: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .carousel-nav-btn.prev {
+        left: 1rem;
+    }
+    
+    .carousel-nav-btn.next {
+        right: 1rem;
+    }
+    
+    .carousel-nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+    
+    .carousel-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #d1d5db;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .carousel-dot.active {
+        background: #F4D03F;
+        width: 32px;
+        border-radius: 6px;
+    }
+    
+    section > * {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header & Navigation -->
+<header class="peaceful-nav sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center justify-between py-5">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-sun text-yoga-yellow text-3xl peaceful-logo-icon"></i>
+                <span class="text-2xl font-bold text-peaceful-blue" style="color: #2C5F7D;">Radiating Life</span>
+            </div>
+        
+            <!-- Navigation Links - 5 items only -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#home" class="peaceful-nav-link">HOME</a>
+                <a href="{% url 'about' %}" class="peaceful-nav-link">ABOUT</a>
+                <a href="#services" class="peaceful-nav-link">SERVICES</a>
+                <a href="#testimonials" class="peaceful-nav-link">TESTIMONIALS</a>
+                <a href="#contact" class="bg-yoga-yellow text-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-600 ease-in-out shadow-md hover:shadow-lg" style="background-color: #D4A574; color: #2C3E50;">CONTACT</a>
+            </div>
+        
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-peaceful-blue text-2xl" id="mobile-menu-btn" style="color: #2C5F7D;">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-peaceful-cream z-50 md:hidden" style="background-color: #F9F7F4;">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <button class="absolute top-6 right-6 text-peaceful-blue text-3xl" id="close-menu-btn" style="color: #2C5F7D;">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <a href="#home" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">HOME</a>
+            <a href="{% url 'about' %}" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">ABOUT</a>
+            <a href="#services" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">SERVICES</a>
+            <a href="#testimonials" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">TESTIMONIALS</a>
+            <a href="#contact" class="bg-yoga-yellow text-gray-800 px-10 py-4 rounded-full font-semibold shadow-md" style="background-color: #D4A574; color: #2C3E50;">CONTACT</a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero-section relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('{% static "images/Myra-Yoga-1.jpg" %}') center/cover;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Awaken Your <span class="script-font text-5xl md:text-6xl lg:text-7xl">Radiance</span>. Reclaim Your <span class="script-font text-5xl md:text-6xl lg:text-7xl">Power</span>.
+                </h1>
+            <p class="text-lg text-white mb-4 leading-relaxed">
+                Step into a life where you feel strong, joyful, and completely at home in your body, nourished in mind, heart, and health.
+            </p>
+            <p class="text-lg text-white mb-8 leading-relaxed">
+                I have been where you are, pulled in every direction, full of doubt and quietly craving something more. That is why I hold space for women to return to their truth, release what is heavy, and rise into the radiant powerful version of themselves they were always meant to be.
+            </p>
+            <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-md font-semibold uppercase hover:bg-opacity-90 transition relative">
+                <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                    </a>
+                </div>
+    </div>
+</section>
+
+<!-- Credibility Section -->
+<section id="about" class="bg-white py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <p class="text-sm uppercase tracking-wider text-yoga-yellow mb-4">CREDIBILITY</p>
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
+                Grounded in <span class="script-font">Wisdom</span>, Guided by <span class="script-font">Experience</span>.
+            </h2>
+            <p class="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                With years of experience in personal development, wellness, and public speaking, I bring both professional training and real-life transformation to every session. I've led transformative retreats, hosted workshops, and helped women break through years of emotional heaviness. I don't just teach these practices; I live them every day.
+            </p>
+            </div>
+            
+        <!-- Partner Logos -->
+        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 mt-12">
+            <div class="text-2xl font-bold text-purple-600 floating">Inspire</div>
+            <div class="text-2xl font-bold text-green-600 floating" style="animation-delay: 0.5s;">Positive Intelligence</div>
+            <div class="text-2xl font-bold text-purple-600 floating" style="animation-delay: 1s;">mindvalley</div>
+            <div class="text-2xl font-bold text-blue-600 floating" style="animation-delay: 1.5s;">The MIND Institute</div>
+                </div>
+                
+        <!-- Achieve Your Goals Section -->
+        <div class="mt-16 text-center">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 glow-text">
+                Achieve your goals and live the life you desire.
+            </h3>
+            <div class="grid gap-6 md:grid-cols-5 max-w-5xl mx-auto">
+                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
+                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating">
+                        <i class="fa-solid fa-sun"></i>
+                </div>
+                    <p class="text-sm font-semibold text-gray-800">Holistic Approach</p>
+            </div>
+                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
+                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.2s;">
+                        <i class="fa-solid fa-leaf"></i>
+        </div>
+                    <p class="text-sm font-semibold text-gray-800">Natural Healing</p>
+    </div>
+                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
+                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.4s;">
+                        <i class="fa-solid fa-star"></i>
+                </div>
+                    <p class="text-sm font-semibold text-gray-800">Empowerment</p>
+                        </div>
+                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
+                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.6s;">
+                        <i class="fa-solid fa-heart"></i>
+                        </div>
+                    <p class="text-sm font-semibold text-gray-800">Compassionate Care</p>
+                    </div>
+                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
+                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.8s;">
+                        <i class="fa-solid fa-sparkles"></i>
+                        </div>
+                    <p class="text-sm font-semibold text-gray-800">Transformation</p>
+                        </div>
+                    </div>
+                        </div>
+                        </div>
+</section>
+
+<!-- Qualifications Section -->
+<section class="bg-white py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8">
+            Here's how I've equipped myself to support your journey:
+        </h3>
+        <ul class="space-y-4">
+            <li class="flex items-start">
+                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <span class="text-lg text-gray-700">Master NLP Practitioner (Inspired Outcomes)</span>
+            </li>
+            <li class="flex items-start">
+                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <span class="text-lg text-gray-700">Certified Life Coach (Mindvalley)</span>
+            </li>
+            <li class="flex items-start">
+                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <span class="text-lg text-gray-700">Mental Fitness Coach (Positive Intelligence)</span>
+            </li>
+            <li class="flex items-start">
+                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <span class="text-lg text-gray-700">Certified Consulting Hypnotist (The MIND Institute)</span>
+            </li>
+            <li class="flex items-start">
+                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <span class="text-lg text-gray-700">Certified 200-hour Yoga Teacher with focused training in Kundalini-inspired practices, including breathwork, mantra, and movement designed to support energy flow and emotional clarity.</span>
+            </li>
+        </ul>
+                    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="bg-white py-20 md:py-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 script-font" style="font-family: 'Playfair Display', serif;">
+                SERVICES
+            </h2>
+            </div>
+            
+        <!-- Services Carousel -->
+        <div class="services-carousel relative">
+            <!-- Navigation Buttons -->
+            <button class="carousel-nav-btn prev" onclick="moveCarousel(-1)" id="prevBtn">
+                <i class="fa-solid fa-chevron-left text-gray-800 text-xl"></i>
+            </button>
+            <button class="carousel-nav-btn next" onclick="moveCarousel(1)" id="nextBtn">
+                <i class="fa-solid fa-chevron-right text-gray-800 text-xl"></i>
+            </button>
+            
+            <!-- Carousel Container -->
+            <div class="services-carousel-container" id="carouselContainer">
+                <!-- Duplicate of Last Slide (Service 6) - for seamless looping -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Dress-1P.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(236, 72, 153, 0.95), rgba(236, 72, 153, 0.75), rgba(236, 72, 153, 0.5), transparent);">
+                            <h3 class="service-card-title">Radiant Transition Coaching</h3>
+                            <p class="service-card-description">
+                                A specific coaching path for women entering or navigating perimenopause and menopause. Not just "managing symptoms" but embracing menopause as a new season of power, wisdom, and radiance. Outcomes: Feeling supported, understood, and empowered in this transition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 1: Radiance Coaching (Private Sessions) -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-2L.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(244, 208, 63, 0.95), rgba(244, 208, 63, 0.75), rgba(244, 208, 63, 0.5), transparent);">
+                            <h3 class="service-card-title">Radiance Coaching (Private Sessions)</h3>
+                            <p class="service-card-description">
+                                Personalized coaching sessions designed around your unique journey. We work together to clear emotional weight, rebuild self-trust, and help you feel rooted in your truth. Along the way, you'll explore practices that nurture balance, vitality, and clarity so you can move forward feeling lighter and stronger.
+                            </p>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2: Emotional Healing & Inner Peace -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-3L.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(59, 130, 246, 0.95), rgba(59, 130, 246, 0.75), rgba(59, 130, 246, 0.5), transparent);">
+                            <h3 class="service-card-title">Emotional Healing & Inner Peace</h3>
+                            <p class="service-card-description">
+                                For women carrying years of unspoken stress, suppressed emotions, and long-lived responsibilities. A safe, guided space to process emotions, patterns, and stories that keep you stuck. Outcomes: Emotional clarity, a lighter heart, more inner calm, and self-awareness.
+                            </p>
+                        </div>
+                    </div>
+                        </div>
+                
+                <!-- Service 3: Group Coaching Circles -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-4L.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(37, 99, 235, 0.95), rgba(37, 99, 235, 0.75), rgba(37, 99, 235, 0.5), transparent);">
+                            <h3 class="service-card-title">Group Coaching Circles</h3>
+                            <p class="service-card-description">
+                                Small, safe, healing spaces where women come together. These intimate, women-only circles allow you to share, be witnessed, and grow together. Themes include identity shifts, self-worth, aging, caregiving, transitions, and boundary-setting. Outcomes: Community, support, and the feeling of "I'm not alone in this."
+                            </p>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4: Life Direction & Purpose Mapping -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-5L.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(34, 197, 94, 0.95), rgba(34, 197, 94, 0.75), rgba(34, 197, 94, 0.5), transparent);">
+                            <h3 class="service-card-title">Life Direction & Purpose Mapping</h3>
+                            <p class="service-card-description">
+                                A structured program for women asking: "What's next for me?" "What do I want now?" "Who am I becoming in this season?" We'll explore clarifying values, strengths, desires, and a vision for your next chapter. Outcomes: New sense of direction, renewed identity, and practical next steps.
+                            </p>
+                </div>
+            </div>
+        </div>
+                
+                <!-- Service 5: Mindfulness & Emotional Regulation -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-6L.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(20, 184, 166, 0.95), rgba(20, 184, 166, 0.75), rgba(20, 184, 166, 0.5), transparent);">
+                            <h3 class="service-card-title">Mindfulness & Emotional Regulation</h3>
+                            <p class="service-card-description">
+                                Sessions focused on practical tools: breathwork, grounding, self-regulation, and nervous system support. Perfect for women experiencing hormonal shifts, burnout, insomnia, or emotional ups and downs. Outcomes: More calm, emotional stability, and the ability to handle life's chaos with more grace.
+            </p>
+        </div>
+                </div>
+                </div>
+                
+                <!-- Service 6: Radiant Transition Coaching -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Dress-1P.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(236, 72, 153, 0.95), rgba(236, 72, 153, 0.75), rgba(236, 72, 153, 0.5), transparent);">
+                            <h3 class="service-card-title">Radiant Transition Coaching</h3>
+                            <p class="service-card-description">
+                                A specific coaching path for women entering or navigating perimenopause and menopause. Not just "managing symptoms" but embracing menopause as a new season of power, wisdom, and radiance. Outcomes: Feeling supported, understood, and empowered in this transition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Duplicate of First Slide (Service 1) - for seamless looping -->
+                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-2L.jpg" %}');">
+                    <div class="service-card-overlay">
+                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(244, 208, 63, 0.95), rgba(244, 208, 63, 0.75), rgba(244, 208, 63, 0.5), transparent);">
+                            <h3 class="service-card-title">Radiance Coaching (Private Sessions)</h3>
+                            <p class="service-card-description">
+                                Personalized coaching sessions designed around your unique journey. We work together to clear emotional weight, rebuild self-trust, and help you feel rooted in your truth. Along the way, you'll explore practices that nurture balance, vitality, and clarity so you can move forward feeling lighter and stronger.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div class="carousel-dots" id="carouselDots">
+                <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+                <button class="carousel-dot" onclick="goToSlide(1)"></button>
+                <button class="carousel-dot" onclick="goToSlide(2)"></button>
+                <button class="carousel-dot" onclick="goToSlide(3)"></button>
+                <button class="carousel-dot" onclick="goToSlide(4)"></button>
+                <button class="carousel-dot" onclick="goToSlide(5)"></button>
+                </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="text-center mt-16">
+            <a href="#contact" class="inline-flex items-center gap-3 bg-yoga-yellow text-gray-800 px-10 py-5 rounded-full font-bold text-lg uppercase hover:bg-opacity-90 transition shadow-lg">
+                <span>BOOK YOUR FREE DISCOVERY CALL</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+</section>
+
+<script>
+let currentSlide = 1; // Start at the real first slide (index 1, after the duplicate)
+const totalSlides = 6; // Real number of slides
+const carousel = document.getElementById('carouselContainer');
+const dots = document.querySelectorAll('.carousel-dot');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let isTransitioning = false;
+
+function updateCarousel(withoutTransition = false) {
+    const container = carousel.parentElement;
+    const containerWidth = container.offsetWidth;
+    const cards = carousel.querySelectorAll('.service-card');
+    
+    if (cards.length === 0) return;
+    
+    // Get the width of one card including its margin
+    const firstCard = cards[0];
+    const cardStyle = window.getComputedStyle(firstCard);
+    const cardWidth = firstCard.offsetWidth;
+    const cardMargin = parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
+    const totalCardWidth = cardWidth + cardMargin;
+    
+    // Disable transition for instant jump
+    if (withoutTransition) {
+        carousel.style.transition = 'none';
+    } else {
+        carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    }
+    
+    // Calculate translateX in pixels
+    const translateX = -currentSlide * totalCardWidth;
+    carousel.style.transform = `translateX(${translateX}px)`;
+    
+    // Update dots (map currentSlide to 0-5 range for dots)
+    const dotIndex = currentSlide === 0 ? totalSlides - 1 : (currentSlide === totalSlides + 1 ? 0 : currentSlide - 1);
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === dotIndex);
+    });
+    
+    // Buttons are always enabled with looping
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+    prevBtn.style.opacity = '1';
+    nextBtn.style.opacity = '1';
+    
+    // Re-enable transition after a brief moment
+    if (withoutTransition) {
+        setTimeout(() => {
+            carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, 50);
+    }
+}
+
+function moveCarousel(direction) {
+    if (isTransitioning) return;
+    
+    isTransitioning = true;
+    currentSlide += direction;
+    
+    // If we're at the duplicate of the last slide (index 0), jump to real last slide
+    if (currentSlide === 0) {
+        updateCarousel(true); // Update without transition
+        setTimeout(() => {
+            currentSlide = totalSlides;
+            updateCarousel();
+            isTransitioning = false;
+        }, 50);
+        return;
+    }
+    
+    // If we're at the duplicate of the first slide (index totalSlides + 1), jump to real first slide
+    if (currentSlide === totalSlides + 1) {
+        updateCarousel(true); // Update without transition
+        setTimeout(() => {
+            currentSlide = 1;
+            updateCarousel();
+            isTransitioning = false;
+        }, 50);
+        return;
+    }
+    
+    updateCarousel();
+    
+    // Reset transition flag after animation
+    setTimeout(() => {
+        isTransitioning = false;
+    }, 600);
+}
+
+function goToSlide(index) {
+    if (isTransitioning) return;
+    
+    isTransitioning = true;
+    // Map dot index (0-5) to carousel index (1-6)
+    currentSlide = index + 1;
+    updateCarousel();
+    
+    setTimeout(() => {
+        isTransitioning = false;
+    }, 600);
+}
+
+// Handle window resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        updateCarousel(true);
+    }, 250);
+});
+
+// Initialize - start at the real first slide
+updateCarousel(true);
+</script>
+
+<!-- About the Coach Section -->
+<section class="glow-section bg-gradient-to-br from-blue-50 to-purple-50 py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-2 items-center">
+            <div class="relative floating">
+                <img src="{% static 'images/Myra-Yoga-1P.jpg' %}" alt="Miroslava Grygurachyk" class="rounded-lg shadow-2xl w-full glow-card">
+                </div>
+                        <div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 glow-text">
+                    Beyond mindset and emotional tools, I also integrate holistic wellness practices that support the body's natural vitality.
+                </h2>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    I believe true transformation happens when the physical, mental and emotional aspects of your life are nourished together.
+                </p>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0 floating">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span class="text-lg text-gray-700">Trusted by women navigating life transitions with courage and grace</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0 floating" style="animation-delay: 0.2s;">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span class="text-lg text-gray-700">Loved for creating safe, uplifting spaces where clients feel deeply seen</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0 floating" style="animation-delay: 0.4s;">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span class="text-lg text-gray-700">Known for my joyful energy, empathy, kindness, and compassion.</span>
+                    </li>
+                </ul>
+                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-md font-semibold uppercase hover:bg-opacity-90 transition relative">
+                    <span class="relative z-10">Learn More</span>
+                </a>
+                    </div>
+                    </div>
+                    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="glow-section bg-gradient-to-br from-yellow-50 via-blue-50 to-purple-50 py-20 md:py-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <p class="text-sm uppercase tracking-wider text-yoga-yellow mb-4 glow-text font-bold">TESTIMONIALS</p>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 script-font glow-text">
+                What Women Are <span class="italic">Saying</span>
+            </h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+                Real stories of healing, reclaiming confidence, and renewed joy
+            </p>
+                    </div>
+        
+        <!-- Testimonial Cards -->
+        <div class="grid gap-8 md:grid-cols-3 mt-16">
+            <!-- Sofia B. Testimonial -->
+            <div class="glow-card bg-gradient-to-br from-white to-yellow-50/30 rounded-2xl p-8 shadow-2xl hover:shadow-yellow-200/50 transition-all duration-500 hover:scale-105 floating" style="animation-delay: 0s;">
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-quote-left text-yoga-yellow text-5xl opacity-60 floating" style="animation-delay: 0.1s;"></i>
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-6 text-center glow-text">
+                    "I'm more in control of my emotions and deeply connected to myself."
+                </h3>
+                <p class="text-gray-700 leading-relaxed mb-6 text-base">
+                    Before working with Myra, I had little awareness of how my mind operated. I discovered how deeply self-sabotage was shaping my life. Her powerful energy helped me reconnect with myself. Today, I feel more emotionally grounded and see life through a clearer lens.
+                </p>
+                <div class="flex justify-center gap-2 mb-6">
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.1s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.2s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.3s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.4s;"></i>
+                </div>
+                <p class="text-center text-blue-500 font-bold text-lg">Sofia B.</p>
+            </div>
+            
+            <!-- Lena V. Testimonial -->
+            <div class="glow-card bg-gradient-to-br from-white to-blue-50/30 rounded-2xl p-8 shadow-2xl hover:shadow-blue-200/50 transition-all duration-500 hover:scale-105 floating" style="animation-delay: 0.2s;">
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-quote-left text-yoga-yellow text-5xl opacity-60 floating" style="animation-delay: 0.3s;"></i>
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-6 text-center glow-text">
+                    "I've made peace with my past and feel joy in the present."
+                </h3>
+                <p class="text-gray-700 leading-relaxed mb-6 text-base">
+                    I came to Mira with deep anxiety and constant regrets. My mind was filled with intrusive thoughts from the past. Her guidance helped me release those burdens and see life with more light and hope. For years, I put everyone else first. I never gave myself the care and attention I truly needed. Now I'm learning to love and accept myself. I finally feel at peace in the present.
+                </p>
+                <div class="flex justify-center gap-2 mb-6">
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.5s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.6s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.7s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.8s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.9s;"></i>
+                    </div>
+                <p class="text-center text-blue-500 font-bold text-lg">Lena V.</p>
+                    </div>
+            
+            <!-- Victoria B. Testimonial -->
+            <div class="glow-card bg-gradient-to-br from-white to-purple-50/30 rounded-2xl p-8 shadow-2xl hover:shadow-purple-200/50 transition-all duration-500 hover:scale-105 floating" style="animation-delay: 0.4s;">
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-quote-left text-yoga-yellow text-5xl opacity-60 floating" style="animation-delay: 0.5s;"></i>
+                    </div>
+                <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-6 text-center glow-text">
+                    "I feel grounded, empowered, and back in control of my mind."
+                </h3>
+                <p class="text-gray-700 leading-relaxed mb-6 text-base">
+                    Before working with Myra, I felt overwhelmed by anger and stuck in self-sabotaging thoughts. With her guidance, I learned to breathe consciously, center myself, and reclaim control over my emotions. Now I feel grounded, aware, and empowered to live from my true strength.
+                </p>
+                <div class="flex justify-center gap-2 mb-6">
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.1s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.2s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.3s;"></i>
+                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.4s;"></i>
+                    </div>
+                <p class="text-center text-blue-500 font-bold text-lg">Victoria B.</p>
+                </div>
+                    </div>
+        
+        <!-- Call to Action -->
+        <div class="text-center mt-20">
+            <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-8 glow-text">
+                Ready to experience this kind of transformation for yourself?
+            </h3>
+            <a href="#contact" class="inline-flex items-center gap-3 glow-button bg-yoga-yellow text-gray-800 px-10 py-5 rounded-full font-bold text-lg uppercase hover:bg-opacity-90 transition relative shadow-2xl shadow-yellow-300/50">
+                <span class="relative z-10">BOOK YOUR FREE DISCOVERY CALL</span>
+                <i class="fa-solid fa-arrow-right relative z-10"></i>
+                    </a>
+                </div>
+                
+        <!-- What's Really Holding You Back Section -->
+        <div class="text-center mt-24">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-8 script-font glow-text">
+                What's Really Holding You Back?
+            </h2>
+            <p class="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                Most of the women I work with have spent years taking care of everyone but themselves. They've been so busy being strong, dependable, and kind that somewhere along the way, they forgot how to care for their own needs.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Personal Journey Section -->
+<section class="bg-gradient-to-br from-blue-100 via-cyan-50 to-blue-100 py-20 md:py-28 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="space-y-8 fade-in-up">
+                <!-- Large Quote -->
+                <div class="relative">
+                    <i class="fa-solid fa-quote-left text-blue-200 text-8xl md:text-9xl absolute -top-8 -left-4 quote-mark"></i>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif text-blue-900 leading-tight relative z-10 gentle-sway">
+                        "I have walked through the journey of pouring myself out until there is nothing left."
+                    </h2>
+        </div>
+        
+                <!-- Supporting Paragraph -->
+                <p class="text-lg md:text-xl text-blue-800 leading-relaxed font-light fade-in-up" style="animation-delay: 0.3s;">
+                    And what I learned, deeply and personally, is this: self love is not a luxury. It is the very foundation of your vitality. You cannot radiate life from an empty well. Your nourishment comes first.
+                </p>
+                
+                <!-- Signature -->
+                <div class="fade-in-up" style="animation-delay: 0.6s;">
+                    <p class="text-2xl md:text-3xl text-blue-900 font-serif italic gentle-sway" style="animation-delay: 0.5s;">
+                        Myroslava Grygorachyk
+                    </p>
+                    </div>
+                </div>
+                
+            <!-- Decorative Element -->
+            <div class="hidden md:block relative">
+                <div class="w-full h-96 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-3xl shadow-2xl gentle-sway relative overflow-hidden" style="background-image: linear-gradient(rgba(59, 130, 246, 0.6), rgba(6, 182, 212, 0.6)), url('{% static "images/Myra-Yoga-2P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <i class="fa-solid fa-heart text-white text-6xl opacity-30 gentle-sway" style="animation-delay: 1s;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+    <!-- Background Glow Effects -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-300 rounded-full blur-3xl opacity-20 gentle-sway"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-300 rounded-full blur-3xl opacity-20 gentle-sway" style="animation-delay: 1s;"></div>
+    </div>
+</section>
+
+<!-- Here's What I Hear Most Often Section -->
+<section class="glow-section bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 py-20 md:py-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Title -->
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 script-font glow-text">
+                Here's What I Hear Most Often
+            </h2>
+        </div>
+        
+        <!-- Content Block 1: I feel disconnected from my body -->
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+            <div class="space-y-6 slide-in-left">
+                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+                    "I feel disconnected from my body."
+                </h3>
+                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                    YOU MIGHT BE PUSHING THROUGH FATIGUE, IGNORING ACHES, OR TUNING OUT YOUR INTUITION.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    <span class="font-bold">The Shift:</span> Together, we gently reconnect you to your body's wisdom through breathwork, mindful movement, and simple daily wellness rituals that replenish your energy and restore balance from within. This is about learning to listen to your body's quiet messages and honoring them with compassion.
+                </p>
+                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
+                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                </a>
+                </div>
+            <div class="hidden md:block relative slide-in-right" style="animation-delay: 0.2s;">
+                <div class="w-full h-80 bg-gradient-to-br from-blue-200 to-purple-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.5)), url('{% static "images/Myra-Yoga-3P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <i class="fa-solid fa-heart-pulse text-white text-7xl opacity-40 wave-motion" style="animation-delay: 0.5s;"></i>
+            </div>
+                    </div>
+                </div>
+            </div>
+            
+        <!-- Content Block 2: I've lost confidence in who I am -->
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+            <div class="hidden md:block relative slide-in-left" style="animation-delay: 0.2s;">
+                <div class="w-full h-80 bg-gradient-to-br from-purple-200 to-pink-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(192, 132, 252, 0.5), rgba(244, 114, 182, 0.5)), url('{% static "images/Myra-Yoga-4P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <i class="fa-solid fa-star text-white text-7xl opacity-40 wave-motion" style="animation-delay: 0.5s;"></i>
+                </div>
+            </div>
+        </div>
+            <div class="space-y-6 slide-in-right">
+                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+                    "I've lost confidence in who I am."
+                </h3>
+                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                    YEARS OF GIVING TO OTHERS CAN BLUR YOUR SENSE OF SELF.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    <span class="font-bold">The Shift:</span> We uncover your inner truth and help you reclaim your voice, strength, and natural confidence so you can feel grounded in who you are again. When every part of you is nourished and in harmony, your confidence becomes unshakable.
+                </p>
+                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
+                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                </a>
+    </div>
+                    </div>
+        
+        <!-- Content Block 3: I feel emotionally stuck -->
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+            <div class="space-y-6 slide-in-left">
+                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+                    "I feel emotionally stuck."
+                </h3>
+                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                    YOU MIGHT BE PUSHING THROUGH FATIGUE, IGNORING ACHES, OR TUNING OUT YOUR INTUITION.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    <span class="font-bold">The Shift:</span> Together, we gently reconnect you to your body's wisdom through breathwork, mindful movement, and simple daily wellness rituals that replenish your energy and restore balance from within. This is about learning to listen to your body's quiet messages and honoring them with compassion.
+                </p>
+                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
+                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                </a>
+        </div>
+            <div class="hidden md:block relative slide-in-right" style="animation-delay: 0.2s;">
+                <div class="w-full h-80 bg-gradient-to-br from-pink-200 to-yellow-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(251, 146, 60, 0.5), rgba(234, 179, 8, 0.5)), url('{% static "images/Myra-Yoga-5P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <i class="fa-solid fa-lock-open text-white text-7xl opacity-40 wave-motion" style="animation-delay: 0.5s;"></i>
+    </div>
+                </div>
+                </div>
+            </div>
+            
+        <!-- Content Block 4: I know I need change -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="hidden md:block relative slide-in-left" style="animation-delay: 0.2s;">
+                <div class="w-full h-80 bg-gradient-to-br from-yellow-200 to-orange-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(234, 179, 8, 0.5), rgba(251, 146, 60, 0.5)), url('{% static "images/Myra-Yoga-6P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                        <div class="text-6xl font-bold text-white opacity-60 wave-motion" style="animation-delay: 0.5s;">CHANGE</div>
+                        <i class="fa-solid fa-arrow-up text-white text-5xl opacity-40 mt-4 wave-motion" style="animation-delay: 0.7s;"></i>
+                        </div>
+                        </div>
+                        </div>
+            <div class="space-y-6 slide-in-right">
+                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+                    "I know I need change... but I don't know where to start."
+                </h3>
+                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                    YOU'VE TRIED THE BOOKS, THE PODCASTS, MAYBE EVEN THERAPY, BUT SOMETHING STILL FEELS MISSING.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    <span class="font-bold">The Shift:</span> You don't need to do more. You need a guide who truly sees you and helps you take aligned, gentle steps toward change, steps that nourish your whole self.
+                </p>
+                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
+                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                    </a>
+                        </div>
+                        </div>
+                    </div>
+    
+    <!-- Background Glow Effects -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-300 rounded-full blur-3xl opacity-15 wave-motion"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-300 rounded-full blur-3xl opacity-15 wave-motion" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-300 rounded-full blur-3xl opacity-10 wave-motion" style="animation-delay: 0.5s;"></div>
+                </div>
+</section>
+
+<!-- Why Work with Me Section -->
+<section class="glow-section bg-gradient-to-br from-indigo-900 via-purple-900 to-teal-900 py-20 md:py-28 relative overflow-hidden">
+    <!-- Starry Background Effect -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute w-1 h-1 bg-white rounded-full opacity-60" style="top: 10%; left: 20%; animation: twinkle 3s infinite;"></div>
+        <div class="absolute w-1 h-1 bg-white rounded-full opacity-40" style="top: 30%; left: 60%; animation: twinkle 4s infinite 0.5s;"></div>
+        <div class="absolute w-1 h-1 bg-white rounded-full opacity-50" style="top: 50%; left: 40%; animation: twinkle 3.5s infinite 1s;"></div>
+        <div class="absolute w-1 h-1 bg-white rounded-full opacity-45" style="top: 70%; left: 80%; animation: twinkle 4.5s infinite 1.5s;"></div>
+        <div class="absolute w-1 h-1 bg-white rounded-full opacity-55" style="top: 20%; left: 85%; animation: twinkle 3.2s infinite 0.8s;"></div>
+        <div class="absolute w-1 h-1 bg-white rounded-full opacity-50" style="top: 60%; left: 15%; animation: twinkle 4.2s infinite 1.2s;"></div>
+                        </div>
+        
+    <style>
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+    </style>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Title -->
+        <div class="text-center mb-16 scale-in">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-4 glow-text">
+                Why Work <span class="italic">with Me</span>
+            </h2>
+            <p class="text-xl md:text-2xl text-yoga-yellow font-semibold text-reveal" style="animation-delay: 0.3s;">
+                Because I've Walked the Path You're On
+                    </p>
+                        </div>
+                
+        <!-- Main Content -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="space-y-8 text-reveal" style="animation-delay: 0.5s;">
+                <!-- Large Heading -->
+                <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight glow-text">
+                    From surviving abuse to rediscovering joy, I've lived the transformation I now help others create.
+                </h3>
+                
+                <!-- Body Paragraphs -->
+                <div class="space-y-6 text-lg text-white leading-relaxed">
+                    <p class="text-reveal" style="animation-delay: 0.7s;">
+                        I know what it's like to give everything to everyone else and forget who you are. My journey from Ukraine to Canada, through healing, motherhood, and the profound transition of menopause, has taught me that your hardest chapters often lead to your deepest truths.
+                    </p>
+                    
+                    <p class="text-reveal" style="animation-delay: 0.9s;">
+                        Menopause, in particular, was one of my most challenging and awakening experiences. It became a turning point that called me to stop conforming and start listening to my inner voice.
+                    </p>
+                    
+                    <p class="text-reveal" style="animation-delay: 1.1s;">
+                        That's why I guide women to embrace their truth, own their radiance, and rise with clarity and strength. My coaching blends intuition, psychology, and presence. There is no judgment here, only support and steady transformation.
+                    </p>
+                        </div>
+                        </div>
+            
+            <!-- Decorative Element -->
+            <div class="hidden md:block relative scale-in" style="animation-delay: 0.6s;">
+                <div class="w-full h-96 bg-gradient-to-br from-teal-400 via-purple-500 to-indigo-600 rounded-3xl shadow-2xl rotate-glow relative overflow-hidden glow-expand" style="background-image: linear-gradient(rgba(20, 184, 166, 0.6), rgba(168, 85, 247, 0.6), rgba(99, 102, 241, 0.6)), url('{% static "images/Myra-Yoga-7P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                        <i class="fa-solid fa-compass text-white text-8xl opacity-50 rotate-glow" style="animation-delay: 0.3s;"></i>
+                        <div class="mt-6 text-white text-2xl font-semibold opacity-70 rotate-glow" style="animation-delay: 0.5s;">
+                            Your Journey
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    
+    <!-- Background Glow Effects -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-indigo-500 rounded-full blur-3xl opacity-20 rotate-glow"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-20 rotate-glow" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-teal-500 rounded-full blur-3xl opacity-15 rotate-glow" style="animation-delay: 0.5s;"></div>
+    </div>
+</section>
+
+<!-- Confidence Quote Section -->
+<section class="glow-section bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-20 md:py-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="space-y-8 fade-in-right">
+                <!-- Large Quote Mark -->
+                <div class="relative">
+                    <i class="fa-solid fa-quote-left text-amber-200 text-9xl md:text-[12rem] absolute -top-12 -left-8 sparkle"></i>
+                </div>
+                
+                <!-- Main Quote -->
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight relative z-10 glow-text fade-in-right" style="animation-delay: 0.2s;">
+                    "For years, I believed confidence was something you earned from others."
+                </h2>
+                
+                <!-- Supporting Text -->
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed fade-in-right" style="animation-delay: 0.4s;">
+                    But then I discovered it's about trusting that deep, intuitive knowing inside you. As I've heard, the 'real brain' is in your stomach and heart. When you lean into that wisdom, everything changes. You become unshakable.
+                </p>
+                
+                <!-- Attribution -->
+                <p class="text-xl md:text-2xl font-bold text-amber-600 uppercase tracking-wider fade-in-right" style="animation-delay: 0.6s;">
+                    MYROSLAVA GRYGORACHYK
+            </p>
+        </div>
+        
+            <!-- Decorative Element -->
+            <div class="hidden md:block relative bounce-in" style="animation-delay: 0.3s;">
+                <div class="w-full h-96 bg-gradient-to-br from-amber-200 via-orange-300 to-yellow-400 rounded-3xl shadow-2xl sparkle relative overflow-hidden glow-expand" style="background-image: linear-gradient(rgba(251, 191, 36, 0.6), rgba(249, 115, 22, 0.6), rgba(234, 179, 8, 0.6)), url('{% static "images/Myra-Dress-2P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                        <i class="fa-solid fa-lightbulb text-white text-8xl opacity-50 sparkle" style="animation-delay: 0.5s;"></i>
+                        <div class="mt-6 text-white text-2xl font-semibold opacity-70 sparkle" style="animation-delay: 0.7s;">
+                            Inner Wisdom
+                </div>
+                </div>
+            </div>
+                </div>
+                </div>
+            </div>
+            
+    <!-- Background Glow Effects -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-300 rounded-full blur-3xl opacity-20 sparkle"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-300 rounded-full blur-3xl opacity-20 sparkle" style="animation-delay: 1s;"></div>
+                </div>
+</section>
+
+<!-- What Makes Me Different Section -->
+<section class="bg-gradient-to-br from-white via-blue-50 to-purple-50 py-20 md:py-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Decorative Element -->
+            <div class="hidden md:block relative bounce-in" style="animation-delay: 0.2s;">
+                <div class="w-full h-96 bg-gradient-to-br from-blue-200 via-purple-300 to-pink-400 rounded-3xl shadow-2xl sparkle relative overflow-hidden glow-expand" style="background-image: linear-gradient(rgba(59, 130, 246, 0.5), rgba(168, 85, 247, 0.5), rgba(244, 114, 182, 0.5)), url('{% static "images/Myra-Dress-3P.jpg" %}'); background-size: cover; background-position: center;">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                        <i class="fa-solid fa-hand-holding-heart text-white text-8xl opacity-50 sparkle" style="animation-delay: 0.4s;"></i>
+                        <div class="mt-6 text-white text-2xl font-semibold opacity-70 sparkle" style="animation-delay: 0.6s;">
+                            Authentic Connection
+                </div>
+            </div>
+        </div>
+    </div>
+            
+            <!-- Text Content -->
+            <div class="space-y-8 fade-in-right">
+                <!-- Main Heading -->
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 glow-text fade-in-right">
+                    What Makes Me <span class="italic">Different?</span>
+                </h2>
+                
+                <!-- Subtitles -->
+                <p class="text-xl md:text-2xl text-gray-700 font-semibold fade-in-right" style="animation-delay: 0.2s;">
+                    This is more than coaching. It's connection, clarity, and care.
+                </p>
+                
+                <p class="text-lg md:text-xl font-bold text-gray-800 uppercase tracking-wide fade-in-right" style="animation-delay: 0.3s;">
+                    I GUIDE FROM LIVED EXPERIENCE, NOT SCRIPTS.
+                </p>
+                
+                <!-- Paragraph -->
+                <p class="text-lg text-gray-700 leading-relaxed fade-in-right" style="animation-delay: 0.4s;">
+                    My work is rooted in presence, empathy, and real transformation. I gently help you return to who you truly are.
+                </p>
+                
+                <!-- Bullet Points -->
+                <div class="space-y-4 fade-in-right" style="animation-delay: 0.5s;">
+                    <div class="flex items-start gap-4">
+                        <i class="fa-solid fa-check-circle text-yoga-yellow text-2xl mt-1 sparkle"></i>
+                        <p class="text-lg text-gray-700">I meet you where you are, without judgment.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i class="fa-solid fa-check-circle text-yoga-yellow text-2xl mt-1 sparkle" style="animation-delay: 0.2s;"></i>
+                        <p class="text-lg text-gray-700">I blend science, soul, and strategy.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i class="fa-solid fa-check-circle text-yoga-yellow text-2xl mt-1 sparkle" style="animation-delay: 0.4s;"></i>
+                        <p class="text-lg text-gray-700">I hold space for your mind, body, heart, and spirit.</p>
+                    </div>
+            </div>
+            
+                <!-- Call to Action Button -->
+                <div class="fade-in-right" style="animation-delay: 0.6s;">
+                    <a href="#contact" class="inline-flex items-center gap-3 glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold text-lg uppercase hover:bg-opacity-90 transition relative shadow-2xl shadow-yellow-300/50 pulse-glow">
+                        <span class="relative z-10">BOOK YOUR FREE DISCOVERY CALL</span>
+                        <i class="fa-solid fa-arrow-right relative z-10"></i>
+                    </a>
+                    </div>
+                </div>
+                    </div>
+                </div>
+                
+    <!-- Background Glow Effects -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-300 rounded-full blur-3xl opacity-15 sparkle"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-300 rounded-full blur-3xl opacity-15 sparkle" style="animation-delay: 1s;"></div>
+                    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="bg-white py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Get in Touch</h2>
+            <p class="text-lg text-gray-700">Ready to begin your transformation journey? Let's connect.</p>
+                    </div>
+        <div class="bg-gray-50 rounded-lg shadow-xl p-8 md:p-12">
+            <form class="space-y-6">
+                    <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Name</label>
+                    <input type="text" class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yoga-yellow" placeholder="Your name">
+                </div>
+                    <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Email</label>
+                    <input type="email" class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yoga-yellow" placeholder="your.email@example.com">
+            </div>
+                    <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Message</label>
+                    <textarea rows="5" class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yoga-yellow" placeholder="Tell me what's on your heart..."></textarea>
+                    </div>
+                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-yoga-yellow text-gray-800 px-6 py-4 text-base font-semibold uppercase rounded-md hover:bg-opacity-90 transition">
+                    SEND MESSAGE
+                    </button>
+                </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="peaceful-footer py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-10 md:grid-cols-4">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-sun text-yoga-yellow text-3xl peaceful-footer-icon"></i>
+                    <span class="text-2xl font-bold">Radiating Life</span>
+                </div>
+                <p class="text-base leading-relaxed text-white/90">
+                    Awakening radiance and reclaiming power through holistic wellness and trauma-informed coaching.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-xl mb-6">Navigation</h3>
+                <ul class="space-y-3 text-base">
+                    <li><a href="#home" class="peaceful-footer-link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="peaceful-footer-link">About</a></li>
+                    <li><a href="#services" class="peaceful-footer-link">Services</a></li>
+                    <li><a href="#testimonials" class="peaceful-footer-link">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-xl mb-6">Connect</h3>
+                <div class="flex gap-4 mb-6">
+                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-xl mb-6">Contact</h3>
+                <p class="text-base leading-relaxed text-white/90">
+                    Ready to begin your transformation?<br>
+                    Let's explore together.
+                </p>
+            </div>
+        </div>
+        <div class="border-t border-white/20 mt-12 pt-8 text-center text-base text-white/70">
+            © 2024 Radiating Life. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- Mobile menu script -->
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+    }
+    
+    if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    }
+    
+    // Close menu when clicking on a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+</script>
+{% endblock %}

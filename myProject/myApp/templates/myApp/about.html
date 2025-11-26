@@ -1,0 +1,334 @@
+{% extends 'myApp/base.html' %}
+{% load static %}
+
+{% block title %}About Me - Radiating Life{% endblock %}
+
+{% block extra_head %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #F5F5E8;
+    }
+    
+    .script-font {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    /* Peaceful color palette for older viewers */
+    .bg-peaceful-cream {
+        background-color: #F9F7F4;
+    }
+    
+    .bg-peaceful-blue {
+        background-color: #E8F0F5;
+    }
+    
+    .text-peaceful-blue {
+        color: #2C5F7D;
+    }
+    
+    .text-peaceful-gold {
+        color: #D4A574;
+    }
+    
+    /* Gentle animations for older viewers - slower and smoother */
+    @keyframes gentleFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes gentleFloat {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+    
+    .gentle-fade-in {
+        animation: gentleFadeIn 1.5s ease-out forwards;
+        opacity: 0;
+    }
+    
+    .gentle-float {
+        animation: gentleFloat 4s ease-in-out infinite;
+    }
+    
+    .section-content {
+        animation-delay: 0.2s;
+    }
+    
+    .section-content:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+    
+    .section-content:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+    
+    .section-content:nth-child(4) {
+        animation-delay: 0.8s;
+    }
+    
+    /* Larger text for readability */
+    .about-text {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        color: #2C3E50;
+    }
+    
+    .about-heading {
+        font-size: 1.75rem;
+        line-height: 1.4;
+        color: #2C5F7D;
+        margin-bottom: 1rem;
+    }
+    
+    /* Peaceful navigation bar */
+    .peaceful-nav {
+        background: rgba(249, 247, 244, 0.95);
+        backdrop-filter: blur(10px);
+        transition: all 0.6s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .peaceful-nav-link {
+        font-size: 1rem;
+        padding: 0.75rem 1.25rem;
+        transition: all 0.4s ease;
+        color: #2C5F7D;
+    }
+    
+    .peaceful-nav-link:hover {
+        color: #D4A574;
+        transform: translateY(-2px);
+    }
+    
+    /* Peaceful footer */
+    .peaceful-footer {
+        background: linear-gradient(to bottom, #2C5F7D, #1A4A5F);
+        color: #F9F7F4;
+        transition: all 0.6s ease;
+    }
+    
+    .peaceful-footer a {
+        transition: all 0.4s ease;
+        color: #F9F7F4;
+    }
+    
+    .peaceful-footer a:hover {
+        color: #D4A574;
+        transform: translateX(5px);
+    }
+    
+    /* Image styling */
+    .about-image {
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: transform 0.8s ease;
+    }
+    
+    .about-image:hover {
+        transform: scale(1.02);
+    }
+    
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Peaceful Header & Navigation -->
+<header class="peaceful-nav sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center justify-between py-5">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-sun text-peaceful-gold text-3xl gentle-float"></i>
+                <span class="text-2xl font-bold text-peaceful-blue">Radiating Life</span>
+            </div>
+        
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="{% url 'home' %}" class="peaceful-nav-link font-semibold">HOME</a>
+                <a href="{% url 'about' %}" class="peaceful-nav-link font-semibold border-b-2 border-peaceful-gold pb-1">ABOUT</a>
+                <a href="{% url 'home' %}#services" class="peaceful-nav-link font-semibold">SERVICES</a>
+                <a href="{% url 'home' %}#testimonials" class="peaceful-nav-link font-semibold">TESTIMONIALS</a>
+                <a href="{% url 'home' %}#contact" class="bg-peaceful-gold text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-400 ease-in-out">CONTACT</a>
+            </div>
+        
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-peaceful-blue text-2xl" id="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-peaceful-cream z-50 md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <button class="absolute top-6 right-6 text-peaceful-blue text-3xl" id="close-menu-btn">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <a href="{% url 'home' %}" class="text-xl font-semibold text-peaceful-blue">HOME</a>
+            <a href="{% url 'about' %}" class="text-xl font-semibold text-peaceful-blue border-b-2 border-peaceful-gold pb-2">ABOUT</a>
+            <a href="{% url 'home' %}#services" class="text-xl font-semibold text-peaceful-blue">SERVICES</a>
+            <a href="{% url 'home' %}#testimonials" class="text-xl font-semibold text-peaceful-blue">TESTIMONIALS</a>
+            <a href="{% url 'home' %}#contact" class="bg-peaceful-gold text-white px-10 py-4 rounded-full font-semibold">CONTACT</a>
+        </div>
+    </div>
+</header>
+
+<!-- About Me Section -->
+<section class="bg-peaceful-cream py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-12 gentle-fade-in">
+            <p class="text-peaceful-gold text-lg font-semibold uppercase tracking-wider mb-4">ABOUT ME</p>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-peaceful-blue script-font">Myroslava Grygorachyk</h1>
+        </div>
+        
+        <!-- Two Column Layout -->
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <!-- Left Column - Text Content -->
+            <div class="space-y-10">
+                <!-- The Woman I Used to Be -->
+                <div class="gentle-fade-in section-content">
+                    <h2 class="about-heading font-bold text-peaceful-blue">The Woman I Used to Be</h2>
+                    <p class="about-text">
+                        I grew up believing a "good woman" puts others first, that if I worked hard, stayed strong, and didn't complain, I was worthy of love. Even after leaving an abusive relationship and starting over in Canada with my little boy, I found myself repeating old patterns: overgiving, criticizing myself, and feeling like I was never enough. I was raising three boys, working full-time, and always showing up as "the strong one." But inside, I felt overwhelmed, exhausted, unseen, and deeply disconnected from who I really was.
+                    </p>
+                </div>
+                
+                <!-- The Turning Point -->
+                <div class="gentle-fade-in section-content">
+                    <h2 class="about-heading font-bold text-peaceful-blue">The Turning Point</h2>
+                    <p class="about-text">
+                        The guilt after yelling at my kids, the endless to-do lists, the constant voice saying "not enough" finally pushed me to ask: What if there's another way to live? That question began my journey of healing. Louise Hay opened my heart. Wayne Dyer awakened my soul. NLP taught me I could rewire how I think, speak, and feel. Yoga and Kundalini helped me heal my body and reconnect with my spirit. Mental fitness showed me that peace and presence are choices I can make every day.
+                    </p>
+                </div>
+                
+                <!-- Why I Do This Work -->
+                <div class="gentle-fade-in section-content">
+                    <h2 class="about-heading font-bold text-peaceful-blue">Why I Do This Work</h2>
+                    <p class="about-text">
+                        Because I know the pain of feeling like you're never enough, no matter how much you do, of smiling on the outside while quietly aching inside, of losing touch with your dreams "because everyone else comes first." And I also know the freedom of coming home to yourself, of living with clarity, compassion, and joy.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right Column - Image and Text -->
+            <div class="space-y-8">
+                <!-- Portrait Image -->
+                <div class="gentle-fade-in">
+                    <img src="{% static 'images/about-portrait.jpg' %}" alt="Myroslava Grygorachyk" class="about-image w-full h-auto gentle-float">
+                </div>
+                
+                <!-- The Woman I Am Today -->
+                <div class="gentle-fade-in section-content">
+                    <h2 class="about-heading font-bold text-peaceful-blue">The Woman I Am Today</h2>
+                    <p class="about-text">
+                        Menopause became one of my greatest teachers, guiding me to shed old layers and light my fire in new ways. Today, I stand rooted in my truth: strong, joyful, and radiant. I help women reconnect with themselves, release what is heavy, and rise into the wise, powerful version of themselves they were always meant to be.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Peaceful Footer -->
+<footer class="peaceful-footer py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-10 md:grid-cols-4">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-sun text-peaceful-gold text-3xl gentle-float"></i>
+                    <span class="text-2xl font-bold">Radiating Life</span>
+                </div>
+                <p class="text-base leading-relaxed text-white/90">
+                    Awakening radiance and reclaiming power through holistic wellness and trauma-informed coaching.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-xl mb-6">Navigation</h3>
+                <ul class="space-y-3 text-base">
+                    <li><a href="{% url 'home' %}" class="hover:text-peaceful-gold transition-all duration-400">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="hover:text-peaceful-gold transition-all duration-400">About</a></li>
+                    <li><a href="{% url 'home' %}#services" class="hover:text-peaceful-gold transition-all duration-400">Services</a></li>
+                    <li><a href="{% url 'home' %}#testimonials" class="hover:text-peaceful-gold transition-all duration-400">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-xl mb-6">Connect</h3>
+                <div class="flex gap-4 mb-6">
+                    <a href="#" class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-all duration-400 text-lg">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="#" class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-all duration-400 text-lg">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-all duration-400 text-lg">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-all duration-400 text-lg">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold text-xl mb-6">Contact</h3>
+                <p class="text-base leading-relaxed text-white/90">
+                    Ready to begin your transformation?<br>
+                    Let's explore together.
+                </p>
+            </div>
+        </div>
+        <div class="border-t border-white/20 mt-12 pt-8 text-center text-base text-white/70">
+            © 2024 Radiating Life. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- Mobile menu script -->
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+    }
+    
+    // Close menu when clicking on a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+    });
+</script>
+{% endblock %}
+
+
