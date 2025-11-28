@@ -25,7 +25,20 @@ SECRET_KEY = 'django-insecure-xk6iq68zlcvg&ko-d)gqbl&$d(p=(3gwn7v3wv&t1-0pqv5o5$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'radiatinglife-production.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://radiatinglife-production.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'http://localhost',
+    'http://127.0.0.1',
+]
 
 
 # Application definition
