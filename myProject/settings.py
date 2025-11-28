@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xk6iq68zlcvg&ko-d)gqbl&$d(p=(3gwn7v3wv&t1-0pqv5o5$'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-xk6iq68zlcvg&ko-d)gqbl&$d(p=(3gwn7v3wv&t1-0pqv5o5$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
     'radiatinglife-production.up.railway.app',
@@ -86,12 +91,20 @@ WSGI_APPLICATION = 'myProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Use PostgreSQL if DATABASE_URL is set, otherwise fall back to SQLite
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -140,3 +153,15 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', '')
+CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', '')
+CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', '')
+
+# PostgreSQL Configuration (for direct connection in scripts)
+POSTGRES_DB = os.getenv('POSTGRES_DB', '')
+POSTGRES_USER = os.getenv('POSTGRES_USER', '')
+POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', '')
+POSTGRES_HOST = os.getenv('POSTGRES_HOST', 'localhost')
+POSTGRES_PORT = os.getenv('POSTGRES_PORT', '5432')

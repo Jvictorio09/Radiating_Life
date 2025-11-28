@@ -28,6 +28,8 @@ A Django web application project ready for deployment on Railway.
 - Static file management
 - Image gallery
 - Template-based UI
+- Cloudinary image upload integration
+- PostgreSQL database support
 
 ## Setup
 
@@ -41,10 +43,49 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-3. Start the development server:
+3. Create a `.env` file (see `ENV_SETUP.md` for details):
+```bash
+# Copy the example and fill in your credentials
+cp .env.example .env
+# Edit .env with your Cloudinary and PostgreSQL credentials
+```
+
+4. Run migrations:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+5. Start the development server:
 ```bash
 python manage.py runserver
 ```
+
+## Cloudinary Image Uploader
+
+The project includes a script to upload static images to Cloudinary and store URLs in PostgreSQL.
+
+### Usage:
+
+```bash
+# Upload images from default directory (static/images)
+python upload_images_to_cloudinary.py
+
+# Specify custom directory
+python upload_images_to_cloudinary.py --static-dir static/images
+
+# Custom resolution threshold (default: 1920px)
+python upload_images_to_cloudinary.py --threshold 2560
+```
+
+### Features:
+- Automatically converts high-resolution images (>1920px) to WebP format
+- Preserves high quality while optimizing file size
+- Uploads to Cloudinary with automatic optimization
+- Stores metadata (URLs, dimensions, format) in PostgreSQL
+- Comprehensive logging to `image_upload.log`
+
+See `ENV_SETUP.md` for environment variable configuration.
 
 ## Railway Deployment
 
