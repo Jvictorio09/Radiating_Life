@@ -65,6 +65,16 @@ python manage.py runserver
 
 The project includes a script to upload static images to Cloudinary and store URLs in PostgreSQL.
 
+### Prerequisites:
+
+1. Create and run migrations for the MediaAsset model:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+2. Ensure your `.env` file is configured with Cloudinary and PostgreSQL credentials (see `ENV_SETUP.md`)
+
 ### Usage:
 
 ```bash

@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 import cloudinary
 import cloudinary.uploader
 from PIL import Image
-import psycopg
+from django.db import connection
 
 # Configure logging
 logging.basicConfig(
@@ -193,29 +193,18 @@ def upload_to_cloudinary(image_path: Path, public_id: Optional[str] = None) -> d
 
 def get_db_connection(env_vars: dict):
     """
-    Get PostgreSQL database connection.
+    Get Django database connection.
     
     Args:
-        env_vars: Dictionary containing database credentials
+        env_vars: Dictionary containing database credentials (not used, but kept for compatibility)
         
     Returns:
-        Database connection object
+        Django database connection object
     """
     try:
-        # Try DATABASE_URL first (for Railway/Heroku style)
-        if env_vars['database_url']:
-            conn = psycopg.connect(env_vars['database_url'])
-        else:
-            # Use individual connection parameters
-            conn = psycopg.connect(
-                dbname=env_vars['postgres_db'],
-                user=env_vars['postgres_user'],
-                password=env_vars['postgres_password'],
-                host=env_vars['postgres_host'],
-                port=env_vars['postgres_port']
-            )
-        
-        logger.info("Database connection established")
+        # Use Django's database connection
+        conn = connection
+        logger.info("Database connection established via Django")
         return conn
     except Exception as e:
         logger.error(f"Error connecting to database: {e}")
@@ -224,55 +213,73 @@ def get_db_connection(env_vars: dict):
 
 def create_media_assets_table(conn):
     """
-    Create media_assets table if it doesn't exist.
+    Verify media_assets table exists. If not, prompt user to run migrations.
     
     Args:
-        conn: Database connection
+        conn: Django database connection
     """
     try:
-        with conn.cursor() as cur:
-            cur.execute("""
-                CREATE TABLE IF NOT EXISTS media_assets (
-                    id SERIAL PRIMARY KEY,
-                    original_path VARCHAR(500) NOT NULL,
-                    file_name VARCHAR(255) NOT NULL,
-                    cloudinary_url VARCHAR(1000) NOT NULL,
-                    cloudinary_public_id VARCHAR(500),
-                    format VARCHAR(10),
-                    width INTEGER,
-                    height INTEGER,
-                    file_size BIGINT,
-                    was_converted BOOLEAN DEFAULT FALSE,
-                    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                );
-            """)
+        from myApp.models import MediaAsset
+        
+        # Try to query the table to see if it exists
+        try:
+            MediaAsset.objects.first()
+            logger.info("media_assets table exists and is accessible")
+        except Exception as e:
+            # Table might not exist - try to create it via migrations
+            logger.warning(f"Table may not exist: {e}")
+            logger.info("Creating table using Django's connection...")
             
-            # Create indexes
-            cur.execute("""
-                CREATE INDEX IF NOT EXISTS idx_media_assets_original_path 
-                ON media_assets(original_path);
-            """)
+            # Get the table name from the model
+            table_name = MediaAsset._meta.db_table
+            vendor = connection.vendor
             
-            cur.execute("""
-                CREATE INDEX IF NOT EXISTS idx_media_assets_cloudinary_public_id 
-                ON media_assets(cloudinary_public_id);
-            """)
-            
-            conn.commit()
-            logger.info("media_assets table created/verified")
+            if vendor == 'postgresql':
+                with conn.cursor() as cur:
+                    cur.execute(f"""
+                        CREATE TABLE IF NOT EXISTS {table_name} (
+                            id SERIAL PRIMARY KEY,
+                            original_path VARCHAR(500) NOT NULL,
+                            file_name VARCHAR(255) NOT NULL,
+                            cloudinary_url VARCHAR(1000) NOT NULL,
+                            cloudinary_public_id VARCHAR(500),
+                            format VARCHAR(10),
+                            width INTEGER,
+                            height INTEGER,
+                            file_size BIGINT,
+                            was_converted BOOLEAN DEFAULT FALSE,
+                            uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                        );
+                    """)
+                    
+                    # Create indexes
+                    cur.execute(f"""
+                        CREATE INDEX IF NOT EXISTS idx_media_assets_original_path 
+                        ON {table_name}(original_path);
+                    """)
+                    
+                    cur.execute(f"""
+                        CREATE INDEX IF NOT EXISTS idx_media_assets_cloudinary_public_id 
+                        ON {table_name}(cloudinary_public_id);
+                    """)
+                logger.info("media_assets table created successfully")
+            else:
+                logger.warning(f"Database vendor {vendor} detected.")
+                logger.info("For proper setup, run: python manage.py makemigrations && python manage.py migrate")
+                
     except Exception as e:
-        logger.error(f"Error creating media_assets table: {e}")
-        conn.rollback()
-        raise
+        logger.error(f"Error verifying/creating media_assets table: {e}")
+        logger.info("Tip: Run 'python manage.py makemigrations' and 'python manage.py migrate' to create the table properly")
+        # Don't raise - allow script to continue and try to use the model anyway
 
 
 def save_to_postgres(conn, original_path: str, file_name: str, upload_result: dict, 
                     was_converted: bool, file_size: int):
     """
-    Save image metadata to PostgreSQL.
+    Save image metadata to database using Django ORM.
     
     Args:
-        conn: Database connection
+        conn: Django database connection (not used directly, but kept for compatibility)
         original_path: Original file path relative to static directory
         file_name: Original file name
         upload_result: Cloudinary upload response dictionary
@@ -280,29 +287,25 @@ def save_to_postgres(conn, original_path: str, file_name: str, upload_result: di
         file_size: File size in bytes
     """
     try:
-        with conn.cursor() as cur:
-            cur.execute("""
-                INSERT INTO media_assets 
-                (original_path, file_name, cloudinary_url, cloudinary_public_id, 
-                 format, width, height, file_size, was_converted)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                ON CONFLICT DO NOTHING
-            """, (
-                original_path,
-                file_name,
-                upload_result.get('secure_url') or upload_result.get('url'),
-                upload_result.get('public_id'),
-                upload_result.get('format'),
-                upload_result.get('width'),
-                upload_result.get('height'),
-                upload_result.get('bytes') or file_size,
-                was_converted
-            ))
-            conn.commit()
-            logger.info(f"Saved metadata for {file_name} to database")
+        from myApp.models import MediaAsset
+        
+        # Use Django ORM to save the data
+        MediaAsset.objects.update_or_create(
+            original_path=original_path,
+            defaults={
+                'file_name': file_name,
+                'cloudinary_url': upload_result.get('secure_url') or upload_result.get('url'),
+                'cloudinary_public_id': upload_result.get('public_id'),
+                'format': upload_result.get('format'),
+                'width': upload_result.get('width'),
+                'height': upload_result.get('height'),
+                'file_size': upload_result.get('bytes') or file_size,
+                'was_converted': was_converted,
+            }
+        )
+        logger.info(f"Saved metadata for {file_name} to database")
     except Exception as e:
         logger.error(f"Error saving {file_name} to database: {e}")
-        conn.rollback()
         raise
 
 
@@ -439,8 +442,8 @@ def scan_and_process_images(static_dir: Path, threshold: int = HIGH_RES_THRESHOL
         logger.info(f"{'='*60}")
         
     finally:
-        conn.close()
-        logger.info("Database connection closed")
+        # Django connection is managed by Django, no need to close manually
+        logger.info("Processing complete, database connection managed by Django")
 
 
 def main():
