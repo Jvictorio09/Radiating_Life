@@ -3,7 +3,7 @@
 
 {% block extra_head %}
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@700&family=Great+Vibes&family=Allura&display=swap');
     
     body {
         font-family: 'Inter', sans-serif;
@@ -58,11 +58,13 @@
     
     .hero-section {
         position: relative;
-        min-height: 90vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        margin-top: -80px;
+        padding-top: 80px;
     }
     
     .lotus-icon {
@@ -107,25 +109,38 @@
     
     /* Peaceful Navigation & Footer Styles for Older Viewers */
     .peaceful-nav {
-        background: rgba(249, 247, 244, 0.98);
-        backdrop-filter: blur(10px);
-        transition: all 0.8s ease;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: transparent;
+        transition: background 0.5s ease, box-shadow 0.5s ease;
+        box-shadow: none;
+        z-index: 50;
+    }
+    
+    .peaceful-nav.scrolled {
+        background: linear-gradient(135deg, #2C5F7D 0%, #1A4A5F 25%, #2C5F7D 50%, #1A4A5F 75%, #2C5F7D 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 20s ease infinite;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
     }
     
     .peaceful-nav-link {
-        font-size: 1.05rem;
-        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.875rem;
         transition: all 0.6s ease;
-        color: #2C5F7D;
+        color: white;
         font-weight: 500;
         letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     
     .peaceful-nav-link:hover {
-        color: #D4A574;
+        color: #F4D03F;
         transform: translateY(-2px);
-        text-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+        text-shadow: 0 2px 8px rgba(244, 208, 63, 0.5);
     }
     
     .peaceful-logo-icon {
@@ -142,9 +157,42 @@
     }
     
     .peaceful-footer {
-        background: linear-gradient(to bottom, #2C5F7D, #1A4A5F);
+        background: linear-gradient(135deg, #2C5F7D 0%, #1A4A5F 25%, #2C5F7D 50%, #1A4A5F 75%, #2C5F7D 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 20s ease infinite;
         color: #F9F7F4;
         transition: all 0.8s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .peaceful-footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 50%, rgba(244, 208, 63, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 50%, rgba(174, 214, 241, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+    
+    .peaceful-footer::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(244, 208, 63, 0.05) 0%, transparent 70%);
+        animation: gentleFloat 15s ease-in-out infinite;
+        pointer-events: none;
+    }
+    
+    .peaceful-footer > * {
+        position: relative;
+        z-index: 1;
     }
     
     .peaceful-footer a {
@@ -154,21 +202,38 @@
     }
     
     .peaceful-footer a:hover {
-        color: #D4A574;
+        color: #F4D03F;
         transform: translateX(5px);
-        text-shadow: 0 2px 8px rgba(212, 165, 116, 0.4);
+        text-shadow: 0 2px 8px rgba(244, 208, 63, 0.6);
     }
     
     .peaceful-footer-link {
         transition: all 0.5s ease;
         color: #F9F7F4;
         font-size: 1rem;
+        position: relative;
+    }
+    
+    .peaceful-footer-link::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 2px;
+        background: #F4D03F;
+        transition: width 0.3s ease;
+    }
+    
+    .peaceful-footer-link:hover::before {
+        width: 6px;
     }
     
     .peaceful-footer-link:hover {
-        color: #D4A574;
+        color: #F4D03F;
         transform: translateX(5px);
-        text-shadow: 0 2px 8px rgba(212, 165, 116, 0.4);
+        text-shadow: 0 2px 8px rgba(244, 208, 63, 0.6);
     }
     
     .peaceful-footer-icon {
@@ -179,11 +244,19 @@
         transition: all 0.6s ease;
         width: 3rem;
         height: 3rem;
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(10px);
     }
     
     .peaceful-social-link:hover {
-        transform: translateY(-3px) scale(1.1);
-        background-color: rgba(212, 165, 116, 0.3) !important;
+        transform: translateY(-5px) scale(1.15);
+        background: rgba(244, 208, 63, 0.3) !important;
+        box-shadow: 0 8px 20px rgba(244, 208, 63, 0.4);
+    }
+    
+    .footer-logo {
+        filter: drop-shadow(0 0 20px rgba(244, 208, 63, 0.5)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        animation: logoGlow 4s ease-in-out infinite;
     }
     
     /* Glowing Animations */
@@ -229,6 +302,19 @@
     @keyframes textGlow {
         0%, 100% { text-shadow: 0 0 20px rgba(244, 208, 63, 0.5), 0 0 40px rgba(244, 208, 63, 0.3); }
         50% { text-shadow: 0 0 30px rgba(244, 208, 63, 0.8), 0 0 60px rgba(244, 208, 63, 0.5); }
+    }
+    
+    /* Contact button scroll color change */
+    .contact-button-scroll {
+        background-color: transparent !important;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .peaceful-nav.scrolled .contact-button-scroll {
+        background-color: #fedd33 !important;
+        border-color: #fedd33;
+        color: #2C3E50 !important;
     }
     
     .glow-card {
@@ -319,6 +405,72 @@
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+    
+    .fade-in {
+        opacity: 0;
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        transform: translateY(20px);
+    }
+    
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Scroll Animation Classes */
+    .scroll-animate {
+        opacity: 0;
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .scroll-animate-up {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .scroll-animate-down {
+        opacity: 0;
+        transform: translateY(-50px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .scroll-animate-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .scroll-animate-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .scroll-animate-scale {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .scroll-animate.visible,
+    .scroll-animate-up.visible,
+    .scroll-animate-down.visible,
+    .scroll-animate-left.visible,
+    .scroll-animate-right.visible,
+    .scroll-animate-scale.visible {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
         }
     }
     
@@ -537,39 +689,57 @@
     .services-carousel {
         position: relative;
         overflow: hidden;
+        width: 100%;
     }
     
     .services-carousel-container {
         display: flex;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: none;
         gap: 1.5rem;
         padding: 0 1rem;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .service-card {
-        flex: 0 0 calc(100% - 2rem);
-        height: 600px;
-        border-radius: 1.5rem;
+        flex: 0 0 auto;
+        width: calc(100% - 4rem);
+        height: 650px;
+        border-radius: 2rem;
         overflow: hidden;
         position: relative;
         background-size: cover;
         background-position: center;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        margin: 0 1rem;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 35px 100px rgba(0, 0, 0, 0.2), 0 15px 40px rgba(0, 0, 0, 0.15);
     }
     
     @media (min-width: 768px) {
         .service-card {
-            flex: 0 0 calc(50% - 3rem);
+            width: calc((100% - 2rem - 1.5rem) / 2);
+            min-width: calc((100% - 2rem - 1.5rem) / 2);
+            flex-shrink: 0;
         }
         .services-carousel-container {
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
     }
     
     @media (min-width: 1024px) {
         .service-card {
-            flex: 0 0 calc(33.333% - 3rem);
+            width: calc((100% - 2rem - 1.5rem) / 2);
+            min-width: calc((100% - 2rem - 1.5rem) / 2);
+            flex-shrink: 0;
+        }
+        .services-carousel-container {
+            padding: 0 1rem;
         }
     }
     
@@ -579,50 +749,62 @@
         left: 0;
         right: 0;
         padding: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%);
     }
     
     .service-card-content {
-        padding: 3rem 2.5rem 2.5rem;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.5), transparent);
+        padding: 3.5rem 3rem 3rem;
+        position: relative;
     }
     
     .service-card-title {
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: 700;
         color: white;
-        margin-bottom: 1rem;
-        font-family: 'Playfair Display', serif;
-        line-height: 1.3;
+        margin-bottom: 1.25rem;
+        font-family: 'Inter', sans-serif;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
     
     .service-card-description {
-        color: rgba(255, 255, 255, 0.95);
-        line-height: 1.7;
-        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.75;
+        font-size: 1rem;
+        font-weight: 400;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     }
     
     .carousel-nav-btn {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.9);
-        border: none;
-        width: 50px;
-        height: 50px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         z-index: 20;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .carousel-nav-btn:hover {
         background: white;
-        transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-50%) scale(1.15);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .carousel-nav-btn i {
+        color: #1f2937;
+        font-weight: 600;
     }
     
     .carousel-nav-btn.prev {
@@ -646,9 +828,15 @@
     }
     
     .carousel-dot {
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
+        background: rgba(0, 0, 0, 0.2);
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0;
+        margin: 0;
         background: #d1d5db;
         border: none;
         cursor: pointer;
@@ -657,39 +845,238 @@
     
     .carousel-dot.active {
         background: #F4D03F;
-        width: 32px;
+        width: 28px;
         border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(244, 208, 63, 0.4);
+    }
+    
+    .carousel-dot:hover {
+        background: rgba(0, 0, 0, 0.3);
+        transform: scale(1.2);
+    }
+    
+    .carousel-dot.active:hover {
+        background: #F4D03F;
+    }
+    
+    /* Testimonial Glow Effect */
+    .testimonial-glow {
+        position: relative;
+    }
+    
+    .testimonial-glow::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 1.5rem;
+        padding: 2px;
+        background: linear-gradient(135deg, rgba(244, 208, 63, 0.3), rgba(102, 126, 234, 0.3), rgba(240, 147, 251, 0.3));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    
+    .testimonial-glow:hover::before {
+        opacity: 1;
+    }
+    
+    /* Partner Logos Loop Styles */
+    .partner-logos-loop {
+        padding: 2rem 0;
+        width: 100%;
+    }
+    
+    .partner-logos-track {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--logoloop-gap, 3rem);
+        width: max-content;
+    }
+    
+    .partner-logo-item {
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .partner-logo-img {
+        height: 4rem;
+        width: auto;
+        object-fit: contain;
+        opacity: 0.7;
+        filter: grayscale(10%);
+        transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+    
+    .partner-logo-item:hover .partner-logo-img {
+        opacity: 1;
+        filter: grayscale(0%);
+        transform: scale(1.05);
+    }
+    
+    @media (min-width: 768px) {
+        .partner-logo-img {
+            height: 5rem;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .partner-logo-img {
+            height: 6rem;
+        }
     }
     
     section > * {
         position: relative;
         z-index: 1;
     }
+    
+    /* Logo Glow Animation */
+    .logo-glow {
+        animation: logoGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes logoGlow {
+        0%, 100% {
+            filter: drop-shadow(0 0 20px rgba(244, 208, 63, 0.8)) drop-shadow(0 0 40px rgba(244, 208, 63, 0.5)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+        }
+        50% {
+            filter: drop-shadow(0 0 30px rgba(244, 208, 63, 1)) drop-shadow(0 0 60px rgba(244, 208, 63, 0.8)) drop-shadow(0 0 80px rgba(244, 208, 63, 0.4)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+        }
+    }
+    
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    
+    @keyframes ribbonFloat {
+        0%, 100% {
+            transform: translateY(-50%) translateX(-50%) rotate(-3deg);
+        }
+        50% {
+            transform: translateY(-50%) translateX(-50%) rotate(3deg);
+        }
+    }
+    
+    @keyframes ribbonFloatRight {
+        0%, 100% {
+            transform: translateY(-50%) translateX(50%) rotate(3deg);
+        }
+        50% {
+            transform: translateY(-50%) translateX(50%) rotate(-3deg);
+        }
+    }
+    
+    /* Floating Stars Animations */
+    @keyframes starFloat1 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
+        25% { transform: translate(20px, -30px) rotate(90deg); opacity: 0.8; }
+        50% { transform: translate(-15px, -50px) rotate(180deg); opacity: 0.5; }
+        75% { transform: translate(25px, -20px) rotate(270deg); opacity: 0.7; }
+    }
+    
+    @keyframes starFloat2 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+        25% { transform: translate(-25px, -35px) rotate(-90deg); opacity: 0.7; }
+        50% { transform: translate(15px, -45px) rotate(-180deg); opacity: 0.4; }
+        75% { transform: translate(-20px, -25px) rotate(-270deg); opacity: 0.6; }
+    }
+    
+    @keyframes starFloat3 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
+        25% { transform: translate(30px, 20px) rotate(90deg); opacity: 0.5; }
+        50% { transform: translate(-20px, 35px) rotate(180deg); opacity: 0.8; }
+        75% { transform: translate(25px, 15px) rotate(270deg); opacity: 0.6; }
+    }
+    
+    @keyframes starFloat4 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.55; }
+        25% { transform: translate(-30px, 25px) rotate(-90deg); opacity: 0.7; }
+        50% { transform: translate(20px, 40px) rotate(-180deg); opacity: 0.4; }
+        75% { transform: translate(-25px, 20px) rotate(-270deg); opacity: 0.6; }
+    }
+    
+    @keyframes starFloat5 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.65; }
+        25% { transform: translate(15px, 30px) rotate(90deg); opacity: 0.5; }
+        50% { transform: translate(-25px, 45px) rotate(180deg); opacity: 0.75; }
+        75% { transform: translate(20px, 25px) rotate(270deg); opacity: 0.6; }
+    }
+    
+    @keyframes starFloat6 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
+        25% { transform: translate(-20px, 35px) rotate(-90deg); opacity: 0.8; }
+        50% { transform: translate(30px, 50px) rotate(-180deg); opacity: 0.4; }
+        75% { transform: translate(-15px, 30px) rotate(-270deg); opacity: 0.7; }
+    }
+    
+    @keyframes starFloat7 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+        25% { transform: translate(25px, -25px) rotate(90deg); opacity: 0.7; }
+        50% { transform: translate(-20px, -40px) rotate(180deg); opacity: 0.3; }
+        75% { transform: translate(30px, -20px) rotate(270deg); opacity: 0.6; }
+    }
+    
+    @keyframes starFloat8 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.55; }
+        25% { transform: translate(-15px, 30px) rotate(-90deg); opacity: 0.75; }
+        50% { transform: translate(25px, 45px) rotate(-180deg); opacity: 0.4; }
+        75% { transform: translate(-20px, 25px) rotate(-270deg); opacity: 0.65; }
+    }
+    
+    @keyframes starFloat9 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
+        25% { transform: translate(20px, -20px) rotate(90deg); opacity: 0.8; }
+        50% { transform: translate(-25px, -35px) rotate(180deg); opacity: 0.5; }
+        75% { transform: translate(15px, -15px) rotate(270deg); opacity: 0.7; }
+    }
+    
+    @keyframes starFloat10 {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+        25% { transform: translate(-25px, 25px) rotate(-90deg); opacity: 0.7; }
+        50% { transform: translate(20px, 40px) rotate(-180deg); opacity: 0.4; }
+        75% { transform: translate(-30px, 20px) rotate(-270deg); opacity: 0.6; }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <!-- Header & Navigation -->
-<header class="peaceful-nav sticky top-0 z-50">
+<header class="peaceful-nav">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="flex items-center justify-between py-5">
+        <nav class="flex items-center justify-between py-1">
             <!-- Logo -->
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-sun text-yoga-yellow text-3xl peaceful-logo-icon"></i>
-                <span class="text-2xl font-bold text-peaceful-blue" style="color: #2C5F7D;">Radiating Life</span>
+            <div class="flex items-center">
+                <span class="text-sm md:text-base lg:text-lg font-bold text-white uppercase tracking-wider" style="font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);">MYROSLAVA GRYGORACHYK</span>
             </div>
-        
+            
             <!-- Navigation Links - 5 items only -->
             <div class="hidden md:flex items-center gap-6">
                 <a href="#home" class="peaceful-nav-link">HOME</a>
-                <a href="{% url 'about' %}" class="peaceful-nav-link">ABOUT</a>
+                <a href="#about" class="peaceful-nav-link">ABOUT</a>
                 <a href="#services" class="peaceful-nav-link">SERVICES</a>
                 <a href="#testimonials" class="peaceful-nav-link">TESTIMONIALS</a>
-                <a href="#contact" class="bg-yoga-yellow text-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-600 ease-in-out shadow-md hover:shadow-lg" style="background-color: #D4A574; color: #2C3E50;">CONTACT</a>
+                <a href="#contact" class="contact-button-scroll px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wide transition-all duration-300 ease-in-out shadow-md hover:shadow-lg flex items-center gap-2" style="color: white;">CONTACT <i class="fa-solid fa-arrow-right text-sm"></i></a>
             </div>
-        
             <!-- Mobile menu button -->
-            <button class="md:hidden text-peaceful-blue text-2xl" id="mobile-menu-btn" style="color: #2C5F7D;">
+            <button class="md:hidden text-white text-2xl" id="mobile-menu-btn" style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </nav>
@@ -702,247 +1089,463 @@
                 <i class="fa-solid fa-times"></i>
             </button>
             <a href="#home" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">HOME</a>
-            <a href="{% url 'about' %}" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">ABOUT</a>
+            <a href="#about" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">ABOUT</a>
             <a href="#services" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">SERVICES</a>
             <a href="#testimonials" class="text-xl font-semibold text-peaceful-blue peaceful-nav-link" style="color: #2C5F7D;">TESTIMONIALS</a>
-            <a href="#contact" class="bg-yoga-yellow text-gray-800 px-10 py-4 rounded-full font-semibold shadow-md" style="background-color: #D4A574; color: #2C3E50;">CONTACT</a>
+            <a href="#contact" class="contact-button-scroll px-8 py-4 rounded-lg font-semibold text-base uppercase tracking-wide shadow-md transition-all duration-300 ease-in-out flex items-center gap-2" style="color: #2C5F7D;">CONTACT <i class="fa-solid fa-arrow-right text-base"></i></a>
         </div>
     </div>
 </header>
 
 <!-- Hero Section -->
 <section id="home" class="hero-section relative" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('{% static "images/Myra-Yoga-1.jpg" %}') center/cover;">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="max-w-3xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center min-h-[100vh] pt-2 pb-20">
+        <!-- Logo - Centered at top -->
+        <div class="flex justify-center mb-8 md:mb-12">
+            <img src="{% static 'images/RL-Logo.png' %}" alt="Radiating Life Logo" class="h-40 md:h-52 lg:h-64 w-auto object-contain logo-glow logo-fade-in">
+        </div>
+        
+        <!-- Headline - Below logo -->
+        <div class="text-center max-w-4xl mb-6 md:mb-8">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 Awaken Your <span class="script-font text-5xl md:text-6xl lg:text-7xl">Radiance</span>. Reclaim Your <span class="script-font text-5xl md:text-6xl lg:text-7xl">Power</span>.
-                </h1>
-            <p class="text-lg text-white mb-4 leading-relaxed">
+            </h1>
+        </div>
+        
+        <!-- Description Text - Middle section -->
+        <div class="text-center max-w-3xl mb-8 md:mb-12">
+            <p class="text-lg md:text-xl text-white mb-4 leading-relaxed">
                 Step into a life where you feel strong, joyful, and completely at home in your body, nourished in mind, heart, and health.
             </p>
-            <p class="text-lg text-white mb-8 leading-relaxed">
+            <p class="text-lg md:text-xl text-white leading-relaxed">
                 I have been where you are, pulled in every direction, full of doubt and quietly craving something more. That is why I hold space for women to return to their truth, release what is heavy, and rise into the radiant powerful version of themselves they were always meant to be.
             </p>
+        </div>
+        
+        <!-- CTA Button - At bottom -->
+        <div class="mt-4">
             <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-md font-semibold uppercase hover:bg-opacity-90 transition relative">
                 <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
-                    </a>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Me Section -->
+<section id="about" class="relative py-20 md:py-32 overflow-hidden" style="background: linear-gradient(135deg, #F9F7F4 0%, #F5F1EB 50%, #F0EBE0 100%);">
+    <!-- Decorative Background Elements -->
+    <div class="absolute top-0 right-0 w-96 h-96 opacity-10">
+        <div class="w-full h-full rounded-full" style="background: radial-gradient(circle, #D4A574 0%, transparent 70%); filter: blur(60px);"></div>
+    </div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 opacity-10">
+        <div class="w-full h-full rounded-full" style="background: radial-gradient(circle, #AED6F1 0%, transparent 70%); filter: blur(60px);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-3 mb-6">
+                <p class="text-peaceful-gold text-lg font-semibold uppercase tracking-wider" style="color: #D4A574;">ABOUT ME</p>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-peaceful-blue script-font mb-4" style="color: #2C5F7D;">Myroslava Grygorachyk</h1>
+            <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(to right, transparent, #D4A574, transparent);"></div>
+        </div>
+        
+        <!-- Two Column Layout -->
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <!-- Left Column - Text Content -->
+            <div class="space-y-12">
+                <!-- The Woman I Used to Be -->
+                <div class="relative pl-8 border-l-4 rounded-lg p-6 transition-all duration-500 hover:shadow-lg" style="border-color: #D4A574; background: rgba(255, 255, 255, 0.5);">
+                    <div class="absolute -left-3 top-6">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #D4A574;">
+                            <i class="fas fa-seedling text-white text-sm"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-peaceful-blue mb-4 flex items-center gap-3" style="color: #2C5F7D;">
+                        <i class="fas fa-leaf text-xl" style="color: #D4A574;"></i>
+                        The Woman I Used to Be
+                    </h2>
+                    <p class="text-lg leading-relaxed scroll-animate-left" style="color: #2C3E50; line-height: 1.9;">
+                        I grew up believing a "good woman" puts others first, that if I worked hard, stayed strong, and didn't complain, I was worthy of love. Even after leaving an abusive relationship and starting over in Canada with my little boy, I found myself repeating old patterns: overgiving, criticizing myself, and feeling like I was never enough. I was raising three boys, working full-time, and always showing up as "the strong one." But inside, I felt overwhelmed, exhausted, unseen, and deeply disconnected from who I really was.
+                    </p>
                 </div>
+                
+                <!-- The Turning Point -->
+                <div class="relative pl-8 border-l-4 rounded-lg p-6 transition-all duration-500 hover:shadow-lg" style="border-color: #AED6F1; background: rgba(255, 255, 255, 0.5);">
+                    <div class="absolute -left-3 top-6">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #AED6F1;">
+                            <i class="fas fa-sun text-white text-sm"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-peaceful-blue mb-4 flex items-center gap-3" style="color: #2C5F7D;">
+                        <i class="fas fa-compass text-xl" style="color: #AED6F1;"></i>
+                        The Turning Point
+                    </h2>
+                    <p class="text-lg leading-relaxed scroll-animate-left" style="color: #2C3E50; line-height: 1.9;">
+                        The guilt after yelling at my kids, the endless to-do lists, the constant voice saying "not enough" finally pushed me to ask: What if there's another way to live? That question began my journey of healing. Louise Hay opened my heart. Wayne Dyer awakened my soul. NLP taught me I could rewire how I think, speak, and feel. Yoga and Kundalini helped me heal my body and reconnect with my spirit. Mental fitness showed me that peace and presence are choices I can make every day.
+                    </p>
+                </div>
+                
+                <!-- Why I Do This Work -->
+                <div class="relative pl-8 border-l-4 rounded-lg p-6 transition-all duration-500 hover:shadow-lg" style="border-color: #E8B4B8; background: rgba(255, 255, 255, 0.5);">
+                    <div class="absolute -left-3 top-6">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #E8B4B8;">
+                            <i class="fas fa-heart text-white text-sm"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-peaceful-blue mb-4 flex items-center gap-3" style="color: #2C5F7D;">
+                        <i class="fas fa-hand-holding-heart text-xl" style="color: #E8B4B8;"></i>
+                        Why I Do This Work
+                    </h2>
+                    <p class="text-lg leading-relaxed scroll-animate-left" style="color: #2C3E50; line-height: 1.9;">
+                        Because I know the pain of feeling like you're never enough, no matter how much you do, of smiling on the outside while quietly aching inside, of losing touch with your dreams "because everyone else comes first." And I also know the freedom of coming home to yourself, of living with clarity, compassion, and joy.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right Column - Image and Text -->
+            <div class="space-y-8">
+                <!-- Portrait Image -->
+                <div class="relative">
+                    <div class="absolute -inset-4 rounded-3xl opacity-20" style="background: linear-gradient(135deg, #D4A574, #AED6F1); filter: blur(20px);"></div>
+                    <img src="{% static 'images/Myra-white-1P.jpg' %}" alt="Myroslava Grygorachyk" class="relative w-full h-auto rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-105" style="box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);">
+                    <!-- Decorative corner elements -->
+                    <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full opacity-30" style="background: #D4A574; animation: gentleFloat 5s ease-in-out infinite;"></div>
+                    <div class="absolute -bottom-4 -left-4 w-12 h-12 rounded-full opacity-30" style="background: #AED6F1; animation: gentleFloat 6s ease-in-out infinite 1s;"></div>
+                </div>
+                
+                <!-- The Woman I Am Today -->
+                <div class="relative pl-8 border-l-4 rounded-lg p-6 transition-all duration-500 hover:shadow-lg" style="border-color: #F4D03F; background: rgba(255, 255, 255, 0.6);">
+                    <div class="absolute -left-3 top-6">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #F4D03F;">
+                            <i class="fas fa-star text-white text-sm"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-peaceful-blue mb-4 flex items-center gap-3" style="color: #2C5F7D;">
+                        <i class="fas fa-butterfly text-xl" style="color: #F4D03F;"></i>
+                        The Woman I Am Today
+                    </h2>
+                    <p class="text-lg leading-relaxed scroll-animate-left" style="color: #2C3E50; line-height: 1.9;">
+                        Menopause became one of my greatest teachers, guiding me to shed old layers and light my fire in new ways. Today, I stand rooted in my truth: strong, joyful, and radiant. I help women reconnect with themselves, release what is heavy, and rise into the wise, powerful version of themselves they were always meant to be.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- Credibility Section -->
-<section id="about" class="bg-white py-16 md:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="relative py-16 md:py-24 overflow-hidden" style="background: linear-gradient(135deg, #F4D03F 0%, #AED6F1 25%, #E8B4B8 50%, #F4D03F 75%, #AED6F1 100%); background-size: 400% 400%; animation: gradientShift 15s ease infinite;">
+    <!-- Animated Background Overlay -->
+    <div class="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+    
+    <!-- Decorative Elements -->
+    <div class="absolute top-10 left-10 w-32 h-32 rounded-full opacity-20" style="background: #F4D03F; filter: blur(40px); animation: gentleFloat 8s ease-in-out infinite;"></div>
+    <div class="absolute top-1/4 right-20 w-40 h-40 rounded-full opacity-20" style="background: #AED6F1; filter: blur(50px); animation: gentleFloat 10s ease-in-out infinite 1s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-36 h-36 rounded-full opacity-20" style="background: #E8B4B8; filter: blur(45px); animation: gentleFloat 9s ease-in-out infinite 2s;"></div>
+    <div class="absolute bottom-10 right-10 w-28 h-28 rounded-full opacity-20" style="background: #F4D03F; filter: blur(35px); animation: gentleFloat 7s ease-in-out infinite 0.5s;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-12">
-            <p class="text-sm uppercase tracking-wider text-yoga-yellow mb-4">CREDIBILITY</p>
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
+            <div class="inline-flex items-center gap-2 mb-6">
+                <p class="text-sm uppercase tracking-wider font-bold mb-0" style="color: #2C5F7D; text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);">CREDIBILITY</p>
+            </div>
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" style="color: #2C5F7D; text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);">
                 Grounded in <span class="script-font">Wisdom</span>, Guided by <span class="script-font">Experience</span>.
             </h2>
-            <p class="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            <p class="text-lg max-w-4xl mx-auto leading-relaxed" style="color: #2C3E50; text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);">
                 With years of experience in personal development, wellness, and public speaking, I bring both professional training and real-life transformation to every session. I've led transformative retreats, hosted workshops, and helped women break through years of emotional heaviness. I don't just teach these practices; I live them every day.
             </p>
             </div>
             
-        <!-- Partner Logos -->
-        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 mt-12">
-            <div class="text-2xl font-bold text-purple-600 floating">Inspire</div>
-            <div class="text-2xl font-bold text-green-600 floating" style="animation-delay: 0.5s;">Positive Intelligence</div>
-            <div class="text-2xl font-bold text-purple-600 floating" style="animation-delay: 1s;">mindvalley</div>
-            <div class="text-2xl font-bold text-blue-600 floating" style="animation-delay: 1.5s;">The MIND Institute</div>
+        <!-- Partner Logos Loop -->
+        <div class="partner-logos-loop relative mt-12 overflow-x-hidden" id="partner-logos-loop">
+            <div class="partner-logos-track flex items-center will-change-transform" style="--logoloop-gap: 3rem;" data-original-logos>
+                <div class="partner-logo-item flex items-center justify-center">
+                    <img src="{% static 'images/Inspire.png' %}" alt="Inspire" class="partner-logo-img">
                 </div>
-                
-        <!-- Achieve Your Goals Section -->
-        <div class="mt-16 text-center">
-            <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 glow-text">
-                Achieve your goals and live the life you desire.
-            </h3>
-            <div class="grid gap-6 md:grid-cols-5 max-w-5xl mx-auto">
-                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
-                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating">
-                        <i class="fa-solid fa-sun"></i>
+                <div class="partner-logo-item flex items-center justify-center">
+                    <img src="{% static 'images/Positive-Int.png' %}" alt="Positive Intelligence" class="partner-logo-img">
                 </div>
-                    <p class="text-sm font-semibold text-gray-800">Holistic Approach</p>
+                <div class="partner-logo-item flex items-center justify-center">
+                    <img src="{% static 'images/Mindvalley.png' %}" alt="Mindvalley" class="partner-logo-img">
+                </div>
+                <div class="partner-logo-item flex items-center justify-center">
+                    <img src="{% static 'images/The-mind-insitute.png' %}" alt="The MIND Institute" class="partner-logo-img">
+                </div>
             </div>
-                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
-                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.2s;">
-                        <i class="fa-solid fa-leaf"></i>
         </div>
-                    <p class="text-sm font-semibold text-gray-800">Natural Healing</p>
-    </div>
-                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
-                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.4s;">
-                        <i class="fa-solid fa-star"></i>
-                </div>
-                    <p class="text-sm font-semibold text-gray-800">Empowerment</p>
-                        </div>
-                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
-                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.6s;">
-                        <i class="fa-solid fa-heart"></i>
-                        </div>
-                    <p class="text-sm font-semibold text-gray-800">Compassionate Care</p>
-                    </div>
-                <div class="text-center glow-card bg-white/50 rounded-lg p-4">
-                    <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 floating" style="animation-delay: 0.8s;">
-                        <i class="fa-solid fa-sparkles"></i>
-                        </div>
-                    <p class="text-sm font-semibold text-gray-800">Transformation</p>
-                        </div>
-                    </div>
-                        </div>
+                
                         </div>
 </section>
 
-<!-- Qualifications Section -->
-<section class="bg-white py-16 md:py-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8">
+<!-- Qualifications Section with Gallery -->
+<section class="relative py-16 md:py-24 overflow-hidden" style="background: linear-gradient(135deg, #F4D03F 0%, #AED6F1 25%, #E8B4B8 50%, #F4D03F 75%, #AED6F1 100%); background-size: 400% 400%; animation: gradientShift 15s ease infinite;">
+    <!-- Animated Background Overlay -->
+    <div class="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
+    
+    <!-- Left Ribbon -->
+    <div id="leftRibbon" class="absolute left-0 top-1/2 z-20 hidden md:block">
+        <svg width="120" height="400" viewBox="0 0 120 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0 L120 50 L120 350 L0 400 Z" fill="url(#ribbonGradientLeft)" opacity="0.8"/>
+            <path d="M0 0 L120 50 L120 60 L0 10 Z" fill="#F4D03F" opacity="0.6"/>
+            <path d="M0 390 L120 340 L120 350 L0 400 Z" fill="#AED6F1" opacity="0.6"/>
+            <defs>
+                <linearGradient id="ribbonGradientLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#F4D03F;stop-opacity:0.9" />
+                    <stop offset="50%" style="stop-color:#AED6F1;stop-opacity:0.7" />
+                    <stop offset="100%" style="stop-color:#E8B4B8;stop-opacity:0.9" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    
+    <!-- Right Ribbon -->
+    <div id="rightRibbon" class="absolute right-0 top-1/2 z-20 hidden md:block">
+        <svg width="120" height="400" viewBox="0 0 120 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M120 0 L0 50 L0 350 L120 400 Z" fill="url(#ribbonGradientRight)" opacity="0.8"/>
+            <path d="M120 0 L0 50 L0 60 L120 10 Z" fill="#E8B4B8" opacity="0.6"/>
+            <path d="M120 390 L0 340 L0 350 L120 400 Z" fill="#F4D03F" opacity="0.6"/>
+            <defs>
+                <linearGradient id="ribbonGradientRight" x1="100%" y1="0%" x2="0%" y2="0%">
+                    <stop offset="0%" style="stop-color:#E8B4B8;stop-opacity:0.9" />
+                    <stop offset="50%" style="stop-color:#AED6F1;stop-opacity:0.7" />
+                    <stop offset="100%" style="stop-color:#F4D03F;stop-opacity:0.9" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    
+    <!-- Decorative Elements -->
+    <div class="absolute top-10 left-10 w-32 h-32 rounded-full opacity-20" style="background: #F4D03F; filter: blur(40px); animation: gentleFloat 8s ease-in-out infinite;"></div>
+    <div class="absolute top-1/4 right-20 w-40 h-40 rounded-full opacity-20" style="background: #AED6F1; filter: blur(50px); animation: gentleFloat 10s ease-in-out infinite 1s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-36 h-36 rounded-full opacity-20" style="background: #E8B4B8; filter: blur(45px); animation: gentleFloat 9s ease-in-out infinite 2s;"></div>
+    <div class="absolute bottom-10 right-10 w-28 h-28 rounded-full opacity-20" style="background: #F4D03F; filter: blur(35px); animation: gentleFloat 7s ease-in-out infinite 0.5s;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-12 text-center" style="color: #2C5F7D; text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);">
             Here's how I've equipped myself to support your journey:
         </h3>
-        <ul class="space-y-4">
-            <li class="flex items-start">
-                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
-                    <i class="fa-solid fa-check"></i>
-                </span>
-                <span class="text-lg text-gray-700">Master NLP Practitioner (Inspired Outcomes)</span>
-            </li>
-            <li class="flex items-start">
-                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
-                    <i class="fa-solid fa-check"></i>
-                </span>
-                <span class="text-lg text-gray-700">Certified Life Coach (Mindvalley)</span>
-            </li>
-            <li class="flex items-start">
-                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
-                    <i class="fa-solid fa-check"></i>
-                </span>
-                <span class="text-lg text-gray-700">Mental Fitness Coach (Positive Intelligence)</span>
-            </li>
-            <li class="flex items-start">
-                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
-                    <i class="fa-solid fa-check"></i>
-                </span>
-                <span class="text-lg text-gray-700">Certified Consulting Hypnotist (The MIND Institute)</span>
-            </li>
-            <li class="flex items-start">
-                <span class="bg-yoga-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0">
-                    <i class="fa-solid fa-check"></i>
-                </span>
-                <span class="text-lg text-gray-700">Certified 200-hour Yoga Teacher with focused training in Kundalini-inspired practices, including breathwork, mantra, and movement designed to support energy flow and emotional clarity.</span>
-            </li>
-        </ul>
+        
+        <!-- Staggered Masonry Gallery -->
+        <div id="qualifications-gallery" class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            <!-- Qualification 1 - Tall -->
+            <div class="break-inside-avoid mb-6 group scroll-animate-left">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                    <div class="w-full h-80 overflow-hidden">
+                        <img src="{% static 'images/Myra-Yoga-6L.jpg' %}" alt="NLP Certification" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                                <i class="fa-solid fa-check text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Master NLP Practitioner</h4>
+                                <p class="text-sm text-white font-medium">Inspired Outcomes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Qualification 2 - Medium -->
+            <div class="break-inside-avoid mb-6 group scroll-animate-right">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                    <div class="w-full h-64 overflow-hidden">
+                        <img src="{% static 'images/Myra-Yoga-2P.jpg' %}" alt="Life Coach Certification" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                                <i class="fa-solid fa-check text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Certified Life Coach</h4>
+                                <p class="text-sm text-white font-medium">Mindvalley</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Qualification 3 - Short -->
+            <div class="break-inside-avoid mb-6 group scroll-animate-left">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                    <div class="w-full h-72 overflow-hidden">
+                        <img src="{% static 'images/Myra-Yoga-3P.jpg' %}" alt="Mental Fitness Certification" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                                <i class="fa-solid fa-check text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Mental Fitness Coach</h4>
+                                <p class="text-sm text-white font-medium">Positive Intelligence</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Qualification 4 - Medium -->
+            <div class="break-inside-avoid mb-6 group scroll-animate-right">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                    <div class="w-full h-64 overflow-hidden">
+                        <img src="{% static 'images/Myra-Yoga-4P.jpg' %}" alt="Hypnotist Certification" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                                <i class="fa-solid fa-check text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Certified Consulting Hypnotist</h4>
+                                <p class="text-sm text-white font-medium">The MIND Institute</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Qualification 5 - Tall -->
+            <div class="break-inside-avoid mb-6 group scroll-animate-left">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                    <div class="w-full h-96 overflow-hidden">
+                        <img src="{% static 'images/Myra-Yoga-5P.jpg' %}" alt="Yoga Teacher Certification" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-yoga-yellow text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                                <i class="fa-solid fa-check text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Certified 200-hour Yoga Teacher</h4>
+                                <p class="text-sm text-white font-medium">Kundalini-inspired practices, breathwork & mantra</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Services Section -->
-<section id="services" class="bg-white py-20 md:py-28 relative overflow-hidden">
+<section id="services" class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-yellow-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl"></div>
+    </div>
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <!-- Section Header -->
-        <div class="text-center mb-12">
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 script-font" style="font-family: 'Playfair Display', serif;">
-                SERVICES
-            </h2>
+        <!-- Modern Section Header -->
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-sm font-semibold uppercase tracking-widest text-gray-500">What I Offer</span>
             </div>
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent" style="font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+                Services
+            </h2>
+            <div class="w-24 h-1 mx-auto rounded-full" style="background: linear-gradient(to right, transparent, #F4D03F, transparent);"></div>
+        </div>
             
         <!-- Services Carousel -->
         <div class="services-carousel relative">
             <!-- Navigation Buttons -->
-            <button class="carousel-nav-btn prev" onclick="moveCarousel(-1)" id="prevBtn">
-                <i class="fa-solid fa-chevron-left text-gray-800 text-xl"></i>
+            <button class="carousel-nav-btn prev" onclick="moveCarousel(-1)" id="prevBtn" aria-label="Previous slide">
+                <i class="fa-solid fa-chevron-left text-xl"></i>
             </button>
-            <button class="carousel-nav-btn next" onclick="moveCarousel(1)" id="nextBtn">
-                <i class="fa-solid fa-chevron-right text-gray-800 text-xl"></i>
+            <button class="carousel-nav-btn next" onclick="moveCarousel(1)" id="nextBtn" aria-label="Next slide">
+                <i class="fa-solid fa-chevron-right text-xl"></i>
             </button>
             
             <!-- Carousel Container -->
             <div class="services-carousel-container" id="carouselContainer">
-                <!-- Duplicate of Last Slide (Service 6) - for seamless looping -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Dress-1P.jpg" %}');">
+                <!-- Duplicate of Last Slide (Service 5) - for seamless looping -->
+                <div class="service-card" style="background-image: url('{% static "images/Five5.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(236, 72, 153, 0.95), rgba(236, 72, 153, 0.75), rgba(236, 72, 153, 0.5), transparent);">
-                            <h3 class="service-card-title">Radiant Transition Coaching</h3>
+                        <div class="service-card-content">
+                            <h3 class="service-card-title">Mindfulness & Emotional Regulation</h3>
                             <p class="service-card-description">
-                                A specific coaching path for women entering or navigating perimenopause and menopause. Not just "managing symptoms" but embracing menopause as a new season of power, wisdom, and radiance. Outcomes: Feeling supported, understood, and empowered in this transition.
+                                Sessions focused on practical tools: breathwork, grounding, self-regulation, and nervous system support. Perfect for women experiencing hormonal shifts, burnout, insomnia, or emotional ups and downs. Outcomes: More calm, emotional stability, and the ability to handle life's chaos with more grace.
                             </p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Service 1: Radiance Coaching (Private Sessions) -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-2L.jpg" %}');">
+                <div class="service-card" style="background-image: url('{% static "images/One1.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(244, 208, 63, 0.95), rgba(244, 208, 63, 0.75), rgba(244, 208, 63, 0.5), transparent);">
+                        <div class="service-card-content">
                             <h3 class="service-card-title">Radiance Coaching (Private Sessions)</h3>
                             <p class="service-card-description">
                                 Personalized coaching sessions designed around your unique journey. We work together to clear emotional weight, rebuild self-trust, and help you feel rooted in your truth. Along the way, you'll explore practices that nurture balance, vitality, and clarity so you can move forward feeling lighter and stronger.
                             </p>
-                    </div>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Service 2: Emotional Healing & Inner Peace -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-3L.jpg" %}');">
+                <div class="service-card" style="background-image: url('{% static "images/Two2.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(59, 130, 246, 0.95), rgba(59, 130, 246, 0.75), rgba(59, 130, 246, 0.5), transparent);">
+                        <div class="service-card-content">
                             <h3 class="service-card-title">Emotional Healing & Inner Peace</h3>
                             <p class="service-card-description">
                                 For women carrying years of unspoken stress, suppressed emotions, and long-lived responsibilities. A safe, guided space to process emotions, patterns, and stories that keep you stuck. Outcomes: Emotional clarity, a lighter heart, more inner calm, and self-awareness.
                             </p>
                         </div>
                     </div>
-                        </div>
+                </div>
                 
                 <!-- Service 3: Group Coaching Circles -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-4L.jpg" %}');">
+                <div class="service-card" style="background-image: url('{% static "images/Three3.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(37, 99, 235, 0.95), rgba(37, 99, 235, 0.75), rgba(37, 99, 235, 0.5), transparent);">
+                        <div class="service-card-content">
                             <h3 class="service-card-title">Group Coaching Circles</h3>
                             <p class="service-card-description">
                                 Small, safe, healing spaces where women come together. These intimate, women-only circles allow you to share, be witnessed, and grow together. Themes include identity shifts, self-worth, aging, caregiving, transitions, and boundary-setting. Outcomes: Community, support, and the feeling of "I'm not alone in this."
                             </p>
-                    </div>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Service 4: Life Direction & Purpose Mapping -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-5L.jpg" %}');">
+                <div class="service-card" style="background-image: url('{% static "images/Four4.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(34, 197, 94, 0.95), rgba(34, 197, 94, 0.75), rgba(34, 197, 94, 0.5), transparent);">
+                        <div class="service-card-content">
                             <h3 class="service-card-title">Life Direction & Purpose Mapping</h3>
                             <p class="service-card-description">
                                 A structured program for women asking: "What's next for me?" "What do I want now?" "Who am I becoming in this season?" We'll explore clarifying values, strengths, desires, and a vision for your next chapter. Outcomes: New sense of direction, renewed identity, and practical next steps.
                             </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
                 
                 <!-- Service 5: Mindfulness & Emotional Regulation -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-6L.jpg" %}');">
+                <div class="service-card" style="background-image: url('{% static "images/Five5.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(20, 184, 166, 0.95), rgba(20, 184, 166, 0.75), rgba(20, 184, 166, 0.5), transparent);">
+                        <div class="service-card-content">
                             <h3 class="service-card-title">Mindfulness & Emotional Regulation</h3>
                             <p class="service-card-description">
                                 Sessions focused on practical tools: breathwork, grounding, self-regulation, and nervous system support. Perfect for women experiencing hormonal shifts, burnout, insomnia, or emotional ups and downs. Outcomes: More calm, emotional stability, and the ability to handle life's chaos with more grace.
-            </p>
-        </div>
-                </div>
-                </div>
-                
-                <!-- Service 6: Radiant Transition Coaching -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Dress-1P.jpg" %}');">
-                    <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(236, 72, 153, 0.95), rgba(236, 72, 153, 0.75), rgba(236, 72, 153, 0.5), transparent);">
-                            <h3 class="service-card-title">Radiant Transition Coaching</h3>
-                            <p class="service-card-description">
-                                A specific coaching path for women entering or navigating perimenopause and menopause. Not just "managing symptoms" but embracing menopause as a new season of power, wisdom, and radiance. Outcomes: Feeling supported, understood, and empowered in this transition.
                             </p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Duplicate of First Slide (Service 1) - for seamless looping -->
-                <div class="service-card" style="background-image: url('{% static "images/Myra-Yoga-2L.jpg" %}');">
+                <div class="service-card" style="background-image: url('{% static "images/One1.jfif" %}');">
                     <div class="service-card-overlay">
-                        <div class="service-card-content" style="background: linear-gradient(to top, rgba(244, 208, 63, 0.95), rgba(244, 208, 63, 0.75), rgba(244, 208, 63, 0.5), transparent);">
+                        <div class="service-card-content">
                             <h3 class="service-card-title">Radiance Coaching (Private Sessions)</h3>
                             <p class="service-card-description">
                                 Personalized coaching sessions designed around your unique journey. We work together to clear emotional weight, rebuild self-trust, and help you feel rooted in your truth. Along the way, you'll explore practices that nurture balance, vitality, and clarity so you can move forward feeling lighter and stronger.
@@ -959,28 +1562,26 @@
                 <button class="carousel-dot" onclick="goToSlide(2)"></button>
                 <button class="carousel-dot" onclick="goToSlide(3)"></button>
                 <button class="carousel-dot" onclick="goToSlide(4)"></button>
-                <button class="carousel-dot" onclick="goToSlide(5)"></button>
                 </div>
         </div>
         
-        <!-- Call to Action -->
-        <div class="text-center mt-16">
-            <a href="#contact" class="inline-flex items-center gap-3 bg-yoga-yellow text-gray-800 px-10 py-5 rounded-full font-bold text-lg uppercase hover:bg-opacity-90 transition shadow-lg">
-                <span>BOOK YOUR FREE DISCOVERY CALL</span>
-                <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
+        <!-- Modern Call to Action -->
+        <div class="text-center mt-20">
+            <a href="#contact" class="group inline-flex items-center gap-3 px-10 py-5 rounded-full font-bold text-lg uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                <span>Book Your Free Discovery Call</span>
+                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+            </a>
+        </div>
             </div>
 </section>
 
 <script>
 let currentSlide = 1; // Start at the real first slide (index 1, after the duplicate)
-const totalSlides = 6; // Real number of slides
+const totalSlides = 5; // Real number of slides
 const carousel = document.getElementById('carouselContainer');
 const dots = document.querySelectorAll('.carousel-dot');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-let isTransitioning = false;
 
 function updateCarousel(withoutTransition = false) {
     const container = carousel.parentElement;
@@ -989,25 +1590,22 @@ function updateCarousel(withoutTransition = false) {
     
     if (cards.length === 0) return;
     
-    // Get the width of one card including its margin
+    // Get the width of one card including gap
     const firstCard = cards[0];
     const cardStyle = window.getComputedStyle(firstCard);
     const cardWidth = firstCard.offsetWidth;
-    const cardMargin = parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
-    const totalCardWidth = cardWidth + cardMargin;
+    const containerStyle = window.getComputedStyle(carousel);
+    const gap = parseFloat(containerStyle.gap) || 24; // 1.5rem = 24px default
+    const totalCardWidth = cardWidth + gap;
     
-    // Disable transition for instant jump
-    if (withoutTransition) {
-        carousel.style.transition = 'none';
-    } else {
-        carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-    }
+    // No transitions - instant display
+    carousel.style.transition = 'none';
     
     // Calculate translateX in pixels
     const translateX = -currentSlide * totalCardWidth;
     carousel.style.transform = `translateX(${translateX}px)`;
     
-    // Update dots (map currentSlide to 0-5 range for dots)
+    // Update dots (map currentSlide to 0-4 range for dots)
     const dotIndex = currentSlide === 0 ? totalSlides - 1 : (currentSlide === totalSlides + 1 ? 0 : currentSlide - 1);
     dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === dotIndex);
@@ -1018,62 +1616,46 @@ function updateCarousel(withoutTransition = false) {
     nextBtn.disabled = false;
     prevBtn.style.opacity = '1';
     nextBtn.style.opacity = '1';
-    
-    // Re-enable transition after a brief moment
-    if (withoutTransition) {
-        setTimeout(() => {
-            carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        }, 50);
-    }
 }
 
 function moveCarousel(direction) {
-    if (isTransitioning) return;
-    
-    isTransitioning = true;
     currentSlide += direction;
     
     // If we're at the duplicate of the last slide (index 0), jump to real last slide
     if (currentSlide === 0) {
-        updateCarousel(true); // Update without transition
-        setTimeout(() => {
-            currentSlide = totalSlides;
-            updateCarousel();
-            isTransitioning = false;
-        }, 50);
+        currentSlide = totalSlides;
+        updateCarousel();
         return;
     }
     
-    // If we're at the duplicate of the first slide (index totalSlides + 1), jump to real first slide
+    // If we're at the duplicate of the first slide (index totalSlides + 1), jump to show first slide
     if (currentSlide === totalSlides + 1) {
-        updateCarousel(true); // Update without transition
-        setTimeout(() => {
-            currentSlide = 1;
-            updateCarousel();
-            isTransitioning = false;
-        }, 50);
+        currentSlide = 1;
+        updateCarousel();
+        return;
+    }
+    
+    // When at the last slide (totalSlides) and moving forward, show first slide
+    if (currentSlide > totalSlides) {
+        currentSlide = 1;
+        updateCarousel();
+        return;
+    }
+    
+    // When at the first slide (1) and moving backward, show last slide
+    if (currentSlide < 1) {
+        currentSlide = totalSlides;
+        updateCarousel();
         return;
     }
     
     updateCarousel();
-    
-    // Reset transition flag after animation
-    setTimeout(() => {
-        isTransitioning = false;
-    }, 600);
 }
 
 function goToSlide(index) {
-    if (isTransitioning) return;
-    
-    isTransitioning = true;
-    // Map dot index (0-5) to carousel index (1-6)
+    // Map dot index (0-4) to carousel index (1-5)
     currentSlide = index + 1;
     updateCarousel();
-    
-    setTimeout(() => {
-        isTransitioning = false;
-    }, 600);
 }
 
 // Handle window resize
@@ -1086,140 +1668,218 @@ window.addEventListener('resize', () => {
 });
 
 // Initialize - start at the real first slide
-updateCarousel(true);
+updateCarousel();
 </script>
 
 <!-- About the Coach Section -->
-<section class="glow-section bg-gradient-to-br from-blue-50 to-purple-50 py-16 md:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid gap-12 lg:grid-cols-2 items-center">
-            <div class="relative floating">
-                <img src="{% static 'images/Myra-Yoga-1P.jpg' %}" alt="Miroslava Grygurachyk" class="rounded-lg shadow-2xl w-full glow-card">
+<section class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%); background-size: 400% 400%; animation: gradientShift 20s ease infinite;">
+    <!-- Animated Background Overlay -->
+    <div class="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+    
+    <!-- Decorative Elements -->
+    <div class="absolute top-20 right-20 w-72 h-72 rounded-full opacity-20" style="background: rgba(255, 255, 255, 0.3); filter: blur(80px); animation: gentleFloat 15s ease-in-out infinite;"></div>
+    <div class="absolute bottom-20 left-20 w-96 h-96 rounded-full opacity-20" style="background: rgba(255, 255, 255, 0.2); filter: blur(100px); animation: gentleFloat 18s ease-in-out infinite 2s;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid gap-16 lg:grid-cols-2 items-center">
+            <!-- Image Section -->
+            <div class="relative order-2 lg:order-1">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                    <img src="{% static 'images/Myra-Green-1P.jpg' %}" alt="Myroslava Grygorachyk" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
-                        <div>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 glow-text">
-                    Beyond mindset and emotional tools, I also integrate holistic wellness practices that support the body's natural vitality.
-                </h2>
-                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
-                    I believe true transformation happens when the physical, mental and emotional aspects of your life are nourished together.
-                </p>
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-start">
-                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0 floating">
-                            <i class="fa-solid fa-check"></i>
-                        </span>
-                        <span class="text-lg text-gray-700">Trusted by women navigating life transitions with courage and grace</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0 floating" style="animation-delay: 0.2s;">
-                            <i class="fa-solid fa-check"></i>
-                        </span>
-                        <span class="text-lg text-gray-700">Loved for creating safe, uplifting spaces where clients feel deeply seen</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1 flex-shrink-0 floating" style="animation-delay: 0.4s;">
-                            <i class="fa-solid fa-check"></i>
-                        </span>
-                        <span class="text-lg text-gray-700">Known for my joyful energy, empathy, kindness, and compassion.</span>
-                    </li>
-                </ul>
-                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-md font-semibold uppercase hover:bg-opacity-90 transition relative">
-                    <span class="relative z-10">Learn More</span>
-                </a>
-                    </div>
-                    </div>
-                    </div>
+                <!-- Decorative accent -->
+                <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-yoga-yellow/20 rounded-full blur-3xl -z-10"></div>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="order-1 lg:order-2">
+                <div class="bg-white/95 backdrop-blur-md rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+                        Beyond mindset and emotional tools, I also integrate holistic wellness practices that support the body's natural vitality.
+                    </h2>
+                    <p class="text-lg md:text-xl text-gray-700 mb-10 leading-relaxed font-medium">
+                        I believe true transformation happens when the physical, mental and emotional aspects of your life are nourished together.
+                    </p>
+                    
+                    <ul class="space-y-5 mb-10">
+                        <li class="flex items-start group">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-yoga-yellow to-orange-400 flex items-center justify-center mr-4 mt-1 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-check text-white text-sm font-bold"></i>
+                            </div>
+                            <span class="text-lg md:text-xl text-gray-800 font-medium leading-relaxed pt-1">Trusted by women navigating life transitions with courage and grace</span>
+                        </li>
+                        <li class="flex items-start group">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center mr-4 mt-1 shadow-lg group-hover:scale-110 transition-transform duration-300" style="animation-delay: 0.1s;">
+                                <i class="fa-solid fa-check text-white text-sm font-bold"></i>
+                            </div>
+                            <span class="text-lg md:text-xl text-gray-800 font-medium leading-relaxed pt-1">Loved for creating safe, uplifting spaces where clients feel deeply seen</span>
+                        </li>
+                        <li class="flex items-start group">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center mr-4 mt-1 shadow-lg group-hover:scale-110 transition-transform duration-300" style="animation-delay: 0.2s;">
+                                <i class="fa-solid fa-check text-white text-sm font-bold"></i>
+                            </div>
+                            <span class="text-lg md:text-xl text-gray-800 font-medium leading-relaxed pt-1">Known for my joyful energy, empathy, kindness, and compassion.</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-base uppercase tracking-wide transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                        <span>Learn More</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Testimonials Section -->
-<section id="testimonials" class="glow-section bg-gradient-to-br from-yellow-50 via-blue-50 to-purple-50 py-20 md:py-28 relative overflow-hidden">
+<section id="testimonials" class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);">
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-yellow-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-tr from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
+    </div>
+    
+    <!-- Floating Stars -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-5">
+        <!-- Star 1 - Top Left -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-60" style="top: 10%; left: 5%; font-size: 1.5rem; animation: starFloat1 8s ease-in-out infinite;"></i>
+        <!-- Star 2 - Top Right -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-50" style="top: 15%; right: 8%; font-size: 1.2rem; animation: starFloat2 10s ease-in-out infinite 1s;"></i>
+        <!-- Star 3 - Middle Left -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-70" style="top: 40%; left: 3%; font-size: 1.8rem; animation: starFloat3 9s ease-in-out infinite 2s;"></i>
+        <!-- Star 4 - Middle Right -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-55" style="top: 50%; right: 5%; font-size: 1.3rem; animation: starFloat4 11s ease-in-out infinite 0.5s;"></i>
+        <!-- Star 5 - Bottom Left -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-65" style="bottom: 15%; left: 7%; font-size: 1.4rem; animation: starFloat5 8.5s ease-in-out infinite 1.5s;"></i>
+        <!-- Star 6 - Bottom Right -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-60" style="bottom: 10%; right: 4%; font-size: 1.6rem; animation: starFloat6 9.5s ease-in-out infinite 2.5s;"></i>
+        <!-- Star 7 - Top Center -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-50" style="top: 8%; left: 50%; font-size: 1.1rem; animation: starFloat7 10.5s ease-in-out infinite 0.8s;"></i>
+        <!-- Star 8 - Bottom Center -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-55" style="bottom: 12%; left: 48%; font-size: 1.3rem; animation: starFloat8 9.2s ease-in-out infinite 1.8s;"></i>
+        <!-- Star 9 - Middle Top -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-60" style="top: 25%; left: 12%; font-size: 1.2rem; animation: starFloat9 8.8s ease-in-out infinite 0.3s;"></i>
+        <!-- Star 10 - Middle Bottom -->
+        <i class="fa-solid fa-star absolute text-yellow-400 opacity-50" style="bottom: 25%; right: 10%; font-size: 1.4rem; animation: starFloat10 10.2s ease-in-out infinite 1.2s;"></i>
+    </div>
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center mb-16">
-            <p class="text-sm uppercase tracking-wider text-yoga-yellow mb-4 glow-text font-bold">TESTIMONIALS</p>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 script-font glow-text">
-                What Women Are <span class="italic">Saying</span>
+        <!-- Modern Section Header -->
+        <div class="text-center mb-20">
+            <div class="inline-block mb-4">
+                <span class="text-sm font-semibold uppercase tracking-widest text-gray-500">Client Stories</span>
+            </div>
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent" style="font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+                What Women Are Saying
             </h2>
-            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
                 Real stories of healing, reclaiming confidence, and renewed joy
             </p>
-                    </div>
+            <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, transparent, #F4D03F, transparent);"></div>
+        </div>
         
-        <!-- Testimonial Cards -->
-        <div class="grid gap-8 md:grid-cols-3 mt-16">
+        <!-- Modern Testimonial Cards -->
+        <div class="grid gap-8 md:grid-cols-3">
             <!-- Sofia B. Testimonial -->
-            <div class="glow-card bg-gradient-to-br from-white to-yellow-50/30 rounded-2xl p-8 shadow-2xl hover:shadow-yellow-200/50 transition-all duration-500 hover:scale-105 floating" style="animation-delay: 0s;">
-                <div class="text-center mb-6">
-                    <i class="fa-solid fa-quote-left text-yoga-yellow text-5xl opacity-60 floating" style="animation-delay: 0.1s;"></i>
+            <div class="group relative bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 testimonial-glow">
+                <!-- Quote Icon -->
+                <div class="absolute top-6 right-6 opacity-10">
+                    <i class="fa-solid fa-quote-right text-6xl" style="color: #F4D03F;"></i>
                 </div>
-                <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-6 text-center glow-text">
-                    "I'm more in control of my emotions and deeply connected to myself."
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-6 text-base">
-                    Before working with Myra, I had little awareness of how my mind operated. I discovered how deeply self-sabotage was shaping my life. Her powerful energy helped me reconnect with myself. Today, I feel more emotionally grounded and see life through a clearer lens.
-                </p>
-                <div class="flex justify-center gap-2 mb-6">
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.1s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.2s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.3s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.4s;"></i>
+                <!-- Glow Effect -->
+                <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: radial-gradient(circle at center, rgba(244, 208, 63, 0.15) 0%, transparent 70%); pointer-events: none;"></div>
+                <div class="relative z-10">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 leading-tight" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Inter', sans-serif;">
+                        "I'm more in control of my emotions and deeply connected to myself."
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-base font-medium">
+                        Before working with Myra, I had little awareness of how my mind operated. I discovered how deeply self-sabotage was shaping my life. Her powerful energy helped me reconnect with myself. Today, I feel more emotionally grounded and see life through a clearer lens.
+                    </p>
+                    <div class="flex justify-center gap-1 mb-6">
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                    </div>
+                    <div class="text-center pt-4 border-t border-gray-100">
+                        <p class="text-gray-900 font-bold text-lg">Sofia B.</p>
+                        <p class="text-gray-500 text-sm mt-1">Client</p>
+                    </div>
                 </div>
-                <p class="text-center text-blue-500 font-bold text-lg">Sofia B.</p>
             </div>
             
             <!-- Lena V. Testimonial -->
-            <div class="glow-card bg-gradient-to-br from-white to-blue-50/30 rounded-2xl p-8 shadow-2xl hover:shadow-blue-200/50 transition-all duration-500 hover:scale-105 floating" style="animation-delay: 0.2s;">
-                <div class="text-center mb-6">
-                    <i class="fa-solid fa-quote-left text-yoga-yellow text-5xl opacity-60 floating" style="animation-delay: 0.3s;"></i>
+            <div class="group relative bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 testimonial-glow">
+                <!-- Quote Icon -->
+                <div class="absolute top-6 right-6 opacity-10">
+                    <i class="fa-solid fa-quote-right text-6xl" style="color: #667eea;"></i>
                 </div>
-                <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-6 text-center glow-text">
-                    "I've made peace with my past and feel joy in the present."
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-6 text-base">
-                    I came to Mira with deep anxiety and constant regrets. My mind was filled with intrusive thoughts from the past. Her guidance helped me release those burdens and see life with more light and hope. For years, I put everyone else first. I never gave myself the care and attention I truly needed. Now I'm learning to love and accept myself. I finally feel at peace in the present.
-                </p>
-                <div class="flex justify-center gap-2 mb-6">
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.5s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.6s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.7s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.8s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 0.9s;"></i>
+                <!-- Glow Effect -->
+                <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: radial-gradient(circle at center, rgba(102, 126, 234, 0.15) 0%, transparent 70%); pointer-events: none;"></div>
+                <div class="relative z-10">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 leading-tight" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Inter', sans-serif;">
+                        "I've made peace with my past and feel joy in the present."
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-base font-medium">
+                        I came to Mira with deep anxiety and constant regrets. My mind was filled with intrusive thoughts from the past. Her guidance helped me release those burdens and see life with more light and hope. For years, I put everyone else first. I never gave myself the care and attention I truly needed. Now I'm learning to love and accept myself. I finally feel at peace in the present.
+                    </p>
+                    <div class="flex justify-center gap-1 mb-6">
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
                     </div>
-                <p class="text-center text-blue-500 font-bold text-lg">Lena V.</p>
+                    <div class="text-center pt-4 border-t border-gray-100">
+                        <p class="text-gray-900 font-bold text-lg">Lena V.</p>
+                        <p class="text-gray-500 text-sm mt-1">Client</p>
                     </div>
+                </div>
+            </div>
             
             <!-- Victoria B. Testimonial -->
-            <div class="glow-card bg-gradient-to-br from-white to-purple-50/30 rounded-2xl p-8 shadow-2xl hover:shadow-purple-200/50 transition-all duration-500 hover:scale-105 floating" style="animation-delay: 0.4s;">
-                <div class="text-center mb-6">
-                    <i class="fa-solid fa-quote-left text-yoga-yellow text-5xl opacity-60 floating" style="animation-delay: 0.5s;"></i>
-                    </div>
-                <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-6 text-center glow-text">
-                    "I feel grounded, empowered, and back in control of my mind."
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-6 text-base">
-                    Before working with Myra, I felt overwhelmed by anger and stuck in self-sabotaging thoughts. With her guidance, I learned to breathe consciously, center myself, and reclaim control over my emotions. Now I feel grounded, aware, and empowered to live from my true strength.
-                </p>
-                <div class="flex justify-center gap-2 mb-6">
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.1s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.2s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.3s;"></i>
-                    <i class="fa-solid fa-star text-yoga-yellow text-xl floating" style="animation-delay: 1.4s;"></i>
-                    </div>
-                <p class="text-center text-blue-500 font-bold text-lg">Victoria B.</p>
+            <div class="group relative bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 testimonial-glow">
+                <!-- Quote Icon -->
+                <div class="absolute top-6 right-6 opacity-10">
+                    <i class="fa-solid fa-quote-right text-6xl" style="color: #f093fb;"></i>
                 </div>
+                <!-- Glow Effect -->
+                <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: radial-gradient(circle at center, rgba(240, 147, 251, 0.15) 0%, transparent 70%); pointer-events: none;"></div>
+                <div class="relative z-10">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 leading-tight" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Inter', sans-serif;">
+                        "I feel grounded, empowered, and back in control of my mind."
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-base font-medium">
+                        Before working with Myra, I felt overwhelmed by anger and stuck in self-sabotaging thoughts. With her guidance, I learned to breathe consciously, center myself, and reclaim control over my emotions. Now I feel grounded, aware, and empowered to live from my true strength.
+                    </p>
+                    <div class="flex justify-center gap-1 mb-6">
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
+                        <i class="fa-solid fa-star text-lg" style="color: #F4D03F;"></i>
                     </div>
+                    <div class="text-center pt-4 border-t border-gray-100">
+                        <p class="text-gray-900 font-bold text-lg">Victoria B.</p>
+                        <p class="text-gray-500 text-sm mt-1">Client</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        <!-- Call to Action -->
-        <div class="text-center mt-20">
-            <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-8 glow-text">
+        <!-- Modern Call to Action -->
+        <div class="text-center mt-24">
+            <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-10" style="background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
                 Ready to experience this kind of transformation for yourself?
             </h3>
-            <a href="#contact" class="inline-flex items-center gap-3 glow-button bg-yoga-yellow text-gray-800 px-10 py-5 rounded-full font-bold text-lg uppercase hover:bg-opacity-90 transition relative shadow-2xl shadow-yellow-300/50">
-                <span class="relative z-10">BOOK YOUR FREE DISCOVERY CALL</span>
-                <i class="fa-solid fa-arrow-right relative z-10"></i>
-                    </a>
-                </div>
+            <a href="#contact" class="group inline-flex items-center gap-3 px-10 py-5 rounded-full font-bold text-lg uppercase tracking-wide transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                <span>Book Your Free Discovery Call</span>
+                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+            </a>
+        </div>
                 
         <!-- What's Really Holding You Back Section -->
         <div class="text-center mt-24">
@@ -1234,7 +1894,10 @@ updateCarousel(true);
 </section>
 
 <!-- Personal Journey Section -->
-<section class="bg-gradient-to-br from-blue-100 via-cyan-50 to-blue-100 py-20 md:py-28 relative overflow-hidden">
+<section class="py-20 md:py-28 relative overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0" style="background: url('{% static "images/Myra-Yoga-5L.jpg" %}') center/cover; background-attachment: fixed;"></div>
+    <div class="absolute inset-0 z-0 bg-white/70"></div>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <!-- Text Content -->
@@ -1262,11 +1925,8 @@ updateCarousel(true);
                 
             <!-- Decorative Element -->
             <div class="hidden md:block relative">
-                <div class="w-full h-96 bg-gradient-to-br from-blue-200 to-cyan-300 rounded-3xl shadow-2xl gentle-sway relative overflow-hidden" style="background-image: linear-gradient(rgba(59, 130, 246, 0.6), rgba(6, 182, 212, 0.6)), url('{% static "images/Myra-Yoga-2P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <i class="fa-solid fa-heart text-white text-6xl opacity-30 gentle-sway" style="animation-delay: 1s;"></i>
-                    </div>
+                <div class="w-full h-96 rounded-3xl shadow-2xl relative overflow-hidden">
+                    <img src="{% static 'images/Myra-Yoga-2P.jpg' %}" alt="Self Love" class="w-full h-full object-cover rounded-3xl">
                 </div>
             </div>
         </div>
@@ -1280,406 +1940,459 @@ updateCarousel(true);
 </section>
 
 <!-- Here's What I Hear Most Often Section -->
-<section class="glow-section bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 py-20 md:py-28 relative overflow-hidden">
+<section class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);">
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-50/80 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-yellow-50/80 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-50/60 rounded-full blur-3xl"></div>
+    </div>
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <!-- Section Title -->
-        <div class="text-center mb-16 fade-in-up">
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 script-font glow-text">
+        <!-- Modern Section Header -->
+        <div class="text-center mb-20">
+            <div class="inline-block mb-4">
+                <span class="text-sm font-semibold uppercase tracking-widest text-gray-500">Common Concerns</span>
+            </div>
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent" style="font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
                 Here's What I Hear Most Often
             </h2>
+            <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, transparent, #F4D03F, transparent);"></div>
         </div>
         
         <!-- Content Block 1: I feel disconnected from my body -->
-        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
-            <div class="space-y-6 slide-in-left">
-                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24">
+            <div class="order-2 md:order-1 space-y-6">
+                <div class="inline-block mb-2">
+                    <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">Body Connection</span>
+                </div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style="color: #1e40af; font-family: 'Inter', sans-serif;">
                     "I feel disconnected from my body."
                 </h3>
-                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                <p class="text-base md:text-lg font-semibold text-gray-600 uppercase tracking-wide leading-relaxed">
                     YOU MIGHT BE PUSHING THROUGH FATIGUE, IGNORING ACHES, OR TUNING OUT YOUR INTUITION.
                 </p>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    <span class="font-bold">The Shift:</span> Together, we gently reconnect you to your body's wisdom through breathwork, mindful movement, and simple daily wellness rituals that replenish your energy and restore balance from within. This is about learning to listen to your body's quiet messages and honoring them with compassion.
-                </p>
-                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
-                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                        <span class="font-bold text-gray-900">The Shift:</span> Together, we gently reconnect you to your body's wisdom through breathwork, mindful movement, and simple daily wellness rituals that replenish your energy and restore balance from within. This is about learning to listen to your body's quiet messages and honoring them with compassion.
+                    </p>
+                </div>
+                <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold uppercase tracking-wide text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                    <span>Let's Explore Together</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
                 </a>
-                </div>
-            <div class="hidden md:block relative slide-in-right" style="animation-delay: 0.2s;">
-                <div class="w-full h-80 bg-gradient-to-br from-blue-200 to-purple-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.5)), url('{% static "images/Myra-Yoga-3P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <i class="fa-solid fa-heart-pulse text-white text-7xl opacity-40 wave-motion" style="animation-delay: 0.5s;"></i>
             </div>
-                    </div>
+            <div class="order-1 md:order-2 relative group flex justify-center">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-md" style="aspect-ratio: 3/4;">
+                    <img src="{% static 'images/Women1.jfif' %}" alt="Body Connection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 </div>
             </div>
+        </div>
             
         <!-- Content Block 2: I've lost confidence in who I am -->
-        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
-            <div class="hidden md:block relative slide-in-left" style="animation-delay: 0.2s;">
-                <div class="w-full h-80 bg-gradient-to-br from-purple-200 to-pink-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(192, 132, 252, 0.5), rgba(244, 114, 182, 0.5)), url('{% static "images/Myra-Yoga-4P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <i class="fa-solid fa-star text-white text-7xl opacity-40 wave-motion" style="animation-delay: 0.5s;"></i>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24">
+            <div class="relative group flex justify-center">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-md" style="aspect-ratio: 3/4;">
+                    <img src="{% static 'images/Women2.jfif' %}" alt="Confidence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 </div>
             </div>
-        </div>
-            <div class="space-y-6 slide-in-right">
-                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+            <div class="space-y-6">
+                <div class="inline-block mb-2">
+                    <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full" style="background: rgba(147, 51, 234, 0.1); color: #9333ea;">Self-Confidence</span>
+                </div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style="color: #1e40af; font-family: 'Inter', sans-serif;">
                     "I've lost confidence in who I am."
                 </h3>
-                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                <p class="text-base md:text-lg font-semibold text-gray-600 uppercase tracking-wide leading-relaxed">
                     YEARS OF GIVING TO OTHERS CAN BLUR YOUR SENSE OF SELF.
                 </p>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    <span class="font-bold">The Shift:</span> We uncover your inner truth and help you reclaim your voice, strength, and natural confidence so you can feel grounded in who you are again. When every part of you is nourished and in harmony, your confidence becomes unshakable.
-                </p>
-                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
-                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
+                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                        <span class="font-bold text-gray-900">The Shift:</span> We uncover your inner truth and help you reclaim your voice, strength, and natural confidence so you can feel grounded in who you are again. When every part of you is nourished and in harmony, your confidence becomes unshakable.
+                    </p>
+                </div>
+                <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold uppercase tracking-wide text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                    <span>Let's Explore Together</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
                 </a>
-    </div>
-                    </div>
+            </div>
+        </div>
         
         <!-- Content Block 3: I feel emotionally stuck -->
-        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
-            <div class="space-y-6 slide-in-left">
-                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24">
+            <div class="order-2 md:order-1 space-y-6">
+                <div class="inline-block mb-2">
+                    <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full" style="background: rgba(244, 114, 182, 0.1); color: #f472b6;">Emotional Wellness</span>
+                </div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style="color: #1e40af; font-family: 'Inter', sans-serif;">
                     "I feel emotionally stuck."
                 </h3>
-                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                <p class="text-base md:text-lg font-semibold text-gray-600 uppercase tracking-wide leading-relaxed">
                     YOU MIGHT BE PUSHING THROUGH FATIGUE, IGNORING ACHES, OR TUNING OUT YOUR INTUITION.
                 </p>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    <span class="font-bold">The Shift:</span> Together, we gently reconnect you to your body's wisdom through breathwork, mindful movement, and simple daily wellness rituals that replenish your energy and restore balance from within. This is about learning to listen to your body's quiet messages and honoring them with compassion.
-                </p>
-                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
-                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
-                </a>
-        </div>
-            <div class="hidden md:block relative slide-in-right" style="animation-delay: 0.2s;">
-                <div class="w-full h-80 bg-gradient-to-br from-pink-200 to-yellow-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(251, 146, 60, 0.5), rgba(234, 179, 8, 0.5)), url('{% static "images/Myra-Yoga-5P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <i class="fa-solid fa-lock-open text-white text-7xl opacity-40 wave-motion" style="animation-delay: 0.5s;"></i>
-    </div>
+                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                        <span class="font-bold text-gray-900">The Shift:</span> Together, we gently reconnect you to your body's wisdom through breathwork, mindful movement, and simple daily wellness rituals that replenish your energy and restore balance from within. This is about learning to listen to your body's quiet messages and honoring them with compassion.
+                    </p>
                 </div>
+                <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold uppercase tracking-wide text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                    <span>Let's Explore Together</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+            <div class="order-1 md:order-2 relative group flex justify-center">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-md" style="aspect-ratio: 3/4;">
+                    <img src="{% static 'images/Women3.jfif' %}" alt="Emotional Wellness" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 </div>
             </div>
+        </div>
             
         <!-- Content Block 4: I know I need change -->
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="hidden md:block relative slide-in-left" style="animation-delay: 0.2s;">
-                <div class="w-full h-80 bg-gradient-to-br from-yellow-200 to-orange-300 rounded-3xl shadow-2xl wave-motion relative overflow-hidden" style="background-image: linear-gradient(rgba(234, 179, 8, 0.5), rgba(251, 146, 60, 0.5)), url('{% static "images/Myra-Yoga-6P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                        <div class="text-6xl font-bold text-white opacity-60 wave-motion" style="animation-delay: 0.5s;">CHANGE</div>
-                        <i class="fa-solid fa-arrow-up text-white text-5xl opacity-40 mt-4 wave-motion" style="animation-delay: 0.7s;"></i>
-                        </div>
-                        </div>
-                        </div>
-            <div class="space-y-6 slide-in-right">
-                <h3 class="text-3xl md:text-4xl font-bold text-blue-600 glow-text">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="relative group flex justify-center">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl w-full max-w-md" style="aspect-ratio: 3/4;">
+                    <img src="{% static 'images/Women4.jfif' %}" alt="Transformation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="inline-block mb-2">
+                    <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full" style="background: rgba(234, 179, 8, 0.1); color: #eab308;">Transformation</span>
+                </div>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style="color: #1e40af; font-family: 'Inter', sans-serif;">
                     "I know I need change... but I don't know where to start."
                 </h3>
-                <p class="text-lg md:text-xl font-bold text-gray-700 uppercase tracking-wide">
+                <p class="text-base md:text-lg font-semibold text-gray-600 uppercase tracking-wide leading-relaxed">
                     YOU'VE TRIED THE BOOKS, THE PODCASTS, MAYBE EVEN THERAPY, BUT SOMETHING STILL FEELS MISSING.
                 </p>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    <span class="font-bold">The Shift:</span> You don't need to do more. You need a guide who truly sees you and helps you take aligned, gentle steps toward change, steps that nourish your whole self.
-                </p>
-                <a href="#contact" class="inline-block glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold uppercase hover:bg-opacity-90 transition relative pulse-glow">
-                    <span class="relative z-10">LET'S EXPLORE TOGETHER</span>
-                    </a>
-                        </div>
-                        </div>
-                    </div>
-    
-    <!-- Background Glow Effects -->
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-300 rounded-full blur-3xl opacity-15 wave-motion"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-300 rounded-full blur-3xl opacity-15 wave-motion" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-300 rounded-full blur-3xl opacity-10 wave-motion" style="animation-delay: 0.5s;"></div>
+                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                        <span class="font-bold text-gray-900">The Shift:</span> You don't need to do more. You need a guide who truly sees you and helps you take aligned, gentle steps toward change, steps that nourish your whole self.
+                    </p>
                 </div>
+                <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold uppercase tracking-wide text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                    <span>Let's Explore Together</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Why Work with Me Section -->
-<section class="glow-section bg-gradient-to-br from-indigo-900 via-purple-900 to-teal-900 py-20 md:py-28 relative overflow-hidden">
-    <!-- Starry Background Effect -->
-    <div class="absolute inset-0 pointer-events-none">
-        <div class="absolute w-1 h-1 bg-white rounded-full opacity-60" style="top: 10%; left: 20%; animation: twinkle 3s infinite;"></div>
-        <div class="absolute w-1 h-1 bg-white rounded-full opacity-40" style="top: 30%; left: 60%; animation: twinkle 4s infinite 0.5s;"></div>
-        <div class="absolute w-1 h-1 bg-white rounded-full opacity-50" style="top: 50%; left: 40%; animation: twinkle 3.5s infinite 1s;"></div>
-        <div class="absolute w-1 h-1 bg-white rounded-full opacity-45" style="top: 70%; left: 80%; animation: twinkle 4.5s infinite 1.5s;"></div>
-        <div class="absolute w-1 h-1 bg-white rounded-full opacity-55" style="top: 20%; left: 85%; animation: twinkle 3.2s infinite 0.8s;"></div>
-        <div class="absolute w-1 h-1 bg-white rounded-full opacity-50" style="top: 60%; left: 15%; animation: twinkle 4.2s infinite 1.2s;"></div>
-                        </div>
-        
-    <style>
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
-        }
-    </style>
+<section class="relative py-24 md:py-32 overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0" style="background: url('{% static "images/Myra-blue-1L.jpg" %}') center/cover; background-attachment: fixed;"></div>
+    <div class="absolute inset-0 z-0 bg-gradient-to-r from-white/80 via-white/80 to-white/80"></div>
+    
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-1">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-yellow-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-amber-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-50/30 rounded-full blur-3xl"></div>
+    </div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <!-- Section Title -->
-        <div class="text-center mb-16 scale-in">
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-4 glow-text">
-                Why Work <span class="italic">with Me</span>
+        <!-- Modern Section Header -->
+        <div class="text-center mb-20">
+            <div class="inline-block mb-4">
+                <span class="text-sm font-semibold uppercase tracking-widest text-gray-600">My Story</span>
+            </div>
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-amber-800 to-gray-900 bg-clip-text text-transparent" style="font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+                Why Work <span class="italic" style="font-style: italic;">with Me</span>
             </h2>
-            <p class="text-xl md:text-2xl text-yoga-yellow font-semibold text-reveal" style="animation-delay: 0.3s;">
+            <p class="text-xl md:text-2xl text-gray-700 font-medium">
                 Because I've Walked the Path You're On
-                    </p>
-                        </div>
+            </p>
+            <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, transparent, #F4D03F, transparent);"></div>
+        </div>
                 
         <!-- Main Content -->
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <!-- Text Content -->
-            <div class="space-y-8 text-reveal" style="animation-delay: 0.5s;">
+            <div class="space-y-8 order-2 md:order-1">
                 <!-- Large Heading -->
-                <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight glow-text">
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style="color: #1e40af; font-family: 'Inter', sans-serif;">
                     From surviving abuse to rediscovering joy, I've lived the transformation I now help others create.
                 </h3>
                 
                 <!-- Body Paragraphs -->
-                <div class="space-y-6 text-lg text-white leading-relaxed">
-                    <p class="text-reveal" style="animation-delay: 0.7s;">
-                        I know what it's like to give everything to everyone else and forget who you are. My journey from Ukraine to Canada, through healing, motherhood, and the profound transition of menopause, has taught me that your hardest chapters often lead to your deepest truths.
-                    </p>
+                <div class="space-y-6">
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-lg">
+                        <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                            I know what it's like to give everything to everyone else and forget who you are. My journey from Ukraine to Canada, through healing, motherhood, and the profound transition of menopause, has taught me that your hardest chapters often lead to your deepest truths.
+                        </p>
+                    </div>
                     
-                    <p class="text-reveal" style="animation-delay: 0.9s;">
-                        Menopause, in particular, was one of my most challenging and awakening experiences. It became a turning point that called me to stop conforming and start listening to my inner voice.
-                    </p>
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-lg">
+                        <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                            Menopause, in particular, was one of my most challenging and awakening experiences. It became a turning point that called me to stop conforming and start listening to my inner voice.
+                        </p>
+                    </div>
                     
-                    <p class="text-reveal" style="animation-delay: 1.1s;">
-                        That's why I guide women to embrace their truth, own their radiance, and rise with clarity and strength. My coaching blends intuition, psychology, and presence. There is no judgment here, only support and steady transformation.
-                    </p>
-                        </div>
-                        </div>
-            
-            <!-- Decorative Element -->
-            <div class="hidden md:block relative scale-in" style="animation-delay: 0.6s;">
-                <div class="w-full h-96 bg-gradient-to-br from-teal-400 via-purple-500 to-indigo-600 rounded-3xl shadow-2xl rotate-glow relative overflow-hidden glow-expand" style="background-image: linear-gradient(rgba(20, 184, 166, 0.6), rgba(168, 85, 247, 0.6), rgba(99, 102, 241, 0.6)), url('{% static "images/Myra-Yoga-7P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                        <i class="fa-solid fa-compass text-white text-8xl opacity-50 rotate-glow" style="animation-delay: 0.3s;"></i>
-                        <div class="mt-6 text-white text-2xl font-semibold opacity-70 rotate-glow" style="animation-delay: 0.5s;">
-                            Your Journey
-                        </div>
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-lg">
+                        <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                            That's why I guide women to embrace their truth, own their radiance, and rise with clarity and strength. My coaching blends intuition, psychology, and presence. There is no judgment here, only support and steady transformation.
+                        </p>
                     </div>
                 </div>
             </div>
+            
+            <!-- Image -->
+            <div class="order-1 md:order-2 relative group">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl transform scale-110">
+                    <img src="{% static 'images/Myra-blue-1L.jpg' %}" alt="Myroslava Grygorachyk" class="w-full h-auto object-cover rounded-3xl group-hover:scale-110 transition-transform duration-700" style="min-height: 500px;">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none"></div>
+                </div>
             </div>
         </div>
-    
-    <!-- Background Glow Effects -->
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-indigo-500 rounded-full blur-3xl opacity-20 rotate-glow"></div>
-        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-20 rotate-glow" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-teal-500 rounded-full blur-3xl opacity-15 rotate-glow" style="animation-delay: 0.5s;"></div>
     </div>
 </section>
 
 <!-- Confidence Quote Section -->
-<section class="glow-section bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-20 md:py-28 relative overflow-hidden">
+<section class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(180deg, #ffffff 0%, #fffbeb 30%, #fef3c7 60%, #fde68a 100%);">
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-100/60 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-orange-100/60 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-yellow-50/40 rounded-full blur-3xl"></div>
+    </div>
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <!-- Text Content -->
-            <div class="space-y-8 fade-in-right">
-                <!-- Large Quote Mark -->
-                <div class="relative">
-                    <i class="fa-solid fa-quote-left text-amber-200 text-9xl md:text-[12rem] absolute -top-12 -left-8 sparkle"></i>
+            <div class="space-y-8 order-2 md:order-1">
+                <!-- Quote Icon -->
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-6" style="background: linear-gradient(135deg, #F4D03F 0%, #fbbf24 100%);">
+                    <i class="fa-solid fa-quote-left text-white text-2xl"></i>
                 </div>
                 
                 <!-- Main Quote -->
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight relative z-10 glow-text fade-in-right" style="animation-delay: 0.2s;">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6" style="color: #1f2937; font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
                     "For years, I believed confidence was something you earned from others."
                 </h2>
                 
                 <!-- Supporting Text -->
-                <p class="text-lg md:text-xl text-gray-700 leading-relaxed fade-in-right" style="animation-delay: 0.4s;">
-                    But then I discovered it's about trusting that deep, intuitive knowing inside you. As I've heard, the 'real brain' is in your stomach and heart. When you lean into that wisdom, everything changes. You become unshakable.
-                </p>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        But then I discovered it's about trusting that deep, intuitive knowing inside you. As I've heard, the 'real brain' is in your stomach and heart. When you lean into that wisdom, everything changes. You become unshakable.
+                    </p>
+                </div>
                 
                 <!-- Attribution -->
-                <p class="text-xl md:text-2xl font-bold text-amber-600 uppercase tracking-wider fade-in-right" style="animation-delay: 0.6s;">
-                    MYROSLAVA GRYGORACHYK
-            </p>
-        </div>
+                <div class="flex items-center gap-4 pt-4">
+                    <div class="w-12 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400"></div>
+                    <p class="text-lg md:text-xl font-semibold text-gray-800 uppercase tracking-wide">
+                        Myroslava Grygorachyk
+                    </p>
+                </div>
+            </div>
         
-            <!-- Decorative Element -->
-            <div class="hidden md:block relative bounce-in" style="animation-delay: 0.3s;">
-                <div class="w-full h-96 bg-gradient-to-br from-amber-200 via-orange-300 to-yellow-400 rounded-3xl shadow-2xl sparkle relative overflow-hidden glow-expand" style="background-image: linear-gradient(rgba(251, 191, 36, 0.6), rgba(249, 115, 22, 0.6), rgba(234, 179, 8, 0.6)), url('{% static "images/Myra-Dress-2P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                        <i class="fa-solid fa-lightbulb text-white text-8xl opacity-50 sparkle" style="animation-delay: 0.5s;"></i>
-                        <div class="mt-6 text-white text-2xl font-semibold opacity-70 sparkle" style="animation-delay: 0.7s;">
-                            Inner Wisdom
-                </div>
-                </div>
-            </div>
-                </div>
-                </div>
-            </div>
-            
-    <!-- Background Glow Effects -->
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-300 rounded-full blur-3xl opacity-20 sparkle"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-300 rounded-full blur-3xl opacity-20 sparkle" style="animation-delay: 1s;"></div>
-                </div>
-</section>
-
-<!-- What Makes Me Different Section -->
-<section class="bg-gradient-to-br from-white via-blue-50 to-purple-50 py-20 md:py-28 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <!-- Decorative Element -->
-            <div class="hidden md:block relative bounce-in" style="animation-delay: 0.2s;">
-                <div class="w-full h-96 bg-gradient-to-br from-blue-200 via-purple-300 to-pink-400 rounded-3xl shadow-2xl sparkle relative overflow-hidden glow-expand" style="background-image: linear-gradient(rgba(59, 130, 246, 0.5), rgba(168, 85, 247, 0.5), rgba(244, 114, 182, 0.5)), url('{% static "images/Myra-Dress-3P.jpg" %}'); background-size: cover; background-position: center;">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                        <i class="fa-solid fa-hand-holding-heart text-white text-8xl opacity-50 sparkle" style="animation-delay: 0.4s;"></i>
-                        <div class="mt-6 text-white text-2xl font-semibold opacity-70 sparkle" style="animation-delay: 0.6s;">
-                            Authentic Connection
+            <!-- Image -->
+            <div class="order-1 md:order-2 relative group">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="{% static 'images/Myra-Dress-2P.jpg' %}" alt="Inner Wisdom" class="w-full h-96 md:h-[500px] object-cover rounded-3xl group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
                 </div>
             </div>
         </div>
     </div>
-            
-            <!-- Text Content -->
-            <div class="space-y-8 fade-in-right">
-                <!-- Main Heading -->
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 glow-text fade-in-right">
-                    What Makes Me <span class="italic">Different?</span>
-                </h2>
-                
-                <!-- Subtitles -->
-                <p class="text-xl md:text-2xl text-gray-700 font-semibold fade-in-right" style="animation-delay: 0.2s;">
-                    This is more than coaching. It's connection, clarity, and care.
-                </p>
-                
-                <p class="text-lg md:text-xl font-bold text-gray-800 uppercase tracking-wide fade-in-right" style="animation-delay: 0.3s;">
-                    I GUIDE FROM LIVED EXPERIENCE, NOT SCRIPTS.
-                </p>
-                
-                <!-- Paragraph -->
-                <p class="text-lg text-gray-700 leading-relaxed fade-in-right" style="animation-delay: 0.4s;">
-                    My work is rooted in presence, empathy, and real transformation. I gently help you return to who you truly are.
-                </p>
-                
-                <!-- Bullet Points -->
-                <div class="space-y-4 fade-in-right" style="animation-delay: 0.5s;">
-                    <div class="flex items-start gap-4">
-                        <i class="fa-solid fa-check-circle text-yoga-yellow text-2xl mt-1 sparkle"></i>
-                        <p class="text-lg text-gray-700">I meet you where you are, without judgment.</p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <i class="fa-solid fa-check-circle text-yoga-yellow text-2xl mt-1 sparkle" style="animation-delay: 0.2s;"></i>
-                        <p class="text-lg text-gray-700">I blend science, soul, and strategy.</p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <i class="fa-solid fa-check-circle text-yoga-yellow text-2xl mt-1 sparkle" style="animation-delay: 0.4s;"></i>
-                        <p class="text-lg text-gray-700">I hold space for your mind, body, heart, and spirit.</p>
-                    </div>
+</section>
+
+<!-- What Makes Me Different Section -->
+<section class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 30%, #e0f2fe 60%, #dbeafe 100%);">
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-blue-100/60 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-purple-100/60 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-50/40 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            <!-- Image -->
+            <div class="relative group order-1 md:order-1">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="{% static 'images/Myra-Dress-3P.jpg' %}" alt="Authentic Connection" class="w-full h-96 md:h-[500px] object-cover rounded-3xl group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+                </div>
             </div>
             
-                <!-- Call to Action Button -->
-                <div class="fade-in-right" style="animation-delay: 0.6s;">
-                    <a href="#contact" class="inline-flex items-center gap-3 glow-button bg-yoga-yellow text-gray-800 px-8 py-4 rounded-full font-bold text-lg uppercase hover:bg-opacity-90 transition relative shadow-2xl shadow-yellow-300/50 pulse-glow">
-                        <span class="relative z-10">BOOK YOUR FREE DISCOVERY CALL</span>
-                        <i class="fa-solid fa-arrow-right relative z-10"></i>
-                    </a>
-                    </div>
-                </div>
-                    </div>
+            <!-- Text Content -->
+            <div class="space-y-8 order-2 md:order-2">
+                <!-- Main Heading -->
+                <div>
+                    <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent" style="font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+                        What Makes Me <span class="italic" style="font-style: italic;">Different?</span>
+                    </h2>
+                    <div class="w-24 h-1 mt-4 rounded-full" style="background: linear-gradient(to right, #3b82f6, #8b5cf6);"></div>
                 </div>
                 
-    <!-- Background Glow Effects -->
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-300 rounded-full blur-3xl opacity-15 sparkle"></div>
-        <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-300 rounded-full blur-3xl opacity-15 sparkle" style="animation-delay: 1s;"></div>
+                <!-- Subtitles -->
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-xl md:text-2xl text-gray-700 font-semibold mb-4">
+                        This is more than coaching. It's connection, clarity, and care.
+                    </p>
+                    <p class="text-lg md:text-xl font-bold text-gray-900 uppercase tracking-wide">
+                        I GUIDE FROM LIVED EXPERIENCE, NOT SCRIPTS.
+                    </p>
+                </div>
+                
+                <!-- Paragraph -->
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        My work is rooted in presence, empathy, and real transformation. I gently help you return to who you truly are.
+                    </p>
+                </div>
+                
+                <!-- Bullet Points -->
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-100 shadow-sm">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #F4D03F 0%, #fbbf24 100%);">
+                            <i class="fa-solid fa-check text-white text-sm"></i>
+                        </div>
+                        <p class="text-lg text-gray-700 pt-1">I meet you where you are, without judgment.</p>
                     </div>
+                    <div class="flex items-start gap-4 bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-100 shadow-sm">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #F4D03F 0%, #fbbf24 100%);">
+                            <i class="fa-solid fa-check text-white text-sm"></i>
+                        </div>
+                        <p class="text-lg text-gray-700 pt-1">I blend science, soul, and strategy.</p>
+                    </div>
+                    <div class="flex items-start gap-4 bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-100 shadow-sm">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #F4D03F 0%, #fbbf24 100%);">
+                            <i class="fa-solid fa-check text-white text-sm"></i>
+                        </div>
+                        <p class="text-lg text-gray-700 pt-1">I hold space for your mind, body, heart, and spirit.</p>
+                    </div>
+                </div>
+            
+                <!-- Call to Action Button -->
+                <div class="pt-4">
+                    <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-5 rounded-xl font-bold uppercase tracking-wide text-sm transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                        <span>Book Your Free Discovery Call</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Contact Section -->
-<section id="contact" class="bg-white py-16 md:py-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Get in Touch</h2>
-            <p class="text-lg text-gray-700">Ready to begin your transformation journey? Let's connect.</p>
-                    </div>
-        <div class="bg-gray-50 rounded-lg shadow-xl p-8 md:p-12">
-            <form class="space-y-6">
-                    <div>
-                    <label class="block text-sm font-semibold text-gray-800 mb-2">Name</label>
-                    <input type="text" class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yoga-yellow" placeholder="Your name">
-                </div>
-                    <div>
-                    <label class="block text-sm font-semibold text-gray-800 mb-2">Email</label>
-                    <input type="email" class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yoga-yellow" placeholder="your.email@example.com">
+<section id="contact" class="relative py-24 md:py-32 overflow-hidden" style="background: linear-gradient(180deg, #ffffff 0%, #fffbeb 15%, #fef3c7 30%, #fde68a 50%, #fcd34d 70%, #fbbf24 85%, #f59e0b 100%);">
+    <!-- Modern Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-gradient-to-br from-yellow-200/60 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-gradient-to-tr from-amber-200/60 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-200/40 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Modern Section Header -->
+        <div class="text-center mb-16">
+            <div class="inline-block mb-4">
+                <span class="text-sm font-semibold uppercase tracking-widest text-gray-500">Connect With Me</span>
             </div>
-                    <div>
-                    <label class="block text-sm font-semibold text-gray-800 mb-2">Message</label>
-                    <textarea rows="5" class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yoga-yellow" placeholder="Tell me what's on your heart..."></textarea>
-                    </div>
-                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-yoga-yellow text-gray-800 px-6 py-4 text-base font-semibold uppercase rounded-md hover:bg-opacity-90 transition">
-                    SEND MESSAGE
-                    </button>
-                </form>
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent" style="font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+                Get in Touch
+            </h2>
+            <p class="text-xl text-gray-600 font-medium">
+                Ready to begin your transformation journey? Let's connect.
+            </p>
+            <div class="w-24 h-1 mx-auto mt-6 rounded-full" style="background: linear-gradient(to right, transparent, #F4D03F, transparent);"></div>
+        </div>
+        
+        <!-- Modern Form Card -->
+        <div class="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-100/50 p-8 md:p-12 relative overflow-hidden">
+            <!-- Glow Effect -->
+            <div class="absolute inset-0 rounded-3xl opacity-0 hover:opacity-100 transition-opacity duration-500" style="background: radial-gradient(circle at center, rgba(244, 208, 63, 0.1) 0%, transparent 70%); pointer-events: none;"></div>
+            
+            <form class="space-y-6 relative z-10">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Name</label>
+                    <input type="text" class="w-full rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm px-5 py-4 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-yoga-yellow focus:ring-4 focus:ring-yoga-yellow/20 transition-all duration-300 font-medium" placeholder="Your name">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Email</label>
+                    <input type="email" class="w-full rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm px-5 py-4 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-yoga-yellow focus:ring-4 focus:ring-yoga-yellow/20 transition-all duration-300 font-medium" placeholder="your.email@example.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Message</label>
+                    <textarea rows="6" class="w-full rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm px-5 py-4 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-yoga-yellow focus:ring-4 focus:ring-yoga-yellow/20 transition-all duration-300 resize-none font-medium" placeholder="Tell me what's on your heart..."></textarea>
+                </div>
+                <button type="submit" class="group w-full inline-flex items-center justify-center gap-3 px-8 py-5 text-base font-bold uppercase tracking-wide rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105" style="background: linear-gradient(135deg, #F4D03F 0%, #fedd33 100%); color: #1f2937;">
+                    <span>Send Message</span>
+                    <i class="fa-solid fa-paper-plane group-hover:translate-x-1 transition-transform duration-300"></i>
+                </button>
+            </form>
         </div>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="peaceful-footer py-16">
+<footer class="peaceful-footer py-16 md:py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid gap-10 md:grid-cols-4">
+        <div class="grid gap-12 md:gap-10 md:grid-cols-4 mb-12">
             <div>
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fa-solid fa-sun text-yoga-yellow text-3xl peaceful-footer-icon"></i>
-                    <span class="text-2xl font-bold">Radiating Life</span>
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="{% static 'images/RL-Logo.png' %}" alt="Radiating Life Logo" class="footer-logo h-20 md:h-28 lg:h-32 w-auto object-contain">
+                    <span class="text-2xl md:text-3xl font-bold" style="color: #F4D03F; text-shadow: 0 2px 8px rgba(244, 208, 63, 0.5);">Radiating Life</span>
                 </div>
-                <p class="text-base leading-relaxed text-white/90">
+                <p class="text-base md:text-lg leading-relaxed text-white/95 mb-4" style="line-height: 1.8;">
                     Awakening radiance and reclaiming power through holistic wellness and trauma-informed coaching.
                 </p>
+                <div class="flex items-center gap-2 mt-4">
+                    <i class="fas fa-heart text-yoga-yellow peaceful-footer-icon"></i>
+                    <span class="text-sm text-white/80 italic">Empowering women to shine</span>
+                </div>
             </div>
             <div>
-                <h3 class="font-semibold text-xl mb-6">Navigation</h3>
-                <ul class="space-y-3 text-base">
-                    <li><a href="#home" class="peaceful-footer-link">Home</a></li>
-                    <li><a href="{% url 'about' %}" class="peaceful-footer-link">About</a></li>
-                    <li><a href="#services" class="peaceful-footer-link">Services</a></li>
-                    <li><a href="#testimonials" class="peaceful-footer-link">Testimonials</a></li>
+                <h3 class="font-bold text-xl md:text-2xl mb-6" style="color: #F4D03F; text-shadow: 0 2px 4px rgba(244, 208, 63, 0.3);">Navigation</h3>
+                <ul class="space-y-4 text-base">
+                    <li><a href="#home" class="peaceful-footer-link inline-block">Home</a></li>
+                    <li><a href="#about" class="peaceful-footer-link inline-block">About</a></li>
+                    <li><a href="#services" class="peaceful-footer-link inline-block">Services</a></li>
+                    <li><a href="#testimonials" class="peaceful-footer-link inline-block">Testimonials</a></li>
+                    <li><a href="#contact" class="peaceful-footer-link inline-block">Contact</a></li>
                 </ul>
             </div>
             <div>
-                <h3 class="font-semibold text-xl mb-6">Connect</h3>
-                <div class="flex gap-4 mb-6">
-                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                <h3 class="font-bold text-xl md:text-2xl mb-6" style="color: #F4D03F; text-shadow: 0 2px 4px rgba(244, 208, 63, 0.3);">Connect</h3>
+                <p class="text-base text-white/90 mb-6">Follow the journey</p>
+                <div class="flex gap-4 flex-wrap">
+                    <a href="#" class="peaceful-social-link rounded-full flex items-center justify-center text-xl" style="width: 3.5rem; height: 3.5rem;">
                         <i class="fa-brands fa-facebook"></i>
                     </a>
-                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                    <a href="#" class="peaceful-social-link rounded-full flex items-center justify-center text-xl" style="width: 3.5rem; height: 3.5rem;">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                    <a href="#" class="peaceful-social-link rounded-full flex items-center justify-center text-xl" style="width: 3.5rem; height: 3.5rem;">
                         <i class="fa-brands fa-linkedin"></i>
                     </a>
-                    <a href="#" class="peaceful-social-link rounded-full bg-white/20 flex items-center justify-center text-lg">
+                    <a href="#" class="peaceful-social-link rounded-full flex items-center justify-center text-xl" style="width: 3.5rem; height: 3.5rem;">
                         <i class="fa-brands fa-youtube"></i>
                     </a>
                 </div>
             </div>
             <div>
-                <h3 class="font-semibold text-xl mb-6">Contact</h3>
-                <p class="text-base leading-relaxed text-white/90">
+                <h3 class="font-bold text-xl md:text-2xl mb-6" style="color: #F4D03F; text-shadow: 0 2px 4px rgba(244, 208, 63, 0.3);">Contact</h3>
+                <p class="text-base md:text-lg leading-relaxed text-white/95 mb-4" style="line-height: 1.8;">
                     Ready to begin your transformation?<br>
                     Let's explore together.
                 </p>
+                <div class="flex items-center gap-3 mt-6">
+                    <i class="fas fa-envelope text-yoga-yellow text-xl"></i>
+                    <a href="mailto:info@radiatinglife.com" class="peaceful-footer-link text-base">info@radiatinglife.com</a>
+                </div>
             </div>
         </div>
-        <div class="border-t border-white/20 mt-12 pt-8 text-center text-base text-white/70">
-            © 2024 Radiating Life. All rights reserved.
+        <div class="border-t border-white/30 mt-12 pt-8 text-center">
+            <p class="text-base text-white/80 mb-2">
+                © 2024 Radiating Life. All rights reserved.
+            </p>
+            <p class="text-sm text-white/60">
+                Created with <i class="fas fa-heart text-yoga-yellow"></i> for transformation and growth
+            </p>
         </div>
     </div>
 </footer>
@@ -1710,4 +2423,303 @@ updateCarousel(true);
         });
     });
 </script>
+
+<!-- Navigation Scroll Fade Effect -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('.peaceful-nav');
+        
+        if (nav) {
+            // Check initial scroll position
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            }
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Ribbon scroll animation
+        let lastScrollTop = 0;
+        let ribbonOffset = 0;
+        const leftRibbon = document.getElementById('leftRibbon');
+        const rightRibbon = document.getElementById('rightRibbon');
+        
+        if (leftRibbon && rightRibbon) {
+            // Set initial transform
+            leftRibbon.style.transform = 'translateY(-50%) translateX(-50%)';
+            rightRibbon.style.transform = 'translateY(-50%) translateX(50%)';
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollDelta = scrollTop - lastScrollTop;
+                
+                // Accumulate offset based on scroll direction
+                if (scrollDelta > 0) {
+                    // Scrolling down - move ribbons down
+                    ribbonOffset = Math.min(ribbonOffset + scrollDelta * 0.15, 400);
+                } else if (scrollDelta < 0) {
+                    // Scrolling up - move ribbons up
+                    ribbonOffset = Math.max(ribbonOffset + scrollDelta * 0.15, -400);
+                }
+                
+                // Apply transform with smooth transition
+                leftRibbon.style.transition = 'transform 0.2s ease-out';
+                rightRibbon.style.transition = 'transform 0.2s ease-out';
+                leftRibbon.style.transform = `translateY(calc(-50% + ${ribbonOffset}px)) translateX(-50%)`;
+                rightRibbon.style.transform = `translateY(calc(-50% + ${ribbonOffset}px)) translateX(50%)`;
+                
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            });
+        }
+        
+        // Comprehensive Scroll-triggered animations for all sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        // Observer for fade-in elements
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+        
+        fadeElements.forEach(element => {
+            fadeObserver.observe(element);
+        });
+        
+        // Observer for all scroll-animate elements
+        const scrollAnimateObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Apply animations to all major sections (excluding hero)
+        const sections = document.querySelectorAll('section:not(.hero-section)');
+        sections.forEach((section, index) => {
+            section.classList.add('scroll-animate-up');
+            scrollAnimateObserver.observe(section);
+        });
+        
+        // Animate major headings and key content blocks
+        const headings = document.querySelectorAll('section h2, section h3');
+        headings.forEach((heading, index) => {
+            if (!heading.closest('.hero-section')) {
+                heading.classList.add('scroll-animate-up');
+                heading.style.transitionDelay = `${index % 3 * 0.1}s`;
+                scrollAnimateObserver.observe(heading);
+            }
+        });
+        
+        // Animate cards and grid items with staggered delays
+        const cards = document.querySelectorAll('.glow-card, .service-card, .testimonial-card, .partner-logos-loop');
+        cards.forEach((card, index) => {
+            if (!card.classList.contains('fade-in') && !card.closest('.hero-section')) {
+                card.classList.add('scroll-animate-scale');
+                card.style.transitionDelay = `${(index % 5) * 0.1}s`;
+                scrollAnimateObserver.observe(card);
+            }
+        });
+        
+        // Animate footer
+        const footer = document.querySelector('footer');
+        if (footer) {
+            footer.classList.add('scroll-animate-up');
+            scrollAnimateObserver.observe(footer);
+        }
+        
+        // Animate about me content blocks
+        const aboutBlocks = document.querySelectorAll('#about .story-card, #about .glow-card');
+        aboutBlocks.forEach((block, index) => {
+            block.classList.add('scroll-animate-left');
+            block.style.transitionDelay = `${index * 0.15}s`;
+            scrollAnimateObserver.observe(block);
+        });
+        
+        // Animate paragraphs with left-to-right fade in about section
+        const aboutParagraphs = document.querySelectorAll('#about p.scroll-animate-left');
+        aboutParagraphs.forEach((paragraph) => {
+            scrollAnimateObserver.observe(paragraph);
+        });
+        
+        // Animate gallery items with left/right fade
+        const galleryContainer = document.getElementById('qualifications-gallery');
+        if (galleryContainer) {
+            const galleryItems = galleryContainer.querySelectorAll('.scroll-animate-left, .scroll-animate-right');
+            galleryItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.15}s`;
+                scrollAnimateObserver.observe(item);
+            });
+        }
+        
+        // Animate services carousel
+        const servicesSection = document.querySelector('.services-section, #services');
+        if (servicesSection) {
+            servicesSection.classList.add('scroll-animate-up');
+            scrollAnimateObserver.observe(servicesSection);
+        }
+        
+        // Partner Logos Infinite Loop
+        (function initPartnerLogosLoop() {
+            const loopContainer = document.getElementById('partner-logos-loop');
+            const track = loopContainer?.querySelector('.partner-logos-track');
+            
+            if (!loopContainer || !track) return;
+            
+            // Get original logo items
+            const originalItems = Array.from(track.querySelectorAll('.partner-logo-item'));
+            if (originalItems.length === 0) return;
+            
+            // Calculate how many copies we need
+            function calculateCopies() {
+                const containerWidth = loopContainer.clientWidth;
+                const originalWidth = track.offsetWidth;
+                if (originalWidth === 0) return 3;
+                
+                const copiesNeeded = Math.ceil(containerWidth / originalWidth) + 2;
+                return Math.max(3, copiesNeeded);
+            }
+            
+            // Duplicate logos for seamless loop
+            function duplicateLogos() {
+                // Clear existing duplicates (keep originals)
+                const items = track.querySelectorAll('.partner-logo-item');
+                if (items.length > originalItems.length) {
+                    items.forEach((item, index) => {
+                        if (index >= originalItems.length) {
+                            item.remove();
+                        }
+                    });
+                }
+                
+                const copyCount = calculateCopies();
+                const originalWidth = track.offsetWidth;
+                
+                // Clone original items
+                for (let i = 0; i < copyCount; i++) {
+                    originalItems.forEach(originalItem => {
+                        const clone = originalItem.cloneNode(true);
+                        track.appendChild(clone);
+                    });
+                }
+            }
+            
+            // Animation variables
+            let offset = 0;
+            let velocity = 0;
+            let targetVelocity = 120; // pixels per second
+            let lastTimestamp = null;
+            let isHovered = false;
+            const SMOOTH_TAU = 0.25;
+            
+            // Get sequence width (width of one set of logos)
+            function getSequenceWidth() {
+                if (originalItems.length === 0) return 0;
+                const firstItem = originalItems[0];
+                const lastItem = originalItems[originalItems.length - 1];
+                const firstRect = firstItem.getBoundingClientRect();
+                const lastRect = lastItem.getBoundingClientRect();
+                const gap = parseFloat(getComputedStyle(track).gap) || 48;
+                return lastRect.right - firstRect.left + gap;
+            }
+            
+            // Animation loop
+            function animate(timestamp) {
+                if (lastTimestamp === null) {
+                    lastTimestamp = timestamp;
+                }
+                
+                const deltaTime = Math.max(0, timestamp - lastTimestamp) / 1000;
+                lastTimestamp = timestamp;
+                
+                // Smooth velocity interpolation
+                const target = isHovered ? 0 : targetVelocity;
+                const easingFactor = 1 - Math.exp(-deltaTime / SMOOTH_TAU);
+                velocity += (target - velocity) * easingFactor;
+                
+                const seqWidth = getSequenceWidth();
+                if (seqWidth > 0) {
+                    offset += velocity * deltaTime;
+                    offset = ((offset % seqWidth) + seqWidth) % seqWidth;
+                    track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            // Handle hover
+            loopContainer.addEventListener('mouseenter', () => {
+                isHovered = true;
+            });
+            
+            loopContainer.addEventListener('mouseleave', () => {
+                isHovered = false;
+            });
+            
+            // Handle resize
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    duplicateLogos();
+                    offset = 0;
+                }, 250);
+            });
+            
+            // Wait for images to load
+            function waitForImages(callback) {
+                const images = track.querySelectorAll('img');
+                if (images.length === 0) {
+                    callback();
+                    return;
+                }
+                
+                let loaded = 0;
+                const total = images.length;
+                
+                function onLoad() {
+                    loaded++;
+                    if (loaded === total) {
+                        callback();
+                    }
+                }
+                
+                images.forEach(img => {
+                    if (img.complete) {
+                        onLoad();
+                    } else {
+                        img.addEventListener('load', onLoad, { once: true });
+                        img.addEventListener('error', onLoad, { once: true });
+                    }
+                });
+            }
+            
+            // Initialize
+            waitForImages(() => {
+                duplicateLogos();
+                requestAnimationFrame(animate);
+            });
+        })();
+        
+    });
+</script>
 {% endblock %}
+
