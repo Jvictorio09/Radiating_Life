@@ -1,0 +1,60 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Dashboard Home{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-navy-900 mb-8">Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="{% url 'dashboard:seo_edit' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex items-center mb-4">
+                <i class="fa-solid fa-search text-3xl text-navy-900 mr-4"></i>
+                <h2 class="text-xl font-semibold">SEO Settings</h2>
+            </div>
+            <p class="text-gray-600">Manage SEO metadata and Open Graph settings</p>
+        </a>
+        
+        <a href="{% url 'dashboard:gallery' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex items-center mb-4">
+                <i class="fa-solid fa-images text-3xl text-navy-900 mr-4"></i>
+                <h2 class="text-xl font-semibold">Image Gallery</h2>
+            </div>
+            <p class="text-gray-600">Upload and manage images</p>
+        </a>
+        
+        <a href="{% url 'dashboard:hero_edit' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex items-center mb-4">
+                <i class="fa-solid fa-image text-3xl text-navy-900 mr-4"></i>
+                <h2 class="text-xl font-semibold">Hero Section</h2>
+            </div>
+            <p class="text-gray-600">Edit hero section content</p>
+        </a>
+        
+        <a href="{% url 'dashboard:about_edit' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex items-center mb-4">
+                <i class="fa-solid fa-info-circle text-3xl text-navy-900 mr-4"></i>
+                <h2 class="text-xl font-semibold">About Section</h2>
+            </div>
+            <p class="text-gray-600">Edit about section content</p>
+        </a>
+        
+        <a href="{% url 'dashboard:services_list' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex items-center mb-4">
+                <i class="fa-solid fa-briefcase text-3xl text-navy-900 mr-4"></i>
+                <h2 class="text-xl font-semibold">Services</h2>
+            </div>
+            <p class="text-gray-600">Manage services</p>
+        </a>
+        
+        <a href="{% url 'dashboard:portfolio_projects_list' %}" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div class="flex items-center mb-4">
+                <i class="fa-solid fa-project-diagram text-3xl text-navy-900 mr-4"></i>
+                <h2 class="text-xl font-semibold">Portfolio</h2>
+            </div>
+            <p class="text-gray-600">Manage portfolio projects</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
+

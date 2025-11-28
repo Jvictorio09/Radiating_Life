@@ -1,0 +1,291 @@
+<!-- Image Picker Modal -->
+<div id="imagePickerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <!-- Modal Header -->
+        <div class="bg-navy-900 text-white p-4 flex justify-between items-center">
+            <h2 class="text-xl font-bold">Choose Image</h2>
+            <button onclick="closeImagePickerModal()" class="text-white hover:text-gray-300">
+                <i class="fa-solid fa-times text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="border-b border-gray-200 flex">
+            <button id="galleryTab" onclick="switchTab('gallery')" 
+                    class="px-6 py-3 font-semibold text-navy-900 border-b-2 border-navy-900">
+                <i class="fa-solid fa-images mr-2"></i> Gallery
+            </button>
+            <button id="uploadTab" onclick="switchTab('upload')" 
+                    class="px-6 py-3 font-semibold text-gray-500 hover:text-navy-900">
+                <i class="fa-solid fa-upload mr-2"></i> Upload
+            </button>
+        </div>
+        
+        <!-- Modal Content -->
+        <div class="flex-1 overflow-y-auto p-6">
+            <!-- Gallery Tab -->
+            <div id="galleryContent" class="tab-content">
+                <div class="mb-4">
+                    <input type="text" id="gallerySearch" placeholder="Search images..." 
+                           onkeyup="searchGallery()"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Gallery images will be loaded here -->
+                </div>
+                <div id="galleryEmpty" class="text-center py-12 text-gray-500 hidden">
+                    <i class="fa-solid fa-images text-4xl mb-4"></i>
+                    <p>No images found</p>
+                </div>
+            </div>
+            
+            <!-- Upload Tab -->
+            <div id="uploadContent" class="tab-content hidden">
+                <form id="imageUploadForm" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Folder</label>
+                        <input type="text" name="folder" value="uploads" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Images (Multiple files supported)</label>
+                        <input type="file" name="image" id="imageInput" multiple accept="image/*" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-navy-900 text-white py-3 rounded-lg hover:bg-navy-800 font-semibold">
+                        <i class="fa-solid fa-upload mr-2"></i> Upload Images
+                    </button>
+                </form>
+                <div id="uploadProgress" class="mt-4 hidden">
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="uploadProgressBar" class="bg-navy-900 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Uploading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentFieldId = null;
+let isGalleryMode = false;
+let selectedImages = [];
+
+// Open modal for single image selection
+function openImagePickerModal(fieldId) {
+    currentFieldId = fieldId;
+    isGalleryMode = false;
+    selectedImages = [];
+    document.getElementById('imagePickerModal').classList.remove('hidden');
+    switchTab('gallery');
+    loadGallery();
+}
+
+// Open modal for gallery mode (multiple images for JSON arrays)
+function openImagePickerModalForGallery(fieldId) {
+    currentFieldId = fieldId;
+    isGalleryMode = true;
+    selectedImages = [];
+    document.getElementById('imagePickerModal').classList.remove('hidden');
+    switchTab('gallery');
+    loadGallery();
+}
+
+function closeImagePickerModal() {
+    document.getElementById('imagePickerModal').classList.add('hidden');
+    currentFieldId = null;
+    selectedImages = [];
+}
+
+function switchTab(tab) {
+    if (tab === 'gallery') {
+        document.getElementById('galleryTab').classList.add('border-navy-900', 'text-navy-900');
+        document.getElementById('galleryTab').classList.remove('text-gray-500');
+        document.getElementById('uploadTab').classList.remove('border-navy-900', 'text-navy-900');
+        document.getElementById('uploadTab').classList.add('text-gray-500');
+        document.getElementById('galleryContent').classList.remove('hidden');
+        document.getElementById('uploadContent').classList.add('hidden');
+    } else {
+        document.getElementById('uploadTab').classList.add('border-navy-900', 'text-navy-900');
+        document.getElementById('uploadTab').classList.remove('text-gray-500');
+        document.getElementById('galleryTab').classList.remove('border-navy-900', 'text-navy-900');
+        document.getElementById('galleryTab').classList.add('text-gray-500');
+        document.getElementById('uploadContent').classList.remove('hidden');
+        document.getElementById('galleryContent').classList.add('hidden');
+    }
+}
+
+function loadGallery() {
+    fetch('{% url "dashboard:gallery" %}?format=json')
+        .then(response => response.json())
+        .then(data => {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+            
+            if (data.images && data.images.length > 0) {
+                document.getElementById('galleryEmpty').classList.add('hidden');
+                data.images.forEach(image => {
+                    const div = document.createElement('div');
+                    div.className = 'relative group cursor-pointer';
+                    div.onclick = () => selectImage(image);
+                    
+                    const isSelected = selectedImages.some(img => img.id === image.id);
+                    
+                    div.innerHTML = `
+                        <img src="${image.thumb_url || image.cloudinary_url}" 
+                             alt="${image.file_name}" 
+                             class="w-full h-32 object-cover rounded-lg">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 rounded-lg transition">
+                            ${isSelected ? '<div class="absolute top-2 right-2 bg-navy-900 text-white rounded-full p-1"><i class="fa-solid fa-check"></i></div>' : ''}
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+            } else {
+                document.getElementById('galleryEmpty').classList.remove('hidden');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading gallery:', error);
+            // Fallback: try to load from HTML response
+            fetch('{% url "dashboard:gallery" %}')
+                .then(response => response.text())
+                .then(html => {
+                    // Parse HTML to extract images (simplified approach)
+                    console.log('Gallery loaded');
+                });
+        });
+}
+
+function searchGallery() {
+    const query = document.getElementById('gallerySearch').value.toLowerCase();
+    const images = document.querySelectorAll('#galleryGrid > div');
+    
+    images.forEach(div => {
+        const img = div.querySelector('img');
+        const alt = img ? img.alt.toLowerCase() : '';
+        if (alt.includes(query)) {
+            div.style.display = '';
+        } else {
+            div.style.display = 'none';
+        }
+    });
+}
+
+function selectImage(image) {
+    if (isGalleryMode) {
+        // Toggle selection for gallery mode
+        const index = selectedImages.findIndex(img => img.id === image.id);
+        if (index > -1) {
+            selectedImages.splice(index, 1);
+        } else {
+            selectedImages.push(image);
+        }
+        loadGallery(); // Reload to update selection indicators
+    } else {
+        // Single selection mode
+        const field = document.getElementById(currentFieldId);
+        if (field) {
+            field.value = image.web_url || image.cloudinary_url;
+            field.dispatchEvent(new Event('change'));
+        }
+        closeImagePickerModal();
+    }
+}
+
+function confirmGallerySelection() {
+    if (isGalleryMode && currentFieldId) {
+        const field = document.getElementById(currentFieldId);
+        if (field) {
+            const urls = selectedImages.map(img => img.web_url || img.cloudinary_url);
+            field.value = JSON.stringify(urls);
+            field.dispatchEvent(new Event('change'));
+        }
+        closeImagePickerModal();
+    }
+}
+
+// Handle image upload
+document.getElementById('imageUploadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    const files = document.getElementById('imageInput').files;
+    const folder = document.querySelector('input[name="folder"]').value;
+    
+    if (files.length === 0) {
+        alert('Please select at least one image');
+        return;
+    }
+    
+    document.getElementById('uploadProgress').classList.remove('hidden');
+    
+    // Upload files one by one
+    let uploaded = 0;
+    const total = files.length;
+    
+    Array.from(files).forEach((file, index) => {
+        const fileFormData = new FormData();
+        fileFormData.append('image', file);
+        fileFormData.append('folder', folder);
+        
+        fetch('{% url "dashboard:upload_image" %}', {
+            method: 'POST',
+            body: fileFormData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            uploaded++;
+            document.getElementById('uploadProgressBar').style.width = (uploaded / total * 100) + '%';
+            
+            if (uploaded === total) {
+                document.getElementById('uploadProgress').classList.add('hidden');
+                document.getElementById('imageInput').value = '';
+                loadGallery();
+                switchTab('gallery');
+                
+                // Auto-select first uploaded image if in single mode
+                if (!isGalleryMode && currentFieldId) {
+                    const field = document.getElementById(currentFieldId);
+                    if (field) {
+                        field.value = data.web_url || data.url;
+                    }
+                    closeImagePickerModal();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Upload error:', error);
+            alert('Error uploading image: ' + error.message);
+        });
+    });
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Close modal on outside click
+document.getElementById('imagePickerModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeImagePickerModal();
+    }
+});
+</script>
+

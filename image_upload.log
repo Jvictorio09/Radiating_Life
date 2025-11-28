@@ -1,0 +1,142 @@
+2025-11-29 01:47:52,381 - INFO - Starting image upload process...
+2025-11-29 01:47:52,381 - INFO - Static directory: E:\New Downloads\Radiating_Life\static\images
+2025-11-29 01:47:52,381 - INFO - Resolution threshold: 1920px
+2025-11-29 01:47:52,382 - INFO - Environment variables loaded successfully
+2025-11-29 01:47:52,383 - INFO - Cloudinary configured for cloud: dcuswyfur
+2025-11-29 01:47:52,383 - INFO - Database connection established via Django
+2025-11-29 01:47:52,956 - INFO - media_assets table exists and is accessible
+2025-11-29 01:47:52,959 - INFO - Found 36 image(s) to process
+2025-11-29 01:47:52,959 - INFO - Processing: ChatGPT Image Nov 27, 2025, 05_09_22 PM.png
+2025-11-29 01:47:57,215 - INFO - Successfully uploaded ChatGPT Image Nov 27, 2025, 05_09_22 PM.png to Cloudinary
+2025-11-29 01:47:57,481 - INFO - Saved metadata for ChatGPT Image Nov 27, 2025, 05_09_22 PM.png to database
+2025-11-29 01:47:57,546 - INFO - Processing: h - Myroslava Grygorachyk- (121 of 176).jpg
+2025-11-29 01:47:57,557 - INFO - Converting h - Myroslava Grygorachyk- (121 of 176).jpg to WebP (resolution: 4256x2832)
+2025-11-29 01:48:02,272 - INFO - Converted h - Myroslava Grygorachyk- (121 of 176).jpg to WebP: h - Myroslava Grygorachyk- (121 of 176).webp
+2025-11-29 01:48:04,047 - INFO - Successfully uploaded h - Myroslava Grygorachyk- (121 of 176).webp to Cloudinary
+2025-11-29 01:48:04,308 - INFO - Saved metadata for h - Myroslava Grygorachyk- (121 of 176).jpg to database
+2025-11-29 01:48:04,309 - INFO - Cleaned up temporary file: h - Myroslava Grygorachyk- (121 of 176).webp
+2025-11-29 01:48:04,313 - INFO - Processing: h - Myroslava Grygorachyk- (175 of 176)-2.jpg
+2025-11-29 01:48:04,316 - INFO - Converting h - Myroslava Grygorachyk- (175 of 176)-2.jpg to WebP (resolution: 4256x2832)
+2025-11-29 01:48:10,301 - INFO - Converted h - Myroslava Grygorachyk- (175 of 176)-2.jpg to WebP: h - Myroslava Grygorachyk- (175 of 176)-2.webp
+2025-11-29 01:48:11,920 - INFO - Successfully uploaded h - Myroslava Grygorachyk- (175 of 176)-2.webp to Cloudinary
+2025-11-29 01:48:12,198 - INFO - Saved metadata for h - Myroslava Grygorachyk- (175 of 176)-2.jpg to database
+2025-11-29 01:48:12,199 - INFO - Cleaned up temporary file: h - Myroslava Grygorachyk- (175 of 176)-2.webp
+2025-11-29 01:48:12,200 - INFO - Processing: h - Myroslava Grygorachyk- (98 of 176).jpg
+2025-11-29 01:48:12,202 - INFO - Converting h - Myroslava Grygorachyk- (98 of 176).jpg to WebP (resolution: 4256x2832)
+2025-11-29 01:48:16,885 - INFO - Converted h - Myroslava Grygorachyk- (98 of 176).jpg to WebP: h - Myroslava Grygorachyk- (98 of 176).webp
+2025-11-29 01:48:18,630 - INFO - Successfully uploaded h - Myroslava Grygorachyk- (98 of 176).webp to Cloudinary
+2025-11-29 01:48:18,882 - INFO - Saved metadata for h - Myroslava Grygorachyk- (98 of 176).jpg to database
+2025-11-29 01:48:18,883 - INFO - Cleaned up temporary file: h - Myroslava Grygorachyk- (98 of 176).webp
+2025-11-29 01:48:18,884 - INFO - Processing: Inspire.png
+2025-11-29 01:48:20,081 - INFO - Successfully uploaded Inspire.png to Cloudinary
+2025-11-29 01:48:20,342 - INFO - Saved metadata for Inspire.png to database
+2025-11-29 01:48:20,344 - INFO - Processing: Mindvalley.png
+2025-11-29 01:48:21,275 - INFO - Successfully uploaded Mindvalley.png to Cloudinary
+2025-11-29 01:48:21,525 - INFO - Saved metadata for Mindvalley.png to database
+2025-11-29 01:48:21,527 - INFO - Processing: Myra-blue-1L.jpg
+2025-11-29 01:48:21,528 - INFO - Converting Myra-blue-1L.jpg to WebP (resolution: 2128x1416)
+2025-11-29 01:48:22,648 - INFO - Converted Myra-blue-1L.jpg to WebP: Myra-blue-1L.webp
+2025-11-29 01:48:24,589 - INFO - Successfully uploaded Myra-blue-1L.webp to Cloudinary
+2025-11-29 01:48:24,840 - INFO - Saved metadata for Myra-blue-1L.jpg to database
+2025-11-29 01:48:24,842 - INFO - Cleaned up temporary file: Myra-blue-1L.webp
+2025-11-29 01:48:24,843 - INFO - Processing: Myra-Dress-1P.jpg
+2025-11-29 01:48:26,109 - INFO - Successfully uploaded Myra-Dress-1P.jpg to Cloudinary
+2025-11-29 01:48:26,364 - INFO - Saved metadata for Myra-Dress-1P.jpg to database
+2025-11-29 01:48:26,366 - INFO - Processing: Myra-Dress-2P.jpg
+2025-11-29 01:48:27,743 - INFO - Successfully uploaded Myra-Dress-2P.jpg to Cloudinary
+2025-11-29 01:48:27,995 - INFO - Saved metadata for Myra-Dress-2P.jpg to database
+2025-11-29 01:48:27,997 - INFO - Processing: Myra-Dress-3P.jpg
+2025-11-29 01:48:29,234 - INFO - Successfully uploaded Myra-Dress-3P.jpg to Cloudinary
+2025-11-29 01:48:29,487 - INFO - Saved metadata for Myra-Dress-3P.jpg to database
+2025-11-29 01:48:29,489 - INFO - Processing: Myra-Green-1P.jpg
+2025-11-29 01:48:29,490 - INFO - Converting Myra-Green-1P.jpg to WebP (resolution: 3262x4903)
+2025-11-29 01:48:33,716 - INFO - Converted Myra-Green-1P.jpg to WebP: Myra-Green-1P.webp
+2025-11-29 01:48:35,520 - INFO - Successfully uploaded Myra-Green-1P.webp to Cloudinary
+2025-11-29 01:48:35,773 - INFO - Saved metadata for Myra-Green-1P.jpg to database
+2025-11-29 01:48:35,774 - INFO - Cleaned up temporary file: Myra-Green-1P.webp
+2025-11-29 01:48:35,775 - INFO - Processing: Myra-white-1P.jpg
+2025-11-29 01:48:35,777 - INFO - Converting Myra-white-1P.jpg to WebP (resolution: 3262x4903)
+2025-11-29 01:48:39,760 - INFO - Converted Myra-white-1P.jpg to WebP: Myra-white-1P.webp
+2025-11-29 01:48:42,046 - INFO - Successfully uploaded Myra-white-1P.webp to Cloudinary
+2025-11-29 01:48:42,299 - INFO - Saved metadata for Myra-white-1P.jpg to database
+2025-11-29 01:48:42,299 - INFO - Cleaned up temporary file: Myra-white-1P.webp
+2025-11-29 01:48:42,302 - INFO - Processing: Myra-Yoga-1.jpg
+2025-11-29 01:48:43,402 - INFO - Successfully uploaded Myra-Yoga-1.jpg to Cloudinary
+2025-11-29 01:48:43,662 - INFO - Saved metadata for Myra-Yoga-1.jpg to database
+2025-11-29 01:48:43,664 - INFO - Processing: Myra-Yoga-1P.jpg
+2025-11-29 01:48:45,083 - INFO - Successfully uploaded Myra-Yoga-1P.jpg to Cloudinary
+2025-11-29 01:48:45,333 - INFO - Saved metadata for Myra-Yoga-1P.jpg to database
+2025-11-29 01:48:45,334 - INFO - Processing: Myra-Yoga-2L.jpg
+2025-11-29 01:48:46,424 - INFO - Successfully uploaded Myra-Yoga-2L.jpg to Cloudinary
+2025-11-29 01:48:46,672 - INFO - Saved metadata for Myra-Yoga-2L.jpg to database
+2025-11-29 01:48:46,676 - INFO - Processing: Myra-Yoga-2P.jpg
+2025-11-29 01:48:47,926 - INFO - Successfully uploaded Myra-Yoga-2P.jpg to Cloudinary
+2025-11-29 01:48:48,176 - INFO - Saved metadata for Myra-Yoga-2P.jpg to database
+2025-11-29 01:48:48,177 - INFO - Processing: Myra-Yoga-3L.jpg
+2025-11-29 01:48:49,283 - INFO - Successfully uploaded Myra-Yoga-3L.jpg to Cloudinary
+2025-11-29 01:48:49,545 - INFO - Saved metadata for Myra-Yoga-3L.jpg to database
+2025-11-29 01:48:49,548 - INFO - Processing: Myra-Yoga-3P.jpg
+2025-11-29 01:48:50,729 - INFO - Successfully uploaded Myra-Yoga-3P.jpg to Cloudinary
+2025-11-29 01:48:50,979 - INFO - Saved metadata for Myra-Yoga-3P.jpg to database
+2025-11-29 01:48:50,980 - INFO - Processing: Myra-Yoga-4L.jpg
+2025-11-29 01:48:52,027 - INFO - Successfully uploaded Myra-Yoga-4L.jpg to Cloudinary
+2025-11-29 01:48:52,279 - INFO - Saved metadata for Myra-Yoga-4L.jpg to database
+2025-11-29 01:48:52,280 - INFO - Processing: Myra-Yoga-4P.jpg
+2025-11-29 01:48:53,886 - INFO - Successfully uploaded Myra-Yoga-4P.jpg to Cloudinary
+2025-11-29 01:48:54,136 - INFO - Saved metadata for Myra-Yoga-4P.jpg to database
+2025-11-29 01:48:54,137 - INFO - Processing: Myra-Yoga-5L.jpg
+2025-11-29 01:48:55,254 - INFO - Successfully uploaded Myra-Yoga-5L.jpg to Cloudinary
+2025-11-29 01:48:55,505 - INFO - Saved metadata for Myra-Yoga-5L.jpg to database
+2025-11-29 01:48:55,506 - INFO - Processing: Myra-Yoga-5P.jpg
+2025-11-29 01:48:57,423 - INFO - Successfully uploaded Myra-Yoga-5P.jpg to Cloudinary
+2025-11-29 01:48:57,684 - INFO - Saved metadata for Myra-Yoga-5P.jpg to database
+2025-11-29 01:48:57,686 - INFO - Processing: Myra-Yoga-6L.jpg
+2025-11-29 01:48:59,867 - INFO - Successfully uploaded Myra-Yoga-6L.jpg to Cloudinary
+2025-11-29 01:49:00,118 - INFO - Saved metadata for Myra-Yoga-6L.jpg to database
+2025-11-29 01:49:00,120 - INFO - Processing: Myra-Yoga-6P.jpg
+2025-11-29 01:49:01,429 - INFO - Successfully uploaded Myra-Yoga-6P.jpg to Cloudinary
+2025-11-29 01:49:01,677 - INFO - Saved metadata for Myra-Yoga-6P.jpg to database
+2025-11-29 01:49:01,679 - INFO - Processing: Myra-Yoga-7P.jpg
+2025-11-29 01:49:03,399 - INFO - Successfully uploaded Myra-Yoga-7P.jpg to Cloudinary
+2025-11-29 01:49:03,648 - INFO - Saved metadata for Myra-Yoga-7P.jpg to database
+2025-11-29 01:49:03,650 - INFO - Processing: Myra_YAI-114.jpg
+2025-11-29 01:49:05,675 - INFO - Successfully uploaded Myra_YAI-114.jpg to Cloudinary
+2025-11-29 01:49:05,923 - INFO - Saved metadata for Myra_YAI-114.jpg to database
+2025-11-29 01:49:05,925 - INFO - Processing: Myra_YAI-120.jpg
+2025-11-29 01:49:07,079 - INFO - Successfully uploaded Myra_YAI-120.jpg to Cloudinary
+2025-11-29 01:49:07,327 - INFO - Saved metadata for Myra_YAI-120.jpg to database
+2025-11-29 01:49:07,329 - INFO - Processing: Myra_YAI-131.jpg
+2025-11-29 01:49:08,438 - INFO - Successfully uploaded Myra_YAI-131.jpg to Cloudinary
+2025-11-29 01:49:08,688 - INFO - Saved metadata for Myra_YAI-131.jpg to database
+2025-11-29 01:49:08,690 - INFO - Processing: Myra_YAI-35.jpg
+2025-11-29 01:49:10,166 - INFO - Successfully uploaded Myra_YAI-35.jpg to Cloudinary
+2025-11-29 01:49:10,417 - INFO - Saved metadata for Myra_YAI-35.jpg to database
+2025-11-29 01:49:10,420 - INFO - Processing: Myra_YAI-4.jpg
+2025-11-29 01:49:12,084 - INFO - Successfully uploaded Myra_YAI-4.jpg to Cloudinary
+2025-11-29 01:49:12,352 - INFO - Saved metadata for Myra_YAI-4.jpg to database
+2025-11-29 01:49:12,353 - INFO - Processing: Myra_YAI-45.jpg
+2025-11-29 01:49:13,804 - INFO - Successfully uploaded Myra_YAI-45.jpg to Cloudinary
+2025-11-29 01:49:14,055 - INFO - Saved metadata for Myra_YAI-45.jpg to database
+2025-11-29 01:49:14,057 - INFO - Processing: Myra_YAI-61.jpg
+2025-11-29 01:49:15,356 - INFO - Successfully uploaded Myra_YAI-61.jpg to Cloudinary
+2025-11-29 01:49:15,605 - INFO - Saved metadata for Myra_YAI-61.jpg to database
+2025-11-29 01:49:15,607 - INFO - Processing: Myra_YAI-74.jpg
+2025-11-29 01:49:17,223 - INFO - Successfully uploaded Myra_YAI-74.jpg to Cloudinary
+2025-11-29 01:49:17,472 - INFO - Saved metadata for Myra_YAI-74.jpg to database
+2025-11-29 01:49:17,475 - INFO - Processing: Positive-Int.png
+2025-11-29 01:49:18,534 - INFO - Successfully uploaded Positive-Int.png to Cloudinary
+2025-11-29 01:49:18,796 - INFO - Saved metadata for Positive-Int.png to database
+2025-11-29 01:49:18,798 - INFO - Processing: RL-Logo.png
+2025-11-29 01:49:20,329 - INFO - Successfully uploaded RL-Logo.png to Cloudinary
+2025-11-29 01:49:20,579 - INFO - Saved metadata for RL-Logo.png to database
+2025-11-29 01:49:20,580 - INFO - Processing: The-mind-insitute.png
+2025-11-29 01:49:21,678 - INFO - Successfully uploaded The-mind-insitute.png to Cloudinary
+2025-11-29 01:49:21,928 - INFO - Saved metadata for The-mind-insitute.png to database
+2025-11-29 01:49:21,930 - INFO - 
+============================================================
+2025-11-29 01:49:21,930 - INFO - Processing complete!
+2025-11-29 01:49:21,930 - INFO - Successful: 36
+2025-11-29 01:49:21,930 - INFO - Failed: 0
+2025-11-29 01:49:21,931 - INFO - Total: 36
+2025-11-29 01:49:21,931 - INFO - ============================================================
+2025-11-29 01:49:21,931 - INFO - Processing complete, database connection managed by Django

@@ -1,0 +1,61 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Image Gallery{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-navy-900">Image Gallery</h1>
+    </div>
+    
+    <!-- Search -->
+    <div class="mb-6">
+        <form method="get" class="flex gap-4">
+            <input type="text" name="search" value="{{ search_query }}" 
+                   placeholder="Search images..." 
+                   class="flex-1 px-4 py-2 border border-gray-300 rounded-lg">
+            <button type="submit" class="bg-navy-900 text-white px-6 py-2 rounded-lg hover:bg-navy-800">
+                <i class="fa-solid fa-search mr-2"></i> Search
+            </button>
+        </form>
+    </div>
+    
+    <!-- Gallery Grid -->
+    {% if images %}
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for image in images %}
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <img src="{{ image.cloudinary_url }}" alt="{{ image.file_name }}" 
+                 class="w-full h-48 object-cover">
+            <div class="p-4">
+                <p class="text-sm font-semibold truncate">{{ image.file_name }}</p>
+                <p class="text-xs text-gray-500 mt-1">
+                    {{ image.width }}x{{ image.height }} • {{ image.format|upper }}
+                </p>
+                <div class="mt-2 flex gap-2">
+                    <button onclick="copyToClipboard('{{ image.cloudinary_url }}')" 
+                            class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded">
+                        Copy URL
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12 bg-white rounded-lg">
+        <i class="fa-solid fa-images text-4xl text-gray-400 mb-4"></i>
+        <p class="text-gray-600">No images found</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('URL copied to clipboard!');
+    });
+}
+</script>
+{% endblock %}
+
