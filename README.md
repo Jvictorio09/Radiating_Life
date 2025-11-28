@@ -1,11 +1,14 @@
 # Radiating Life
 
-A Django web application project.
+A Django web application project ready for deployment on Railway.
 
 ## Project Structure
 
 ```
-myProject/
+.
+├── manage.py           # Django management script
+├── requirements.txt    # Python dependencies
+├── db.sqlite3          # SQLite database
 ├── myApp/              # Main Django application
 │   ├── templates/      # HTML templates
 │   ├── migrations/     # Database migrations
@@ -13,12 +16,10 @@ myProject/
 ├── myProject/          # Django project settings
 │   ├── settings.py
 │   ├── urls.py
-│   └── ...
-├── static/             # Static files (CSS, images, etc.)
-│   └── images/         # Image assets
-├── manage.py           # Django management script
-├── requirements.txt    # Python dependencies
-└── db.sqlite3          # SQLite database
+│   ├── wsgi.py
+│   └── asgi.py
+└── static/             # Static files (CSS, images, etc.)
+    └── images/         # Image assets
 ```
 
 ## Features
@@ -32,12 +33,11 @@ myProject/
 
 1. Install dependencies:
 ```bash
-pip install -r myProject/requirements.txt
+pip install -r requirements.txt
 ```
 
 2. Run migrations:
 ```bash
-cd myProject
 python manage.py migrate
 ```
 
@@ -45,6 +45,15 @@ python manage.py migrate
 ```bash
 python manage.py runserver
 ```
+
+## Railway Deployment
+
+This project is structured for easy deployment on Railway. The Django project files are at the root level for Railway to automatically detect and deploy.
+
+### Railway Setup:
+- Railway will automatically detect the Django project
+- Set the start command: `python manage.py runserver` or use gunicorn: `gunicorn myProject.wsgi:application`
+- Add environment variables as needed in Railway dashboard
 
 ## Technologies
 
@@ -56,4 +65,3 @@ python manage.py runserver
 ## License
 
 This project is public and available for viewing.
-
